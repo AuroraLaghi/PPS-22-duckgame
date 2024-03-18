@@ -1,4 +1,4 @@
-# The Ducek Game
+# The Duck Game
 
 ## Autori
 
