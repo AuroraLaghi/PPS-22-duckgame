@@ -6,8 +6,8 @@
 [Aurora Laghi](mailto:aurora.laghi@studio.unibo.it)
 
 ## Sezioni
-- [Introduzione]
-- [Processo di sviluppo adottato]
+- [Introduzione](report/00-intro)
+- [Processo di sviluppo adottato](report/01-process.md)
 - [Requisiti]
 - [Design architetturale]
 - [Design di dettaglio]
