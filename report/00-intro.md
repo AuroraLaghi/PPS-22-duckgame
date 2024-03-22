@@ -1,5 +1,7 @@
 # Report finale PPS - duckgame
 
+![The Duck Game](../img/logo-color.png)
+
 | Nome               |                Email                | Matricola   |
 |--------------------|:-----------------------------------:|-------------|
 | Frattini Francesca | francesca.frattini7@studio.unibo.it | 0001044370  |
