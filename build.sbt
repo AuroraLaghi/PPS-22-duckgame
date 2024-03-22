@@ -7,7 +7,7 @@ lazy val osNames = Seq("linux", "mac", "win")
 lazy val root = (project in file("."))
   .settings(
     name := "duckgame",
-    idePackagePrefix := Some("scala.it.unibo.pps.duckgame"),
+    idePackagePrefix := Some("it.unibo.pps.duckgame"),
     assembly / assemblyJarName := "duckgame.jar",
     libraryDependencies ++= Seq(
       "org.scalatest" %% "scalatest" % "3.2.11" % Test,
