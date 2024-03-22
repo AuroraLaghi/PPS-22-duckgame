@@ -32,3 +32,17 @@ lazy val root = (project in file("."))
     crossPaths := false, // https://github.com/sbt/junit-interface/issues/35
     Test / parallelExecution := false
   )
+
+wartremoverWarnings ++= Warts.allBut(
+  Wart.Any,
+  Wart.Var,
+  Wart.AsInstanceOf,
+  Wart.Null,
+  Wart.ThreadSleep,
+  Wart.Nothing,
+  Wart.Throw,
+  Wart.ToString,
+  Wart.DefaultArguments,
+  Wart.AutoUnboxing,
+  Wart.IsInstanceOf
+)
