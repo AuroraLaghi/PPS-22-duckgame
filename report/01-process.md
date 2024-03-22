@@ -33,3 +33,79 @@ in presenza.
 Ogni meeting ed il relativo ordine del giorno sono stati registrati in un file apposito, facilmente accessibile
 tra gli artefatti del progetto.
 
+Ogni sprint è caratterizzato dalle seguenti attività:
+
+- **Sprint Planning** 
+Seguendo la natura di SCRUM, lo sprint planning è stato suddiviso in due parti: la prima è dedicata alla 
+preparazione dello sprint, cioè al delineamento dei vari task, estratti dal Product Backlog, da svolgere all'interno 
+dello sprint stesso. Al termine di questa prima fase, si ottiene come risultato lo **Sprint Goal**, un file riassuntivo 
+degli obiettivi dello sprint. 
+Lo Sprint Goal ha reso flessibile il lavoro in preparazione della seconda fase dello Sprint Planning.
+Nella seconda fase il team si è occupato di scegiere, in base alle tempistiche, quali task dovranno essere completati 
+nello sprint attuale. Al termine di questa fase si ha come risultato lo **Sprint Backlog**, un approfondimento del 
+Product Backlog trattato.
+- **Daily Scrum**
+Durante gli sprint, con cadenza quasi giornaliera, sono effettuati dei Daily Scrum, della durata di circa 15 minuti, 
+con lo scopo di sincronizzare il lavoro e riportare eventuali difficoltà.
+- **Sprint Review**
+Si tratta di un incontro svolto al termine dello sprint che ha lo scopo di analizzare il risultato ottenuto per revisionare 
+e valutare il lavoro svolto dal team di sviluppo.
+
+## 1.2 Suddivisione in itinere dei task
+
+Alla fine di ogni Sprint Planning, prendendo come base lo Sprint Backlog, attraverso il software **Trello**, sono stati 
+rappresentati i task all'interno di una **Sprint Task Board**. Ciascun task è stato assegnato ad uno o più componenti del 
+team.
+Nella Task Board sono presenti diverse liste, ognuna rappresentativa di uno stato evolutivo del task.
+Le tipologie di liste utilizzate sono: _TO-DO_, _Doing_, _Testing_, _Done_, _Waiting_.
+Attraverso questo schema, ogni componente del team avrà una panoramica sul lavoro totale.
+
+A seconda della tipologia, i task sono stati assegnati ad un singolo membro, oppure sfruttando il _pair-programming_.
+Per ogni task individuato e stata considerata la seguente _definition of done_: una funzionalità è da considerarsi 
+conclusa nel momento in cui viene testata, documentata, passa una _code review_ (manuale o automatica) e soddisfa le 
+aspettative del committente.
+
+## 1.2.1 Revisione in itinere dei task
+
+Al termine di ogni sprint è stata effettuata la revisione del lavoro svolto durante la settimana: in particolare, viene 
+verificata la realizzazione dei task assegnati ad ogni membro, analizzandone la loro completezza in base al _definition 
+of done_ stabilito.
+
+Durante l'incontro, se vengono evidenziati alcuni aspetti del lavoro effettuato che possono essere migliorati, o in caso 
+di incompletezza nel lavoro svolto, si richiede al membro responsabile di correggere o completare il lavoro, prima di 
+passare allo sprint succesivo.
+
+Infine, dopo aver effettuato lo Sprint Review, è possibile effettuare il _refactoring_ di elementi già realizzati, creando 
+nuovi task da concludere nello sprint successivo.
+
+## 1.3 Workflow
+
+Per quel che riguarda l'organizzazione del [repository GitHub](https://github.com/AuroraLaghi/PPS-22-duckgame) si è 
+scelto di adottare **Git Flow**: questo prevede l'impiego di diversi _branch_:
+
+- Un branch **main**, in cui è presente il codice delle _release_;
+- Un branch **develop** da usare come branch principale;
+- Un branch **feature/<nome-feature>** dove sarà presente il codice necessario all'implementazione di una determinata 
+feature.
+
+Nell'immagine seguente è possibile avere un riassunto di questa metodologia di lavoro
+
+![Git Flow Workflow](../img/gitflow.jpg)
+
+Per concludere, si è fatto utilizzo della [conventional commit specification](https://www.conventionalcommits.org/en/v1.0.0/), 
+per uniformare la struttura dei commit tra i membri del team.
+
+## 1.4 Strumenti utilizzati
+
+Per la realizzazione del progetto sono stati utilizzati diversi tool, con lo scopo di agevolare gli sviluppatori durante 
+la creazione del progetto, cercando di automatizzarne diversi aspetti.
+I vari strumenti di supporto impiegati sono:
+
+- **sbt** per la build automation,
+- **ScalaTest** per la scrittura ed esecuzione dei test,
+- **ScalaFMT** per la formattazione del codice,
+- **GitHub**, come servizio di hosting del codice sorgente ed i file utilizzati durante il processo di sviluppo
+- **GitHub Actions**, per garantire la Continuos Integration
+  - È stato definito un file _YAML_ per descrivere le pipelines: ad ogni _push_/_pull_ sul branch main o develop, 
+  l'applicativo viene compilato e testato su diversi sistemi operativi con JVM 11 e 16
+- **Trello**, come strumento per la collaborazione all'interno del team
