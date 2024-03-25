@@ -24,3 +24,10 @@ Ordine del giorno:
 Ordine del giorno:
 - Impostazione tabella di riferimento per i product backlog
 
+## Riunione 25/03/2024: 1° sprint preview
+Ordine del giorno:
+- Impostazione 1° sprint:
+  - Definizione design architetturale
+  - Definizione dei product backlog che si vuole implementare
+  - Suddivisione del lavoro fra i componenti
+- Pianificare la prossima riunione

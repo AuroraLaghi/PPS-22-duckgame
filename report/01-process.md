@@ -101,9 +101,10 @@ Per la realizzazione del progetto sono stati utilizzati diversi tool, con lo sco
 la creazione del progetto, cercando di automatizzarne diversi aspetti.
 I vari strumenti di supporto impiegati sono:
 
-- **sbt** per la build automation,
+- **SBT** per la build automation,
 - **ScalaTest** per la scrittura ed esecuzione dei test,
 - **ScalaFMT** per la formattazione del codice,
+- **Wartremover** per la valutazione della qualità del codice prodotto, individuando possibili pattern problematici;
 - **GitHub**, come servizio di hosting del codice sorgente ed i file utilizzati durante il processo di sviluppo
 - **GitHub Actions**, per garantire la Continuos Integration
   - È stato definito un file _YAML_ per descrivere le pipelines: ad ogni _push_/_pull_ sul branch main o develop, 
