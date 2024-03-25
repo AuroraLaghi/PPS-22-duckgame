@@ -44,6 +44,7 @@ class GameController(
   def getBoxFromPlayerPosition(player: Player): SpaceName =
     gameBoard.gameBoardMap(player.actualPosition)
 
+  @tailrec
   private def moveUser (game: Game): Unit =
     println("press 1 to move into the board, or 2 to quit the game")
     tryToInt(scala.io.StdIn.readLine()) match
