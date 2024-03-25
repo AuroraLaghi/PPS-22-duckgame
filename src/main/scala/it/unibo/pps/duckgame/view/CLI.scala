@@ -50,13 +50,13 @@ class CLI:
     if(cellContent == null || cellContent.isEmpty)
       print("")
     else
-      print(f"| ${cellContent}")
+      print(f"| $cellContent")
 
-  def showGameStart: Unit =
+  def showGameStart(): Unit =
     println("Welcome to The Duck Game")
     getInput match
-      case 'G' => gameController.startGame
-      case 'E' => gameController.exitGame
+      case 'G' => gameController.startGame()
+      case 'E' => gameController.exitGame()
 
   @tailrec
   private def getInput: Char =

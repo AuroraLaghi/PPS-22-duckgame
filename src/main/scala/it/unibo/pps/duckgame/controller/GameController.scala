@@ -17,31 +17,31 @@ class GameController(
 
   def gameBoard: GameBoard = _gameBoard
 
-  def dice: Dice = _dice
+  private def dice: Dice = _dice
 
-  def initialize: Unit =
+  def initialize(): Unit =
     view.setController(this)
 
-  def run: Unit =
+  def run(): Unit =
     view.showGameBoard(game)
-    view.showGameStart
+    view.showGameStart()
 
-  def startGame: Unit =
+  def startGame(): Unit =
     game.currentPlayer_(new Player)
     moveUser(game)
 
-  def exitGame: Unit =
+  def exitGame(): Unit =
     sys.exit(0)
 
-  def moveCurrentPlayer: Unit =
-    dice.rollDices
+  private def moveCurrentPlayer(): Unit =
+    dice.rollDices()
     dice.sum
     game.currentPlayer.actualPosition =
       GameUtils.addSumToPosition(dice.sum, game.currentPlayer.actualPosition, gameBoard)
     checkPosition(game.currentPlayer)
     println(f"${game.currentPlayer.actualPosition}")
 
-  def getBoxFromPlayerPosition(player: Player): SpaceName =
+  private def getBoxFromPlayerPosition(player: Player): SpaceName =
     gameBoard.gameBoardMap(player.actualPosition)
 
   @tailrec
@@ -50,17 +50,17 @@ class GameController(
     tryToInt(scala.io.StdIn.readLine()) match
       case Some(position: Int) =>
         position match
-          case 1 => moveCurrentPlayer
+          case 1 => moveCurrentPlayer()
             if(dice.controlSame)
-              moveCurrentPlayer
+              moveCurrentPlayer()
           case 2 => println("Exiting from game...")
-            exitGame
-          case _ => showInvalidInput
-      case _ => showInvalidInput
+            exitGame()
+          case _ => showInvalidInput()
+      case _ => showInvalidInput()
     moveUser(game)
 
 
-  private def showInvalidInput: Unit =
+  private def showInvalidInput(): Unit =
     println("Invalid input")
 
 
@@ -71,7 +71,7 @@ class GameController(
       println(s"From dices rolling you obtained ${dice.sum} and now you're in position " +
         s"${getBoxFromPlayerPosition(player)}")
       println("player wins!")
-      exitGame
+      exitGame()
     case _ =>
       println(s"From dices rolling you obtained ${dice.sum} and now you're in position " +
         s"${getBoxFromPlayerPosition(player)}")

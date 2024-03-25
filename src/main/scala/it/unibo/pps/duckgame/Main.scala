@@ -11,5 +11,5 @@ object Main:
     val view = new CLI
     val controller = new GameController(model, view)
 
-    controller.initialize
-    controller.run
+    controller.initialize()
+    controller.run()

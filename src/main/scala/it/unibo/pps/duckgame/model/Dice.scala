@@ -6,9 +6,9 @@ class Dice:
   private var _dice1: Int = 1
   private var _dice2: Int = 2
   
-  rollDices
+  rollDices()
   
-  def rollDices: Unit =
+  def rollDices(): Unit =
     _dice1 = Random.between(1, 7)
     _dice2 = Random.between(1, 7)
     
