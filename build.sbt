@@ -1,4 +1,4 @@
-ThisBuild / version := "0.1.0-SNAPSHOT"
+ThisBuild / version := "0.1.0"
 
 ThisBuild / scalaVersion := "3.2.1"
 
@@ -6,8 +6,7 @@ lazy val osNames = Seq("linux", "mac", "win")
 
 lazy val root = (project in file("."))
   .settings(
-    name := "duckgame",
-    idePackagePrefix := Some("it.unibo.pps.duckgame"),
+    name := "PPS-22-duckgame",
     assembly / assemblyJarName := "duckgame.jar",
     libraryDependencies ++= Seq(
       "org.scalatest" %% "scalatest" % "3.2.11" % Test,
