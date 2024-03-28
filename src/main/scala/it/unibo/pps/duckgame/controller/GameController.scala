@@ -8,61 +8,47 @@ import it.unibo.pps.duckgame.view.CLI
 import scala.annotation.tailrec
 import scala.util.Try
 
-class GameController(
-    game: Game,
-    view: CLI,
-    _gameBoard: GameBoard = new GameBoard,
-    _dice: Dice = new Dice):
-
-
+class GameController:
+  private val _game: Game = new Game
+  private val _gameBoard: GameBoard = new GameBoard
+  private val _dice: Dice = new Dice
+  private val _view: CLI = new CLI
+  
   def gameBoard: GameBoard = _gameBoard
 
   private def dice: Dice = _dice
+  
+  def game: Game = _game
+  
+  def currentPlayer: Player = game.currentPlayer
 
   def initialize(): Unit =
-    view.setController(this)
+    _view.setController(this)
 
   def run(): Unit =
-    view.showGameBoard(game)
-    view.showGameStart()
+    _view.showGameBoard(game)
+    _view.showGameStart(game)
 
   def startGame(): Unit =
     game.currentPlayer_(new Player)
-    moveUser(game)
 
   def exitGame(): Unit =
     sys.exit(0)
 
-  private def moveCurrentPlayer(): Unit =
+  def newGame(): Unit =
+    game.reset()
+
+  def moveCurrentPlayer(): Unit =
     dice.rollDices()
     dice.sum
     game.currentPlayer.actualPosition =
       GameUtils.addSumToPosition(dice.sum, game.currentPlayer.actualPosition, gameBoard)
     checkPosition(game.currentPlayer)
-    println(f"${game.currentPlayer.actualPosition}")
+    if (dice.controlSame)
+      moveCurrentPlayer()
 
   private def getBoxFromPlayerPosition(player: Player): SpaceName =
     gameBoard.gameBoardMap(player.actualPosition)
-
-  @tailrec
-  private def moveUser (game: Game): Unit =
-    println("press 1 to move into the board, or 2 to quit the game")
-    tryToInt(scala.io.StdIn.readLine()) match
-      case Some(position: Int) =>
-        position match
-          case 1 => moveCurrentPlayer()
-            if(dice.controlSame)
-              moveCurrentPlayer()
-          case 2 => println("Exiting from game...")
-            exitGame()
-          case _ => showInvalidInput()
-      case _ => showInvalidInput()
-    moveUser(game)
-
-
-  private def showInvalidInput(): Unit =
-    println("Invalid input")
-
 
   private def tryToInt(s: String) = Try(s.toInt).toOption
 

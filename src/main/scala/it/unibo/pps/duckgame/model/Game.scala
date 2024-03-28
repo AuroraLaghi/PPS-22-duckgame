@@ -14,6 +14,10 @@ class Game:
 
   def gameBoard: GameBoard = _gameBoard
 
+  def reset(): Unit =
+    _currentPlayer = null
+
+
 
 
 

@@ -7,9 +7,6 @@ import it.unibo.pps.duckgame.view.CLI
 object Main:
   @main
   def startGame(): Unit =
-    val model = new Game
-    val view = new CLI
-    val controller = new GameController(model, view)
-
+    val controller = new GameController()
     controller.initialize()
     controller.run()

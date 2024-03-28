@@ -4,6 +4,7 @@ import it.unibo.pps.duckgame.controller.GameController
 import it.unibo.pps.duckgame.model.{Game, GameBoard, Player}
 
 import scala.annotation.tailrec
+import scala.util.Try
 
 class CLI:
 
@@ -52,11 +53,38 @@ class CLI:
     else
       print(f"| $cellContent")
 
-  def showGameStart(): Unit =
+  def showGameStart(game: Game): Unit =
     println("Welcome to The Duck Game")
     getInput match
-      case 'G' => gameController.startGame()
+      case 'G' => showGameStartPlay(game)
       case 'E' => gameController.exitGame()
+
+  def showGameStartPlay(game: Game): Unit =
+    println("Start Game")
+    gameController.startGame()
+    showRollDiceOrQuit(game)
+
+  private def tryToInt(s: String) = Try(s.toInt).toOption
+
+  @tailrec
+  private def showRollDiceOrQuit(game: Game): Unit =
+    println("press 1 to move into the board, or 2 to quit the game")
+    tryToInt(scala.io.StdIn.readLine()) match
+      case Some(position: Int) =>
+        position match
+          case 1 => gameController.moveCurrentPlayer()
+          case 2 => println("Exiting from game...")
+            exitGame()
+          case _ => showInvalidInput()
+      case _ => showInvalidInput()
+      showRollDiceOrQuit(game)
+
+  def exitGame(): Unit =
+    println("Exiting form game")
+    gameController.exitGame()
+
+  private def showInvalidInput(): Unit =
+    println("Invalid input")
 
   @tailrec
   private def getInput: Char =
