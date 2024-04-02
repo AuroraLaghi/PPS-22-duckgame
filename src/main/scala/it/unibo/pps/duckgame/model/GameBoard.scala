@@ -1,14 +1,36 @@
 package it.unibo.pps.duckgame.model
 
-import it.unibo.pps.duckgame.model.SpaceName.{Cell, SpaceName, SpecialCell}
-
-class GameBoard:
-  private val _gameBoardMap: Map[Int, SpaceName] = {
-    val numbers = (0 to 62).map(key => key -> Cell(key)).toMap
-    val finalSpace = 63 -> SpecialCell("FINAL_SPACE")
-    numbers + finalSpace
+/** Represents the game board
+ * 
+ * @param cells
+ *  list of cells
+ */
+class GameBoard(cells: List[Cell]):
+  
+  private val _gameBoardMap: Map[Int, Cell] = {
+    val numbers = (0 to 63).map(key => key -> CellImpl(key)).toMap
+    numbers
   }
+
+  /** Return game board map
+   * 
+   * @return
+   *  game board map as a list
+   */
+  def gameBoardMap: List[Cell] = cells
+
+  /** Return the size of the game board
+   * 
+   * @return
+   *  int size of the game board
+   */
+  def size: Int = cells.length
   
-  def gameBoardMap: Map[Int, SpaceName] = _gameBoardMap
+object GameBoard:
+  def apply(): GameBoard = 
+    val numbers = (0 to 63).map(n => CellImpl(n)).toList
+    new GameBoard(numbers)
   
-  def size: Int = _gameBoardMap.size
+  def apply(cells: List[Cell]): GameBoard =
+    new GameBoard(cells)
+  
