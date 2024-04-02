@@ -1,29 +1,22 @@
 package it.unibo.pps.duckgame.view
 
-import it.unibo.pps.duckgame.controller.GameController
-import it.unibo.pps.duckgame.model.{Game, GameBoard, Player}
+import it.unibo.pps.duckgame.controller.{Game, GameController, GameStats}
+import it.unibo.pps.duckgame.model.{GameBoard, Player}
 
 import scala.annotation.tailrec
 import scala.util.Try
 
 class CLI:
-
-  private var gameController: GameController = _
-
-  def setController(controller: GameController): Unit =
-    gameController = controller
-
-  def getController: GameController = gameController
-
-  def showGameBoard(game: Game): Unit =
+  
+  def showGameBoard(): Unit =
     //print game board
     println("Tabellone duckgame:")
-    printDuckGameBoard(game.gameBoard)
+    printDuckGameBoard()
     println("\n")
     println("-------------------------------")
 
 
-  private def printDuckGameBoard(board: GameBoard): Unit =
+  private def printDuckGameBoard(): Unit =
     val rows: List[List[Int]] = List(
       List(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12),
       List(-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 13),
@@ -38,12 +31,13 @@ class CLI:
     for(row <- rows)
       //stampa il contenuto delle celle
       for (cell <- row)
-        drawCell(board, cell)
+        drawCell(cell)
       println("")
 
-  private def drawCell(gameBoard: GameBoard, cellId: Int): Unit =
+  private def drawCell(cellId: Int): Unit =
     val box = cellId match
-      case x if x > -1 => gameBoard.gameBoardMap.getOrElse(cellId, "").toString.padTo(10, ' ')
+      case x if x.equals(63) => "END".padTo(10, ' ')
+      case x if x > -1 => x.toString.padTo(10, ' ')
       case _ => " ".padTo(10, ' ')
     drawCellWithContainer(box)
 
@@ -53,35 +47,42 @@ class CLI:
     else
       print(f"| $cellContent")
 
-  def showGameStart(game: Game): Unit =
+  def showGameStart(): Unit =
     println("Welcome to The Duck Game")
     getInput match
-      case 'G' => showGameStartPlay(game)
-      case 'E' => gameController.exitGame()
+      case 'G' => showGameStartPlay()
+      case 'E' => GameController.exitGame()
 
-  def showGameStartPlay(game: Game): Unit =
+  def showGameStartPlay(): Unit =
     println("Start Game")
-    gameController.startGame()
-    showRollDiceOrQuit(game)
+    GameController.startGame()
+    showRollDiceOrQuit()
 
   private def tryToInt(s: String) = Try(s.toInt).toOption
 
   @tailrec
-  private def showRollDiceOrQuit(game: Game): Unit =
+  private def showRollDiceOrQuit(): Unit =
     println("press 1 to move into the board, or 2 to quit the game")
     tryToInt(scala.io.StdIn.readLine()) match
       case Some(position: Int) =>
         position match
-          case 1 => gameController.moveCurrentPlayer()
+          case 1 => throwDice()
           case 2 => println("Exiting from game...")
             exitGame()
           case _ => showInvalidInput()
       case _ => showInvalidInput()
-      showRollDiceOrQuit(game)
+      showRollDiceOrQuit()
+      
+  @tailrec
+  private def throwDice(): Unit =
+    val pairDice = GameController.ThrowDice()
+    showPosition(pairDice)
+    if (pairDice._1 == pairDice._2)
+      throwDice()
 
   def exitGame(): Unit =
     println("Exiting form game")
-    gameController.exitGame()
+    GameController.exitGame()
 
   private def showInvalidInput(): Unit =
     println("Invalid input")
@@ -94,5 +95,12 @@ class CLI:
       case 'e' | 'E' => 'E'
       case _ => println("Insert a valid char")
         getInput
+        
+  def showVictory(winner: Player): Unit =
+    println("WE HAVE A WINNER!\nGAME OVER!")
+
+  def showPosition(dices: (Int, Int)): Unit = 
+    println(s"From dices rolling you obtained ${dices._1 + dices._2} and now you're in position " +
+        s"${GameStats.currentPlayer.actualPosition}")  
 
 

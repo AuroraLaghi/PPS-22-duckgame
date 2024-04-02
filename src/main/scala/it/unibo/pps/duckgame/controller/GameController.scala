@@ -1,65 +1,72 @@
 package it.unibo.pps.duckgame.controller
 
-import it.unibo.pps.duckgame.model.SpaceName.{SpaceName, SpecialCell}
-import it.unibo.pps.duckgame.model.{Dice, Game, GameBoard, Player}
+import it.unibo.pps.duckgame.model.{Cell, CellStatus, Dice, GameBoard, Player}
 import it.unibo.pps.duckgame.utils.GameUtils
 import it.unibo.pps.duckgame.view.CLI
 
 import scala.annotation.tailrec
 import scala.util.Try
 
-class GameController:
-  private val _game: Game = new Game
-  private val _gameBoard: GameBoard = new GameBoard
-  private val _dice: Dice = new Dice
-  private val _view: CLI = new CLI
-  
-  def gameBoard: GameBoard = _gameBoard
+object GameController:
+//  private val _game: Game = new Game
+//  private val _gameBoard: GameBoard = GameBoard()
+//  private val _dice: Dice = Dice()
+  private var _view: CLI = _
 
-  private def dice: Dice = _dice
+  def view: CLI = _view
   
-  def game: Game = _game
+  def view_=(value: CLI): Unit = _view = value
   
-  def currentPlayer: Player = game.currentPlayer
-
-  def initialize(): Unit =
-    _view.setController(this)
-
+  def addPlayer(player: Player): Unit =
+    Game addPlayer player
+    
+  def removePlayer(player: Player): Unit =
+    Game removePlayer player
+    
   def run(): Unit =
-    _view.showGameBoard(game)
-    _view.showGameStart(game)
+    _view = new CLI()
+    _view.showGameBoard()
+    _view.showGameStart()
 
   def startGame(): Unit =
-    game.currentPlayer_(new Player)
+    addPlayer(Player())
+    Game.players = GameUtils MixPlayers Game.players
 
   def exitGame(): Unit =
     sys.exit(0)
 
   def newGame(): Unit =
-    game.reset()
+    Game.reset()
 
-  def moveCurrentPlayer(): Unit =
-    dice.rollDices()
-    dice.sum
-    game.currentPlayer.actualPosition =
-      GameUtils.addSumToPosition(dice.sum, game.currentPlayer.actualPosition, gameBoard)
-    checkPosition(game.currentPlayer)
-    if (dice.controlSame)
-      moveCurrentPlayer()
-
-  private def getBoxFromPlayerPosition(player: Player): SpaceName =
-    gameBoard.gameBoardMap(player.actualPosition)
+  def moveCurrentPlayer(steps: Int): Unit =
+    PlayerController.updatePlayerWith(Game.currentPlayer, GameStats.currentPlayer.move(steps))
+    if GameStats.checkVictory() then showVictory() 
+    
+  def currentPlayerQuit(): Unit =
+    val playerToDelete = GameStats.currentPlayer
+    endTurn()
+    val nextPlayer = GameStats.currentPlayer
+    Game removePlayer playerToDelete
+    Game.currentPlayer = Game.players.indexOf(nextPlayer)
+    if GameStats.checkVictory() then showVictory()
+    
+  def endTurn(): Unit =
+    Game.currentPlayer = (Game.currentPlayer + 1) % Game.players.length
+    
+  def ThrowDice(): (Int, Int) =
+    val dicePair = Dice().roll()
+    moveCurrentPlayer(dicePair._1 + dicePair._2)
+    dicePair
+    
+  def checkPlayerActions(): Unit =
+    val player = GameStats.currentPlayer
 
   private def tryToInt(s: String) = Try(s.toInt).toOption
+  
+  private def showVictory(): Unit =
+    GameStats.winner.foreach(w =>
+      _view.showVictory(w)
+      exitGame())
 
-  private def checkPosition(player:Player): Unit = player.actualPosition match
-    case 63 =>
-      println(s"From dices rolling you obtained ${dice.sum} and now you're in position " +
-        s"${getBoxFromPlayerPosition(player)}")
-      println("player wins!")
-      exitGame()
-    case _ =>
-      println(s"From dices rolling you obtained ${dice.sum} and now you're in position " +
-        s"${getBoxFromPlayerPosition(player)}")
 
 
