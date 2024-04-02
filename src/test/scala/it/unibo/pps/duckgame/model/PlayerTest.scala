@@ -1,6 +1,5 @@
 package it.unibo.pps.duckgame.model
 
-import it.unibo.pps.duckgame.BaseTest
 import org.junit.jupiter.api.{BeforeEach, Test}
 import org.scalatest.*
 import org.scalatest.flatspec.*
