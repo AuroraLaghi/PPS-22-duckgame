@@ -1,10 +1,17 @@
 package it.unibo.pps.duckgame.model
 
-final case class Player():
+import it.unibo.pps.duckgame.utils.GameUtils
+
+case class Player(actualPosition: Int):
   
-  private var _actualPosition: Int = 0
+  def move(steps: Int): Player =
+    Player(GameUtils.addSumToPosition(steps, actualPosition))
+    
+object Player:
   
-  def actualPosition: Int = _actualPosition
-  def actualPosition_= (value: Int): Unit =
-    _actualPosition = value
+  private val DEFAULT_STARTING_POSITION = 0
+  
+  def apply(): Player =
+    Player(DEFAULT_STARTING_POSITION)  
+
   
