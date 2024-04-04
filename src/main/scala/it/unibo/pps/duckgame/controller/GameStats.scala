@@ -3,7 +3,7 @@ package it.unibo.pps.duckgame.controller
 import it.unibo.pps.duckgame.model.{GameBoard, Player}
 
 object GameStats:
-  private val MIN_PLAYERS = 1
+  private val MIN_PLAYERS = 2
   private val MAX_PLAYERS = 6
   
   def currentPlayer: Player = players(Game.currentPlayer)
@@ -12,12 +12,12 @@ object GameStats:
   
   def gameBoard: GameBoard = Game.gameBoard
   
-  def canStartGame(): Boolean =
+  def canStartGame: Boolean =
     Game.players.length match
       case n if n < MIN_PLAYERS => false
       case _                    => true
       
-  def canAddPlayer(): Boolean =
+  def canAddPlayer: Boolean =
     Game.players.length match
       case n if n < MAX_PLAYERS => true
       case _                    => false

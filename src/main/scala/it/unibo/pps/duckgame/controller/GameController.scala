@@ -8,10 +8,7 @@ import scala.annotation.tailrec
 import scala.util.Try
 
 object GameController:
-//  private val _game: Game = new Game
-//  private val _gameBoard: GameBoard = GameBoard()
-//  private val _dice: Dice = Dice()
-  private var _view: CLI = _
+  private var _view: CLI = new CLI()
 
   def view: CLI = _view
   
@@ -24,12 +21,11 @@ object GameController:
     Game removePlayer player
     
   def run(): Unit =
-    _view = new CLI()
     _view.showGameBoard()
     _view.showGameStart()
 
   def startGame(): Unit =
-    addPlayer(Player())
+    //addPlayer(Player())
     Game.players = GameUtils MixPlayers Game.players
 
   def exitGame(): Unit =

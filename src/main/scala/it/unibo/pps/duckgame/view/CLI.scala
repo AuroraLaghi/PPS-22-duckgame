@@ -36,13 +36,13 @@ class CLI:
 
   private def drawCell(cellId: Int): Unit =
     val box = cellId match
-      case x if x.equals(63) => "END".padTo(10, ' ')
+      case x if x == 63 => "END".padTo(10, ' ')
       case x if x > -1 => x.toString.padTo(10, ' ')
       case _ => " ".padTo(10, ' ')
     drawCellWithContainer(box)
 
   private def drawCellWithContainer(cellContent: String): Unit =
-    if(cellContent == null || cellContent.isEmpty)
+    if(cellContent.isEmpty || cellContent.isBlank)
       print("")
     else
       print(f"| $cellContent")
@@ -99,7 +99,7 @@ class CLI:
   def showVictory(winner: Player): Unit =
     println("WE HAVE A WINNER!\nGAME OVER!")
 
-  def showPosition(dices: (Int, Int)): Unit = 
+  private def showPosition(dices: (Int, Int)): Unit = 
     println(s"From dices rolling you obtained ${dices._1 + dices._2} and now you're in position " +
         s"${GameStats.currentPlayer.actualPosition}")  
 
