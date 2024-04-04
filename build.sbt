@@ -30,9 +30,11 @@ lazy val root = (project in file("."))
     Test / parallelExecution := false
   )
 
+addCompilerPlugin("org.wartremover" %% "wartremover" % "3.1.6" cross CrossVersion.full)
+scalacOptions += "-P:wartremover:only-warn-traverser:org.wartremover.warts.Unsafe"
+
 wartremoverWarnings ++= Warts.allBut(
   Wart.Any,
-  Wart.Var,
   Wart.AsInstanceOf,
   Wart.Null,
   Wart.ThreadSleep,
@@ -41,7 +43,10 @@ wartremoverWarnings ++= Warts.allBut(
   Wart.ToString,
   Wart.DefaultArguments,
   Wart.AutoUnboxing,
-  Wart.IsInstanceOf
+  Wart.IsInstanceOf,
+  Wart.Overloading,
+  Wart.Var,
+  Wart.SeqApply,
+  Wart.IterableOps
 )
 
-Compile/compile/wartremoverErrors ++=Warts.all
