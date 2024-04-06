@@ -42,3 +42,12 @@ Ordine del giorno:
   - Controllo coverage tests
 - Aggiornamento product backlog
 - Riportare obiettivi raggiunti durante lo sprint
+
+## Riunione 06/04/2024: 2° sprint preview
+Ordine del giorno:
+- Impostazione 2° sprint:
+  - Studio e apprendimento ScalaFx/JavaFx e file FXML
+  - Impostazione interfaccia grafica (schermata principale)
+  - Discussione pattern per applicazione MVC
+  - Suddivisione del lavoro
+- Pianificare prossima riunione
