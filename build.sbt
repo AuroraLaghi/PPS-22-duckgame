@@ -25,7 +25,7 @@ lazy val root = (project in file("."))
       "org.scalactic" %% "scalactic" % "3.2.13"
     ) ++ osNames.flatMap(os =>
       Seq("base", "controls", "fxml", "graphics", "media", "swing", "web")
-        .map(m => "org.openjfx" % s"javafx-$m" % "16" classifier os) ),
+        .map(m => "org.openjfx" % s"javafx-$m" % "20" classifier os) ),
     crossPaths := false, // https://github.com/sbt/junit-interface/issues/35
     Test / parallelExecution := false
   )
