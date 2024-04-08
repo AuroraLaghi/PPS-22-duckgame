@@ -6,11 +6,11 @@ import it.unibo.pps.duckgame.utils.resources.ImgResources
 import javafx.fxml
 import javafx.fxml.{FXML, Initializable}
 import javafx.geometry.Pos
-import javafx.scene.{control, image, layout}
-import scalafx.scene.control.{Button, Label}
-import scalafx.scene.image.{Image, ImageView}
-import scalafx.scene.layout.{BorderPane, GridPane, HBox, VBox}
+import javafx.scene.layout.{BorderPane, ColumnConstraints, GridPane, HBox, RowConstraints, VBox}
 import scalafx.stage.Screen
+import javafx.fxml.{FXML, Initializable}
+import javafx.scene.control.{Button, Label, ListView, TableColumn, TableView}
+import javafx.scene.image.{Image, ImageView}
 
 import java.net.URL
 import java.util.ResourceBundle
@@ -89,14 +89,9 @@ class GameBoardView extends Initializable:
 
   private def createPlayerBox(player: Player): Unit =
     val playerHBox: HBox = new HBox()
-    playerList.children.add(playerHBox)
+    playerList.getChildren.add(playerHBox)
     val playerLabel: Label = new Label(player.name)
-    playerHBox.children.add(playerLabel)
+    playerHBox.getChildren.add(playerLabel)
     playerHBox.setSpacing(5)
     playerHBox.setAlignment(Pos.CENTER)
     playersHBox += (player -> playerHBox)
-
-
-
-
-
