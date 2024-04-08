@@ -1,0 +1,6 @@
+.root {
+    -fx-backgroung-image: url('/img/tabellone.png');
+    -fx-opacity: 0.4;
+    -fx-backgroung-repeat: stretch;
+    -fx-backgroung-position: center center;
+}
