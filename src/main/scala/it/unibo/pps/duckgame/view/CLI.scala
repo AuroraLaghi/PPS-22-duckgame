@@ -94,7 +94,7 @@ class CLI:
       
   @tailrec
   private def throwDice(): Unit =
-    val pairDice = GameController.ThrowDice()
+    val pairDice = GameController.throwDice()
     showPosition(pairDice)
     if (pairDice._1 == pairDice._2)
       throwDice()

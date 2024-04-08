@@ -49,7 +49,7 @@ object GameController:
   def endTurn(): Unit =
     Game.currentPlayer = (Game.currentPlayer + 1) % Game.players.length
     
-  def ThrowDice(): (Int, Int) =
+  def throwDice(): (Int, Int) =
     val dicePair = Dice().roll()
     moveCurrentPlayer(dicePair._1 + dicePair._2)
     dicePair
