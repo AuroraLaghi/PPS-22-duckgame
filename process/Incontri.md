@@ -31,3 +31,23 @@ Ordine del giorno:
   - Definizione dei product backlog che si vuole implementare
   - Suddivisione del lavoro fra i componenti
 - Pianificare la prossima riunione
+
+## 31 marzo e 1 aprile non lavorativi
+
+## Riunione 05/04/2024: 1° sprint review
+Ordine del giorno:
+- Verificare il lavoro svolto:
+  - Controllo codice prodotto (sviluppo e testing)
+  - Allineamento documentazione
+  - Controllo coverage tests
+- Aggiornamento product backlog
+- Riportare obiettivi raggiunti durante lo sprint
+
+## Riunione 06/04/2024: 2° sprint preview
+Ordine del giorno:
+- Impostazione 2° sprint:
+  - Studio e apprendimento ScalaFx/JavaFx e file FXML
+  - Impostazione interfaccia grafica (schermata principale)
+  - Discussione pattern per applicazione MVC
+  - Suddivisione del lavoro
+- Pianificare prossima riunione
