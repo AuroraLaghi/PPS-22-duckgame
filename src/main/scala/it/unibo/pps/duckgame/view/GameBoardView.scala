@@ -53,13 +53,13 @@ class GameBoardView extends Initializable:
     temp()
 
   private def setResolution(): Unit =
-    FxmlUtils.setResolution(pane, 0.9, 0.9)
+    FxmlUtils.setResolution(pane, 0.8, 0.8)
     val(width,height) = FxmlUtils.getResolution
 
     val gameBoardSize = pane.getPrefHeight
 
     gameBoard.setFitWidth(gameBoardSize)
-    gameBoard.setFitHeight(gameBoardSize)
+    gameBoard.setFitHeight(gameBoardSize * 0.9)
     val menuWidth = width - gameBoardSize
     bottomMenu.setPrefWidth(menuWidth / 2)
     playerList.setPrefWidth(menuWidth / 2)
@@ -78,7 +78,7 @@ class GameBoardView extends Initializable:
 
   def throwDiceButtonClick(): Unit =
     val (dice1, dice2) = GameController.throwDice()
-    println("Dices: " + dice1 + " " + dice2)
+    println("Dices: " + dice1.toString + " " + dice2.toString)
     endTurnButton.setDisable(false)
     throwDiceButton.setDisable(true)
 

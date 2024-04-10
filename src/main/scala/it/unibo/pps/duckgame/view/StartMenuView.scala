@@ -38,7 +38,7 @@ class StartMenuView extends Initializable:
 //
 //    startMenupane.setPrefWidth(width)
 //    startMenupane.setPrefHeight(height)
-    FxmlUtils.setResolution(startMenuPane, 0.9, 0.9)
+    FxmlUtils.setResolution(startMenuPane, 0.6, 0.6)
 
   def playGame(): Unit =
     FxmlUtils.changeScene(FxmlResources.GAME_VIEW.path)
