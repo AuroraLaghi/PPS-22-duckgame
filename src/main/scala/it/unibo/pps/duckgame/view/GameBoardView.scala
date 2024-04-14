@@ -6,7 +6,7 @@ import it.unibo.pps.duckgame.utils.resources.CssResources.START_MENU_STYLE
 import it.unibo.pps.duckgame.utils.resources.ImgResources
 import javafx.{fxml, geometry}
 import javafx.fxml.{FXML, Initializable}
-import javafx.geometry.Pos
+import javafx.geometry.{Insets, Pos}
 import javafx.scene.layout.{BorderPane, ColumnConstraints, GridPane, HBox, RowConstraints, VBox}
 import javafx.stage.Screen
 import javafx.fxml.{FXML, Initializable}
@@ -21,8 +21,8 @@ import scala.::
 
 class GameBoardView extends Initializable:
 
-  private def N_COLS_IN_CELL = 4
-  private def N_ROWS_IN_CELL = 3
+  private def N_COLS_IN_CELL = 3
+  private def N_ROWS_IN_CELL = 2
 
   @FXML
   private var actionsMenu: VBox = _
@@ -74,26 +74,21 @@ class GameBoardView extends Initializable:
     nameLabel(GameStats.currentPlayer.name).setDisable(true)
     playersHBox(GameStats.currentPlayer.name).setDisable(true)
     GameController.currentPlayerQuit()
+    if GameStats.players.nonEmpty then
+      setButtonsForTurnEnding(false)
 
-  private def canEndTurn(can: Boolean): Unit =
+  private def setButtonsForTurnEnding(can: Boolean): Unit =
     endTurnButton.setDisable(!can)
     throwDiceButton.setDisable(can)
 
   def throwDiceButtonClick(): Unit =
     val (dice1, dice2) = GameController.throwDice()
     println("Dices: " + dice1.toString + " " + dice2.toString)
-    updatePlayerPosition(GameStats.currentPlayer)
-    nameLabel.foreach(t =>
-      GameStats.players.find(p => p.name == t._1) match
-        case None => t._2.setDisable(true)
-        case _ =>
-    )
-    if dice1 != dice2 then
-      canEndTurn(true)
+    afterThrow(dice1, dice2)
 
   def endTurnButtonClick(): Unit =
     GameController.endTurn()
-    canEndTurn(false)
+    setButtonsForTurnEnding(false)
 
 
   private def createPlayerBox(player: Player): Unit =
@@ -113,6 +108,7 @@ class GameBoardView extends Initializable:
       j <- 0 to GameUtils.CELLS_IN_SIDE
     do
       val tempGrid = new GridPane()
+      tempGrid.setPadding(new Insets(2, 5, 2, 5))
       spawnColumns(tempGrid, N_COLS_IN_CELL)
       spawnRows(tempGrid, N_ROWS_IN_CELL)
 
@@ -141,3 +137,13 @@ class GameBoardView extends Initializable:
 
   private def getFirstFreeCellStartingFrom(gridPane: GridPane, nthCell: Int, startingCell: (Int, Int)): (Int, Int) =
     GameUtils.getNthCellInGridWithStartingPos(nthCell + 1, (N_COLS_IN_CELL, N_ROWS_IN_CELL), startingCell)
+
+  private def afterThrow(dice1: Int, dice2: Int): Unit =
+    updatePlayerPosition(GameStats.currentPlayer)
+    nameLabel.foreach(t =>
+      GameStats.players.find(p => p.name == t._1) match
+        case None => t._2.setDisable(true)
+        case _ =>
+    )
+    if dice1 != dice2 then
+      setButtonsForTurnEnding(true)
