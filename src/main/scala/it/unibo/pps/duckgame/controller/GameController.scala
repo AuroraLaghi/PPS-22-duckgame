@@ -40,7 +40,6 @@ object GameController:
 
   def throwDice(): (Int, Int) =
     val dicePair = Dice().roll()
-    println("Dices: " + dicePair._1.toString + " " + dicePair._2.toString)
     moveCurrentPlayer(dicePair._1 + dicePair._2)
     dicePair
 

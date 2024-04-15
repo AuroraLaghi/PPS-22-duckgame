@@ -57,11 +57,16 @@ class GameBoardView extends Initializable:
   @FXML
   private var currentPlayer: VBox = _
 
+  @FXML
+  private var dicesView: VBox = _
+
   private val currentPlayerLabel: Label = new Label()
 
   private val cellsGrid: MMap[(Int, Int), GridPane] = MMap.empty
 
   private val nameLabel: MMap[String, Label] = MMap.empty
+
+  private val dicesLabel: Label = new Label()
 
   override def initialize(url: URL, resourceBundle: ResourceBundle): Unit =
     GameController.startGame()
@@ -72,11 +77,8 @@ class GameBoardView extends Initializable:
     actionsMenu.setPrefWidth(menuWidth / 2)
     playerListBox.setPrefWidth(menuWidth / 2)
     currentPlayer.setPrefWidth(menuWidth / 2)
-    playerListBox.getChildren.add(new Label("Elenco giocatori:"))
-    currentPlayer.getChildren.add(new Label("È il turno di"))
-    currentPlayer.getChildren.add(currentPlayerLabel)
-    currentPlayer.setSpacing(DEFAULT_SPACING)
-    currentPlayer.setAlignment(geometry.Pos.CENTER)
+    dicesView.setPrefWidth(menuWidth / 2)
+    initializeVBoxes()
     setCurrentPlayer()
     GameStats.players.foreach(p => {
       createPlayerBox(p)
@@ -97,6 +99,7 @@ class GameBoardView extends Initializable:
 
   def throwDiceButtonClick(): Unit =
     val (dice1, dice2) = GameController.throwDice()
+    updateDicesView(dice1, dice2)
     afterThrow(dice1, dice2)
 
   def endTurnButtonClick(): Unit =
@@ -104,6 +107,15 @@ class GameBoardView extends Initializable:
     setCurrentPlayer()
     setButtonsForTurnEnding(false)
 
+  private def initializeVBoxes(): Unit =
+    dicesView.getChildren.add(dicesLabel)
+    dicesView.setSpacing(DEFAULT_SPACING)
+    dicesView.setAlignment(Pos.CENTER)
+    playerListBox.getChildren.add(new Label("Elenco giocatori:"))
+    currentPlayer.getChildren.add(new Label("È il turno di"))
+    currentPlayer.getChildren.add(currentPlayerLabel)
+    currentPlayer.setSpacing(DEFAULT_SPACING)
+    currentPlayer.setAlignment(Pos.CENTER)
 
   private def createPlayerBox(player: Player): Unit =
     val playerHBox: HBox = new HBox()
@@ -156,11 +168,15 @@ class GameBoardView extends Initializable:
     nameLabel.foreach(t =>
       GameStats.players.find(p => p.name == t._1) match
         case None => t._2.setDisable(true)
-        case _ =>
+        case _    =>
     )
     if dice1 != dice2 then
       setButtonsForTurnEnding(true)
 
   private def setCurrentPlayer(): Unit =
     currentPlayerLabel.setText(GameStats.currentPlayer.name)
+
+  private def updateDicesView(dice1: Int, dice2: Int): Unit =
+    dicesLabel.setText(dice1.toString + "  " + dice2.toString)
+
 
