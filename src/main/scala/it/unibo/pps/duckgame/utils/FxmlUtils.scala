@@ -101,8 +101,8 @@ object FxmlUtils:
    * @param heightPerc
    *  new height
    */
-  private def setPaneResolution(
-      pane: BorderPane,
+  def setPaneResolution(
+      pane: Pane,
       widthPerc: Double,
       heightPerc: Double
   ): Unit =
