@@ -9,6 +9,16 @@ object GameUtils:
 
   val CELLS_IN_SIDE = 7
 
+  /** Method that returns the new position of current player
+   * If the position is bigger than the gameboard's size, it will return back from the last cell
+   * 
+   * @param sum 
+   *  result of the dices
+   * @param position 
+   *  player's position to be updated
+   * @return
+   *  new player's position
+   */
   def addSumToPosition(sum: Int, position: Int): Int = sum + position match  
     case result if result >= GameStats.gameBoard.size => val updatedPosition = 63 - Math.abs(63 - result)
         updatedPosition
@@ -24,6 +34,7 @@ object GameUtils:
    * @param position
    *  player's position
    * @return
+   *  coordinates in (col, row) of the cell representing player's position
    */
   def getCoordinateFromPosition(position: Int): (Int, Int) =
     position match
