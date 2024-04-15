@@ -9,7 +9,6 @@ import scalafx.application.JFXApp3
 object Main extends JFXApp3:
   @main
   override def start(): Unit =
-    //GameController.run()
     val p1 = Player("p1")
     val p2 = Player("p2")
 

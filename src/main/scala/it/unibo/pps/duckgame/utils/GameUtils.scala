@@ -54,7 +54,7 @@ object GameUtils:
       case _ if position < CELLS_IN_SIDE * 8 - 2 =>
         (5, position - (CELLS_IN_SIDE * CELLS_IN_SIDE))
       case _ if position <= CELLS_IN_SIDE * 8 =>
-        (CELLS_IN_SIDE * 8 + 3, 5)
+        ((CELLS_IN_SIDE * 8 + 3) - position, 5)
       case _ if position < CELLS_IN_SIDE * 8 + 3 =>
         (2, (CELLS_IN_SIDE * 9 - 1) - position)
       case _ if position < CELLS_IN_SIDE * 9 - 2 =>
@@ -80,7 +80,7 @@ object GameUtils:
                                        gridSize: (Int, Int),
                                        startingCell: (Int, Int)
                                      ): (Int, Int) =
-    getNthCellInGrid(n + (startingCell._1 * gridSize._2 + startingCell._2 * gridSize._1),
+    getNthCellInGrid(n,
       gridSize
     )
 
