@@ -36,6 +36,7 @@ object GameUtils:
    * @return
    *  coordinates in (col, row) of the cell representing player's position
    */
+  @SuppressWarnings(Array("org.wartremover.warts.Throw"))
   def getCoordinateFromPosition(position: Int): (Int, Int) =
     position match
       case _ if position < 0 =>
@@ -95,6 +96,7 @@ object GameUtils:
       gridSize
     )
 
+  @SuppressWarnings(Array("org.wartremover.warts.Throw"))
   private def getNthCellInGrid(n: Int, gridSize: (Int, Int)): (Int, Int) =
     n match
       case _ if gridSize._1 <= 0 =>
