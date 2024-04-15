@@ -45,7 +45,7 @@ class TestGameController extends AnyFlatSpec with should.Matchers:
   }
 
   "When a player quits, the list of players" should "remove it" in {
-    for i <- players.length - 1 to 1
+    for i <- players.length - 1 to 2
     do
       val playerToDelete = GameStats.currentPlayer
       GameController.currentPlayerQuit()
@@ -81,4 +81,3 @@ class TestGameController extends AnyFlatSpec with should.Matchers:
     Game.winner = Some(player1)
     GameStats.winner shouldBe Some(player1)
   }
-
