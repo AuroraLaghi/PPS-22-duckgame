@@ -25,7 +25,6 @@ object GameController:
     _view.showGameStart()
 
   def startGame(): Unit =
-    //addPlayer(Player())
     Game.players = GameUtils MixPlayers Game.players
 
   def exitGame(): Unit =
@@ -44,24 +43,22 @@ object GameController:
     val nextPlayer = GameStats.currentPlayer
     Game removePlayer playerToDelete
     Game.currentPlayer = Game.players.indexOf(nextPlayer)
-    if GameStats.checkVictory() then showVictory()
+    if GameStats.checkVictoryForSurrender() then showVictory()
     
   def endTurn(): Unit =
     Game.currentPlayer = (Game.currentPlayer + 1) % Game.players.length
     
   def throwDice(): (Int, Int) =
     val dicePair = Dice().roll()
+    println("Dices: " + dicePair._1.toString + " " + dicePair._2.toString)
     moveCurrentPlayer(dicePair._1 + dicePair._2)
     dicePair
-    
-  def checkPlayerActions(): Unit =
-    val player = GameStats.currentPlayer
 
   private def tryToInt(s: String) = Try(s.toInt).toOption
   
   private def showVictory(): Unit =
-    GameStats.winner.foreach(w =>
-      _view.showVictory(w)
+    GameStats.winner.foreach(w => 
+      println(s"${w.name} IS THE WINNER!\nGAME OVER!")
       exitGame())
 
 
