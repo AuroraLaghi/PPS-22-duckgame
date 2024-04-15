@@ -1,6 +1,6 @@
 package it.unibo.pps.duckgame.utils.resources
 
 enum CssResources(_path: String):
-  case START_MENU_STYLE extends CssResources("/css/StartMenuStyle.css")
+  case GAME_STYLE extends CssResources("/css/UIStyle.css")
   
   val path: String = _path
