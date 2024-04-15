@@ -44,13 +44,6 @@ object FxmlUtils:
       scene = FxmlUtils.loadFXMLResource(FxmlResources.START_MENU.path)
       resizable = false
 
-  def setResolution(pane: Pane, widthPerc: Double, heightPerc: Double): Unit =
-    val screenResolution = Screen.primary.bounds
-    width = screenResolution.getWidth * widthPerc
-    height = screenResolution.getHeight * heightPerc
-    pane.setPrefWidth(width)
-    pane.setPrefHeight(height)
-
   def getResolution: (Double, Double) = (width, height)
 
   /** Initialize the UI elements of the game.
@@ -78,8 +71,8 @@ object FxmlUtils:
     setGameBoardSize(pane, gameBoard)
     setPaneStyle(pane, cssResources)
 
-  private def setPaneResolution(
-      pane: BorderPane,
+  def setPaneResolution(
+      pane: Pane,
       widthPerc: Double,
       heightPerc: Double
   ): Unit =
