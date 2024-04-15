@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unibo.pps.duckgame.view.GameBoardView">
+<BorderPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unibo.pps.duckgame.view.GameBoardView">
     <center>
         <StackPane BorderPane.alignment="CENTER">
             <ImageView fx:id="gameBoard" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true"/>
@@ -40,18 +40,21 @@
     </center>
     <left>
         <VBox fx:id="playerListBox" alignment="CENTER" prefHeight="500.0" prefWidth="100.0" spacing="20.0" BorderPane.alignment="CENTER">
+            <VBox fx:id="currentPlayer" alignment="CENTER" prefHeight="100.0" prefWidth="60.0" spacing="20.0" BorderPane.alignment="CENTER">
+                <VBox.margin> <Insets left="30" right="30"/> </VBox.margin>
+            </VBox>
             <padding>
-                <Insets left="10.0" right="10.0" />
-            </padding>
+            <Insets left="10.0" right="10.0" />
+        </padding>
         </VBox>
     </left>
     <right>
         <VBox fx:id="actionsMenu" alignment="CENTER" prefHeight="500.0" prefWidth="100.0" spacing="50.0" BorderPane.alignment="CENTER">
-            <Button fx:id="throwDiceButton" mnemonicParsing="false" onAction="#throwDiceButtonClick" prefWidth="80.0"
+            <Button fx:id="throwDiceButton" mnemonicParsing="false" onAction="#throwDiceButtonClick" prefWidth="150.0"
                     text="Lancia dadi"/>
             <Button fx:id="endTurnButton" disable="true" mnemonicParsing="false" onAction="#endTurnButtonClick"
-                    prefWidth="80.0" text="Fine turno"/>
-            <Button fx:id="exitButton" mnemonicParsing="false" onAction="#quitButtonClick" prefWidth="80.0"
+                    prefWidth="150.0" text="Fine turno"/>
+            <Button fx:id="exitButton" mnemonicParsing="false" onAction="#quitButtonClick" prefWidth="150.0"
                     text="Abbandona la partita"/>
         </VBox>
     </right>

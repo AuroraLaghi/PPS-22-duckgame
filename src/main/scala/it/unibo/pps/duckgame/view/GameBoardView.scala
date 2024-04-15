@@ -2,7 +2,7 @@ package it.unibo.pps.duckgame.view
 import it.unibo.pps.duckgame.controller.{GameController, GameStats}
 import it.unibo.pps.duckgame.model.Player
 import it.unibo.pps.duckgame.utils.{FxmlUtils, GameUtils}
-import it.unibo.pps.duckgame.utils.resources.CssResources.START_MENU_STYLE
+import it.unibo.pps.duckgame.utils.resources.CssResources.GAME_STYLE
 import it.unibo.pps.duckgame.utils.resources.ImgResources
 import javafx.{fxml, geometry}
 import javafx.fxml.{FXML, Initializable}
@@ -21,6 +21,7 @@ import scala.::
 
 class GameBoardView extends Initializable:
 
+  private def DEFAULT_SPACING = 10
   private def N_COLS_IN_CELL = 3
   private def N_ROWS_IN_CELL = 2
 
@@ -45,7 +46,7 @@ class GameBoardView extends Initializable:
   @FXML
   private var pane: BorderPane = _
 
-  private var playersHBox: MMap[String,HBox] = MMap.empty
+  private val playersHBox: MMap[String,HBox] = MMap.empty
 
   @FXML
   private var playerListBox: VBox = _
@@ -53,17 +54,30 @@ class GameBoardView extends Initializable:
   @FXML
   private var mainGrid: GridPane = _
 
+  @FXML
+  private var currentPlayer: VBox = _
+
+  private val currentPlayerLabel: Label = new Label()
+
   private val cellsGrid: MMap[(Int, Int), GridPane] = MMap.empty
 
   private val nameLabel: MMap[String, Label] = MMap.empty
 
   override def initialize(url: URL, resourceBundle: ResourceBundle): Unit =
-    FxmlUtils.initUIElements(pane, gameBoard, START_MENU_STYLE, FxmlUtils.DEFAULT_WIDTH_PERC,
+    GameController.startGame()
+    FxmlUtils.initUIElements(pane, gameBoard, GAME_STYLE, FxmlUtils.DEFAULT_WIDTH_PERC,
       FxmlUtils.DEFAULT_HEIGHT_PERC)
     initializeCellGrid()
     val menuWidth = FxmlUtils.getResolution._1 - pane.getPrefHeight
     actionsMenu.setPrefWidth(menuWidth / 2)
     playerListBox.setPrefWidth(menuWidth / 2)
+    currentPlayer.setPrefWidth(menuWidth / 2)
+    playerListBox.getChildren.add(new Label("Elenco giocatori:"))
+    currentPlayer.getChildren.add(new Label("È il turno di"))
+    currentPlayer.getChildren.add(currentPlayerLabel)
+    currentPlayer.setSpacing(DEFAULT_SPACING)
+    currentPlayer.setAlignment(geometry.Pos.CENTER)
+    setCurrentPlayer()
     GameStats.players.foreach(p => {
       createPlayerBox(p)
       nameLabel.addOne(p.name, new Label(p.name))
@@ -83,16 +97,15 @@ class GameBoardView extends Initializable:
 
   def throwDiceButtonClick(): Unit =
     val (dice1, dice2) = GameController.throwDice()
-    println("Dices: " + dice1.toString + " " + dice2.toString)
     afterThrow(dice1, dice2)
 
   def endTurnButtonClick(): Unit =
     GameController.endTurn()
+    setCurrentPlayer()
     setButtonsForTurnEnding(false)
 
 
   private def createPlayerBox(player: Player): Unit =
-    val DEFAULT_SPACING = 10
     val playerHBox: HBox = new HBox()
     playerListBox.getChildren.add(playerHBox)
     val playerLabel: Label = new Label(player.name)
@@ -132,8 +145,8 @@ class GameBoardView extends Initializable:
   private def updatePlayerPosition(player: Player): Unit =
     val cellGrid = cellsGrid(GameUtils.getCoordinateFromPosition(player.actualPosition))
     val (col, row) = getFirstFreeCellStartingFrom(cellGrid, cellGrid.getChildren.size(), (0, 1))
-
-    cellGrid.add(new Label(player.name), col, row)
+    if !cellGrid.getChildren.contains(nameLabel(player.name)) then
+      cellGrid.add(nameLabel(player.name), col, row)
 
   private def getFirstFreeCellStartingFrom(gridPane: GridPane, nthCell: Int, startingCell: (Int, Int)): (Int, Int) =
     GameUtils.getNthCellInGridWithStartingPos(nthCell + 1, (N_COLS_IN_CELL, N_ROWS_IN_CELL), startingCell)
@@ -147,3 +160,7 @@ class GameBoardView extends Initializable:
     )
     if dice1 != dice2 then
       setButtonsForTurnEnding(true)
+
+  private def setCurrentPlayer(): Unit =
+    currentPlayerLabel.setText(GameStats.currentPlayer.name)
+
