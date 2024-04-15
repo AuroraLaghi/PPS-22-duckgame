@@ -14,6 +14,9 @@ import scalafx.stage.{Screen, Stage}
 
 import java.io.IOException
 
+/**
+ * Utility object that provides methods to load FXML resources and change the current scene.
+ */
 object FxmlUtils:
   private var _stage: Stage = _
   private var width: Double = _
@@ -21,9 +24,17 @@ object FxmlUtils:
 
   val DEFAULT_WIDTH_PERC: Double = 0.8
   val DEFAULT_HEIGHT_PERC: Double = 0.8
-
+  /** Returns the current stage.
+   *
+   * @return
+   * the current stage.
+   */
   def stage: Stage = _stage
-
+  /** Sets the current stage.
+   *
+   * @param value
+   * the stage to set.
+   */
   def stage_=(value: Stage): Unit =
     _stage = value
 
@@ -34,6 +45,11 @@ object FxmlUtils:
     val root: Parent = FXMLLoader.load(fxmlFile)
     new Scene(root)
 
+  /** Changes the current scene.
+   *
+   * @param fxmlPath
+   * the path of the FXML resource to load.
+   */
   def changeScene(fxmlPath: String): Unit =
     val scene = loadFXMLResource(fxmlPath)
     stage.setScene(scene)
@@ -44,6 +60,15 @@ object FxmlUtils:
       scene = FxmlUtils.loadFXMLResource(FxmlResources.START_MENU.path)
       resizable = false
 
+  /** Sets screen resolution
+   * 
+   * @param pane
+   *  element to set
+   * @param widthPerc
+   *  screen width in percentual
+   * @param heightPerc
+   *  screen height in percentual
+   */
   def setResolution(pane: Pane, widthPerc: Double, heightPerc: Double): Unit =
     val screenResolution = Screen.primary.bounds
     width = screenResolution.getWidth * widthPerc
@@ -51,6 +76,11 @@ object FxmlUtils:
     pane.setPrefWidth(width)
     pane.setPrefHeight(height)
 
+  /** Gets the resolution of the screen.
+   *
+   * @return
+   * the resolution of the screen.
+   */
   def getResolution: (Double, Double) = (width, height)
 
   /** Initialize the UI elements of the game.
@@ -78,6 +108,15 @@ object FxmlUtils:
     setGameBoardSize(pane, gameBoard)
     setPaneStyle(pane, cssResources)
 
+  /** Sets pane resolution
+   * 
+   * @param pane
+   *  element to be set
+   * @param widthPerc
+   *  new width
+   * @param heightPerc
+   *  new height
+   */
   private def setPaneResolution(
       pane: BorderPane,
       widthPerc: Double,
@@ -94,11 +133,23 @@ object FxmlUtils:
       getClass.getResource(cssResources.path).toExternalForm
     )
 
+  /** Sets gameboard size
+   * 
+   * @param pane
+   *  graphic element
+   * @param gameBoard
+   *  gameboard image
+   */
   private def setGameBoardSize(pane: BorderPane, gameBoard: ImageView): Unit =
     val gameBoardSize = pane.getPrefHeight
     gameBoard.setFitWidth(gameBoardSize)
     gameBoard.setFitHeight(gameBoardSize)
 
+  /**Sets the gameboard image
+   *
+   * @param gameBoard
+   *  imageView of the gameboard
+   */
   private def setGameBoardImage(gameBoard: ImageView): Unit =
     gameBoard.setImage(
       new Image(

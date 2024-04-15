@@ -8,14 +8,23 @@ import it.unibo.pps.duckgame.utils.GameUtils
 protected object Game:
 
   private val DEFAULT_CURRENT_PLAYER: Int = 0
-  
   private var _currentPlayer: Int = DEFAULT_CURRENT_PLAYER
   private var _players: List[Player] = List.empty
   private var _winner: Option[Player] = None
   private var _gameBoard: GameBoard = GameBoard()
-  
+
+  /** Return game board
+   * 
+   * @return
+   *  current gameboard
+   */
   def gameBoard: GameBoard = _gameBoard
-  
+
+  /** Sets current gameboard
+   * 
+   * @param value
+   *  gameboard to set
+   */
   def gameBoard_=(value: GameBoard): Unit =
     _gameBoard = value
 
