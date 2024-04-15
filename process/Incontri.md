@@ -51,3 +51,13 @@ Ordine del giorno:
   - Discussione pattern per applicazione MVC
   - Suddivisione del lavoro
 - Pianificare prossima riunione
+
+## Riunione 15/04/2024: 2° sprint review
+Ordine del giorno:
+- Verifica del lavoro svolto:
+  - Check codice prodotto (in fase di sviluppo e test)
+  - Allineamendo documentazione
+  - Stesura javadoc
+- Aggiornamento product backlog
+- Preparazione alla prima release dell'applicazione
+- Riportare obiettivi raggiunti durante lo sprint

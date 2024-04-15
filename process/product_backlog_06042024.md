@@ -6,12 +6,18 @@ funzionamento di _ScalaFx/JavaFX_ e dei file _FXML_.
 
 # Sprint Backlog - 2
 
-| Product Backlog Item | Sprint Task                             | Volunteer   | Initial Estimate of Effort |
-|----------------------|-----------------------------------------|-------------|----------------------------|
-| Implementazione GUI  | Creazione griglia di gioco in ScalaFX   | All members | 12                         | 
-|                      | Renderizzazione della griglia           | All members | 10                         |
-|                      | Renderizzazione delle pedine segnaposto | All members | 10                         |
+| Product Backlog Item   | Sprint Task                                          | Volunteer             | Initial Estimate of Effort |
+|------------------------|------------------------------------------------------|-----------------------|----------------------------|
+| Implementazione GUI    | Creazione griglia di gioco in ScalaFX                | All members           | 12                         | 
+|                        | Renderizzazione della griglia                        | All members           | 10                         |
+|                        | Renderizzazione delle pedine segnaposto              | All members           | 10                         |
+|                        | Movimento delle pedine all'interno del tabellone     | All members           | 8                          |
+| Scrittura test         | Creazione test di verifica delle classi implementate | All members           | 6                          |
+
 
 
 ## Sprint result
-Al termine di questo sprint, 
+Al termine di questo sprint, è stata implementata una gui molto basica che permette di avviare il gioco con due giocatori pre-impostati
+e muovere le relative pedine (rappresentate dai nomi dei giocatori)
+Gli obiettivi dello sprint sono stati raggiunti nei tempi prestabiliti
+Il team si prepara ad effettuare una prima release dell'applicativo
