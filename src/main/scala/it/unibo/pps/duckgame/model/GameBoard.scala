@@ -12,20 +12,20 @@ class GameBoard(cells: List[Cell]):
     numbers
   }
 
-  /** Return game board map
-   * 
+  /** Returns the game board map.
+   *
    * @return
-   *  game board map as a list
+   *   The game board map as a list of cells.
    */
   def gameBoardMap: List[Cell] = cells
 
-  /** Return the size of the game board
-   * 
+  /** Returns the size of the game board.
+   *
    * @return
-   *  int size of the game board
+   *   The integer size of the game board.
    */
   def size: Int = cells.length
-  
+
 object GameBoard:
   def apply(): GameBoard = 
     val numbers = (0 to 63).map(n => CellImpl(n)).toList

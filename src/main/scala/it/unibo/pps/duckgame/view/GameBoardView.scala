@@ -14,7 +14,7 @@ import javafx.scene.control.{Button, Label, ListView, TableColumn, TableView}
 import javafx.scene.image.{Image, ImageView}
 import javafx.scene.layout
 
-import scala.collection.mutable.{ListBuffer, Map as MMap}
+import scala.collection.immutable.Map as MMap
 import java.net.URL
 import java.util.ResourceBundle
 import scala.::
@@ -26,47 +26,82 @@ class GameBoardView extends Initializable:
   private def N_ROWS_IN_CELL = 2
 
   @FXML
+  @SuppressWarnings(
+    Array("org.wartremover.warts.Null", "org.wartremover.warts.Var")
+  )
   private var actionsMenu: VBox = _
 
   @FXML
+  @SuppressWarnings(
+    Array("org.wartremover.warts.Null", "org.wartremover.warts.Var")
+  )
   private var turnLabel: Label = _
 
   @FXML
+  @SuppressWarnings(
+    Array("org.wartremover.warts.Null", "org.wartremover.warts.Var")
+  )
   private var throwDiceButton: Button = _
 
   @FXML
+  @SuppressWarnings(
+    Array("org.wartremover.warts.Null", "org.wartremover.warts.Var")
+  )
   private var endTurnButton: Button = _
 
   @FXML
+  @SuppressWarnings(
+    Array("org.wartremover.warts.Null", "org.wartremover.warts.Var")
+  )
   private var exitButton: Button = _
 
   @FXML
+  @SuppressWarnings(
+    Array("org.wartremover.warts.Null", "org.wartremover.warts.Var")
+  )
   private var gameBoard: ImageView = _
 
   @FXML
+  @SuppressWarnings(
+    Array("org.wartremover.warts.Null", "org.wartremover.warts.Var")
+  )
   private var pane: BorderPane = _
 
-  private val playersHBox: MMap[String,HBox] = MMap.empty
-
   @FXML
+  @SuppressWarnings(
+    Array("org.wartremover.warts.Null", "org.wartremover.warts.Var")
+  )
   private var playerListBox: VBox = _
 
   @FXML
+  @SuppressWarnings(
+    Array("org.wartremover.warts.Null", "org.wartremover.warts.Var")
+  )
   private var mainGrid: GridPane = _
 
   @FXML
+  @SuppressWarnings(
+    Array("org.wartremover.warts.Null", "org.wartremover.warts.Var")
+  )
   private var currentPlayer: VBox = _
 
-  @FXML
-  private var dicesView: VBox = _
+  @SuppressWarnings(
+    Array("org.wartremover.warts.Null", "org.wartremover.warts.Var")
+  )
+  private var playersHBox: MMap[String,HBox] = MMap.empty
+
+  @SuppressWarnings(
+    Array("org.wartremover.warts.Null", "org.wartremover.warts.Var")
+  )
+  private var cellsGrid: MMap[(Int, Int), GridPane] = MMap.empty
+
+  @SuppressWarnings(
+    Array("org.wartremover.warts.Null", "org.wartremover.warts.Var")
+  )
+  private var nameLabel: MMap[String, Label] = MMap.empty
 
   private val currentPlayerLabel: Label = new Label()
 
-  private val cellsGrid: MMap[(Int, Int), GridPane] = MMap.empty
-
-  private val nameLabel: MMap[String, Label] = MMap.empty
-
-  private val dicesLabel: Label = new Label()
 
   override def initialize(url: URL, resourceBundle: ResourceBundle): Unit =
     GameController.startGame()
@@ -77,12 +112,15 @@ class GameBoardView extends Initializable:
     actionsMenu.setPrefWidth(menuWidth / 2)
     playerListBox.setPrefWidth(menuWidth / 2)
     currentPlayer.setPrefWidth(menuWidth / 2)
-    dicesView.setPrefWidth(menuWidth / 2)
-    initializeVBoxes()
+    playerListBox.getChildren.add(new Label("Elenco giocatori:"))
+    currentPlayer.getChildren.add(new Label("È il turno di"))
+    currentPlayer.getChildren.add(currentPlayerLabel)
+    currentPlayer.setSpacing(DEFAULT_SPACING)
+    currentPlayer.setAlignment(geometry.Pos.CENTER)
     setCurrentPlayer()
     GameStats.players.foreach(p => {
       createPlayerBox(p)
-      nameLabel.addOne(p.name, new Label(p.name))
+      nameLabel += (p.name -> new Label(p.name))
       updatePlayerPosition(p)
     })
 
@@ -99,7 +137,6 @@ class GameBoardView extends Initializable:
 
   def throwDiceButtonClick(): Unit =
     val (dice1, dice2) = GameController.throwDice()
-    updateDicesView(dice1, dice2)
     afterThrow(dice1, dice2)
 
   def endTurnButtonClick(): Unit =
@@ -107,15 +144,6 @@ class GameBoardView extends Initializable:
     setCurrentPlayer()
     setButtonsForTurnEnding(false)
 
-  private def initializeVBoxes(): Unit =
-    dicesView.getChildren.add(dicesLabel)
-    dicesView.setSpacing(DEFAULT_SPACING)
-    dicesView.setAlignment(Pos.CENTER)
-    playerListBox.getChildren.add(new Label("Elenco giocatori:"))
-    currentPlayer.getChildren.add(new Label("È il turno di"))
-    currentPlayer.getChildren.add(currentPlayerLabel)
-    currentPlayer.setSpacing(DEFAULT_SPACING)
-    currentPlayer.setAlignment(Pos.CENTER)
 
   private def createPlayerBox(player: Player): Unit =
     val playerHBox: HBox = new HBox()
@@ -138,7 +166,7 @@ class GameBoardView extends Initializable:
       spawnRows(tempGrid, N_ROWS_IN_CELL)
 
       mainGrid.add(tempGrid, i, j)
-      cellsGrid.addOne((i, j), tempGrid)
+      cellsGrid += ((i,j) -> tempGrid)
 
       def spawnColumns(grid: GridPane, numCol: Int): Unit =
         val col = new ColumnConstraints()
@@ -163,20 +191,17 @@ class GameBoardView extends Initializable:
   private def getFirstFreeCellStartingFrom(gridPane: GridPane, nthCell: Int, startingCell: (Int, Int)): (Int, Int) =
     GameUtils.getNthCellInGridWithStartingPos(nthCell + 1, (N_COLS_IN_CELL, N_ROWS_IN_CELL), startingCell)
 
+  @SuppressWarnings(Array("org.wartremover.warts.Equals"))
   private def afterThrow(dice1: Int, dice2: Int): Unit =
     updatePlayerPosition(GameStats.currentPlayer)
     nameLabel.foreach(t =>
       GameStats.players.find(p => p.name == t._1) match
         case None => t._2.setDisable(true)
-        case _    =>
+        case _ =>
     )
     if dice1 != dice2 then
       setButtonsForTurnEnding(true)
 
   private def setCurrentPlayer(): Unit =
     currentPlayerLabel.setText(GameStats.currentPlayer.name)
-
-  private def updateDicesView(dice1: Int, dice2: Int): Unit =
-    dicesLabel.setText(dice1.toString + "  " + dice2.toString)
-
 

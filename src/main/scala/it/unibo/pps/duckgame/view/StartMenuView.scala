@@ -18,21 +18,20 @@ import scalafx.stage.Screen
 class StartMenuView extends Initializable:
 
   @FXML
-  @SuppressWarnings(Array("org.wartremover.warts.Null"))
+  @SuppressWarnings(Array("org.wartremover.warts.Null", "org.wartremover.warts.Var"))
   private var startButton: Button = _
 
   @FXML
-  @SuppressWarnings(Array("org.wartremover.warts.Null"))
+  @SuppressWarnings(Array("org.wartremover.warts.Null", "org.wartremover.warts.Var"))
   private var exitButton: Button = _
 
   @FXML
-  @SuppressWarnings(Array("org.wartremover.warts.Null"))
+  @SuppressWarnings(Array("org.wartremover.warts.Null", "org.wartremover.warts.Var"))
   private var startMenuPane: AnchorPane = _
-
 
   override def initialize(url: URL, resourceBundle: ResourceBundle): Unit =
     startMenuPane.getStylesheets.add(getClass.getResource(CssResources.GAME_STYLE.path).toExternalForm)
-    FxmlUtils.setResolution(startMenuPane, 0.6, 0.6)
+    FxmlUtils.setPaneResolution(startMenuPane, 0.6, 0.6)
 
   def playGame(): Unit =
     FxmlUtils.changeScene(FxmlResources.GAME_VIEW.path)

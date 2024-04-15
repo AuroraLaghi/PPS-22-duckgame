@@ -21,11 +21,6 @@ object Dice:
   val MIN_DICE_VALUE = 1
   val MAX_DICE_VALUE = 6
 
-  /** Creates a new Dice with two random dice.
-    *
-    * @return
-    *   a new Dice
-    */
   def apply(): Dice = new Dice(rollDice(), rollDice())
 
   /** roll one dice
@@ -35,16 +30,3 @@ object Dice:
     */
   private def rollDice(): Int =
     Random.between(MIN_DICE_VALUE, MAX_DICE_VALUE + 1)
-
-/*
-    def sum: Int =
-      _dice1 + _dice2
-
-    def controlSame: Boolean =
-      _dice1 == _dice2
-
-    def dice1: Int = _dice1
-
-    def dice2: Int = _dice27
-
- */

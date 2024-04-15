@@ -60,22 +60,6 @@ object FxmlUtils:
       scene = FxmlUtils.loadFXMLResource(FxmlResources.START_MENU.path)
       resizable = false
 
-  /** Sets screen resolution
-   * 
-   * @param pane
-   *  element to set
-   * @param widthPerc
-   *  screen width in percentual
-   * @param heightPerc
-   *  screen height in percentual
-   */
-  def setResolution(pane: Pane, widthPerc: Double, heightPerc: Double): Unit =
-    val screenResolution = Screen.primary.bounds
-    width = screenResolution.getWidth * widthPerc
-    height = screenResolution.getHeight * heightPerc
-    pane.setPrefWidth(width)
-    pane.setPrefHeight(height)
-
   /** Gets the resolution of the screen.
    *
    * @return
@@ -109,7 +93,7 @@ object FxmlUtils:
     setPaneStyle(pane, cssResources)
 
   /** Sets pane resolution
-   * 
+   *
    * @param pane
    *  element to be set
    * @param widthPerc
@@ -134,7 +118,7 @@ object FxmlUtils:
     )
 
   /** Sets gameboard size
-   * 
+   *
    * @param pane
    *  graphic element
    * @param gameBoard
