@@ -6,7 +6,7 @@ Project for `Paradigmi di Programmazione e Sviluppo` course of `University of Bo
 ## Requirements
 The following dependencies are required to run the application:
 - sbt version 1.9.0
-- Scala version 3.1.0
+- Scala version 3.2.1
 - JDK version 17
 
 ## Documentation
