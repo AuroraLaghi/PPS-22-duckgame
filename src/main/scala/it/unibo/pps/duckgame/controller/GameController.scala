@@ -87,5 +87,6 @@ object GameController:
   private def showVictory(): Unit =
     GameStats.winner.foreach(w =>
       println(s"${w.name} IS THE WINNER!\nGAME OVER!")
+      Thread.sleep(5000)
       exitGame()
     )
