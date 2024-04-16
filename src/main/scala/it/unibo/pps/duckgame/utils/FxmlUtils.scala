@@ -58,6 +58,7 @@ object FxmlUtils:
     stage = new PrimaryStage:
       title.value = "THE DUCK GAME"
       scene = FxmlUtils.loadFXMLResource(FxmlResources.START_MENU.path)
+      icons += Image(this.getClass.getResourceAsStream("/img/duck.png"))
       resizable = false
 
   /** Gets the resolution of the screen.
