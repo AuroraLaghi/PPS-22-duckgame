@@ -14,7 +14,7 @@ lazy val root = (project in file("."))
       "it.unibo.alice.tuprolog" % "2p-core" % "4.1.1",
       "it.unibo.alice.tuprolog" % "2p-ui" % "4.1.1",
       "org.controlsfx" % "controlsfx" % "11.2.1",
-      "org.scalactic" %% "scalactic" % "3.2.13",
+      "org.scalactic" %% "scalactic" % "3.2.18",
       "org.junit.jupiter" % "junit-jupiter" % "5.10.2" % Test, // aggregator of junit-jupiter-api and junit-jupiter-engine (runtime)
       "org.junit.jupiter" % "junit-jupiter-engine" % "5.10.2" % Test, // for org.junit.platform
       "org.junit.vintage" % "junit-vintage-engine" % "5.10.2" % Test,
