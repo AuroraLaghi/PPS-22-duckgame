@@ -43,3 +43,10 @@ wartremoverWarnings ++= Warts.allBut(
   Wart.IterableOps
 )
 
+assembly / mainClass := Some("it.unibo.pps.duckgame.Main")
+assembly / assemblyOutputPath := file("target/duckgame.jar")
+assembly / assemblyMergeStrategy := {
+  case PathList("META-INF", _*) => MergeStrategy.discard
+  case _ => MergeStrategy.first
+}
+
