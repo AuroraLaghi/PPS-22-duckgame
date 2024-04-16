@@ -1,0 +1,28 @@
+name: test workflow
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  run-tests:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ macos-latest, windows-latest, ubuntu-latest ]
+    runs-on: ${{ matrix.os }}
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'sbt'
+      - name: Build with SBT
+        run: sbt package
+      - name: Run test
+        shell: bash
+        run: sbt -v +test
