@@ -61,3 +61,13 @@ Ordine del giorno:
 - Aggiornamento product backlog
 - Preparazione alla prima release dell'applicazione
 - Riportare obiettivi raggiunti durante lo sprint
+
+## Riunione 16/04/2024: 3° sprint preview
+Ordine del giorno:
+- Impostazione task 3° sprint:
+  - Realizzazione schermata avvio applicazione
+  - Proseguimento logica di gioco:
+    - Introduzione **caselle speciali**
+    - Logica di fine partita
+  - Suddivisione del lavoro
+- Pianificazione riunione successiva 
