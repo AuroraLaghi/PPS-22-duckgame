@@ -8,7 +8,6 @@ import javafx.scene.layout.AnchorPane
 import javafx.{event as jfxe, fxml as jfxf, scene as jfxs}
 import javafx.scene.{control as jfxsc, layout as jfxsl}
 import scalafx.scene.Scene
-
 import java.net.URL
 import java.util.ResourceBundle
 import scalafx.Includes.*
@@ -34,7 +33,7 @@ class StartMenuView extends Initializable:
     FxmlUtils.setPaneResolution(startMenuPane, 0.6, 0.6)
 
   def playGame(): Unit =
-    FxmlUtils.changeScene(FxmlResources.GAME_VIEW.path)
+    FxmlUtils.changeScene(FxmlResources.PLAYER_MENU.path)
 
   def exitGame(): Unit =
     GameController.exitGame()
