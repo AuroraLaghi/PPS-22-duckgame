@@ -9,7 +9,7 @@ lazy val root = (project in file("."))
     name := "PPS-22-duckgame",
     assembly / assemblyJarName := "duckgame.jar",
     libraryDependencies ++= Seq(
-      "org.scalatest" %% "scalatest" % "3.2.17" % Test,
+      "org.scalatest" %% "scalatest" % "3.2.18" % Test,
       "org.scalafx" %% "scalafx" % "16.0.0-R25",
       "it.unibo.alice.tuprolog" % "2p-core" % "4.1.1",
       "it.unibo.alice.tuprolog" % "2p-ui" % "4.1.1",
