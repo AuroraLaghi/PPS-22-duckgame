@@ -1,4 +1,5 @@
 package it.unibo.pps.duckgame.view
+
 import it.unibo.pps.duckgame.controller.{GameController, GameStats}
 import it.unibo.pps.duckgame.model.Player
 import it.unibo.pps.duckgame.utils.{FxmlUtils, GameUtils}
@@ -13,7 +14,6 @@ import javafx.fxml.{FXML, Initializable}
 import javafx.scene.control.{Button, Label, ListView, TableColumn, TableView}
 import javafx.scene.image.{Image, ImageView}
 import javafx.scene.layout
-
 import scala.collection.immutable.Map as MMap
 import java.net.URL
 import java.util.ResourceBundle
@@ -102,7 +102,6 @@ class GameBoardView extends Initializable:
 
   private val currentPlayerLabel: Label = new Label()
 
-
   override def initialize(url: URL, resourceBundle: ResourceBundle): Unit =
     GameController.startGame()
     FxmlUtils.initUIElements(pane, gameBoard, GAME_STYLE, FxmlUtils.DEFAULT_WIDTH_PERC,
@@ -143,7 +142,6 @@ class GameBoardView extends Initializable:
     GameController.endTurn()
     setCurrentPlayer()
     setButtonsForTurnEnding(false)
-
 
   private def createPlayerBox(player: Player): Unit =
     val playerHBox: HBox = new HBox()

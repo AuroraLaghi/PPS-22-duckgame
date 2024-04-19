@@ -1,7 +1,8 @@
 package it.unibo.pps.duckgame.controller
 
 import it.unibo.pps.duckgame.model.{Cell, CellStatus, Dice, GameBoard, Player}
-import it.unibo.pps.duckgame.utils.GameUtils
+import it.unibo.pps.duckgame.utils.resources.FxmlResources
+import it.unibo.pps.duckgame.utils.{AlertUtils, FxmlUtils, GameUtils}
 
 import scala.annotation.tailrec
 import scala.util.Try
@@ -86,7 +87,7 @@ object GameController:
    */
   private def showVictory(): Unit =
     GameStats.winner.foreach(w =>
-      println(s"${w.name} IS THE WINNER!\nGAME OVER!")
-      Thread.sleep(5000)
-      exitGame()
+      AlertUtils.showVictory(w)
+      newGame()
+      FxmlUtils.changeScene(FxmlResources.START_MENU.path)
     )
