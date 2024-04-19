@@ -64,7 +64,7 @@ object GameController:
     val nextPlayer = GameStats.currentPlayer
     Game removePlayer playerToDelete
     Game.currentPlayer = Game.players.indexOf(nextPlayer)
-    if GameStats.checkVictoryForSurrender() then showVictory()
+    if EndGameController.checkVictoryForSurrender() then showVictory()
 
   /**
    * Called when a player ends its turn
