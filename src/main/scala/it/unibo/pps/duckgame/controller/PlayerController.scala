@@ -14,5 +14,6 @@ protected object PlayerController:
    * @param playerUpdated
    *  updated player to replace in the list
    */
+  @SuppressWarnings(Array("org.wartremover.warts.SeqUpdated"))
   def updatePlayerWith(index: Int, playerUpdated: Player): Unit =
     Game.players = Game.players.updated(index, playerUpdated)

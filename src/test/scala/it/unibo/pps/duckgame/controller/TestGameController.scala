@@ -51,7 +51,6 @@ class TestGameController extends AnyFlatSpec with should.Matchers:
       GameController.currentPlayerQuit()
       GameStats.players.length shouldBe i
       GameStats.players.contains(playerToDelete) shouldBe false
-    GameController.currentPlayerQuit()
   }
 
   "When the game starts it" should "have at least two players" in {
