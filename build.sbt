@@ -10,7 +10,7 @@ lazy val root = (project in file("."))
     assembly / assemblyJarName := "duckgame.jar",
     libraryDependencies ++= Seq(
       "org.scalatest" %% "scalatest" % "3.2.18" % Test,
-      "org.scalafx" %% "scalafx" % "16.0.0-R25",
+      "org.scalafx" %% "scalafx" % "22.0.0-R33",
       "it.unibo.alice.tuprolog" % "2p-core" % "4.1.1",
       "it.unibo.alice.tuprolog" % "2p-ui" % "4.1.1",
       "org.controlsfx" % "controlsfx" % "11.2.1",
