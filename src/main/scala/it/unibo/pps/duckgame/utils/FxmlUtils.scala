@@ -14,6 +14,7 @@ import javafx.scene.layout.BorderPane
 import scalafx.scene.control.Alert.AlertType
 import javafx.scene.control.ButtonType
 import scalafx.stage.{Screen, Stage}
+import org.scalactic.TripleEquals.convertToEqualizer
 
 import java.io.IOException
 import java.util.Optional
@@ -44,7 +45,7 @@ object FxmlUtils:
 
   private def loadFXMLResource(fxmlPath: String): Scene =
     val fxmlFile = getClass.getResource(fxmlPath)
-    if (fxmlFile == null)
+    if (fxmlFile === null)
       throw new IOException("Cannot load resource: " + fxmlPath)
     val root: Parent = FXMLLoader.load(fxmlFile)
     new Scene(root)
@@ -96,6 +97,15 @@ object FxmlUtils:
     setGameBoardImage(gameBoard)
     setGameBoardSize(pane, gameBoard)
     setPaneStyle(pane, cssResources)
+
+  def initUIElements(
+                      pane: BorderPane,
+                      cssResources: CssResources,
+                      width_perc: Double,
+                      height_perc: Double
+                    ): Unit =
+    setPaneResolution(pane, width_perc, height_perc)
+    setPaneStyle(pane, cssResources)  
 
   /** Sets pane resolution
    *

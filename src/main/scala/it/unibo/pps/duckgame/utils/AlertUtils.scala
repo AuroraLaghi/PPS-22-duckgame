@@ -9,7 +9,7 @@ import java.util.Optional
 object AlertUtils:
 
   def showVictory(winner: Player): Optional[ButtonType]=
-    FxmlUtils.showAlert(AlertType.Information, "VITTORIA", "vittoria", s"Complimenti,${winner.name} è il vincitore!")
+    FxmlUtils.showAlert(AlertType.Confirmation, "VITTORIA", s"Complimenti, ${winner.name} è il vincitore!", "")
 
   def notEnoughPlayersWarning(): Optional[ButtonType]=
     FxmlUtils.showAlert(AlertType.Warning, "Duckgame", "Impossibile iniziare la partita", "É necessario che ci siano almeno due giocatori")
