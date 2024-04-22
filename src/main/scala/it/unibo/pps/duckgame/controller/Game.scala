@@ -13,6 +13,7 @@ protected object Game:
   private var _players: List[Player] = List.empty
   private var _winner: Option[Player] = None
   private var _gameBoard: GameBoard = GameBoard()
+  private var _firstRound: Boolean = false
 
   /** Return game board
    * 
@@ -28,6 +29,11 @@ protected object Game:
    */
   def gameBoard_=(value: GameBoard): Unit =
     _gameBoard = value
+    
+  def firstRound: Boolean = _firstRound 
+  
+  def firstRound_=(value: Boolean): Unit =
+    _firstRound = value
 
   /** Sets the current player
    * 

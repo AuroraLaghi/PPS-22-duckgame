@@ -19,5 +19,5 @@ protected object PlayerController:
   def updatePlayerWith(index: Int, playerUpdated: Player): Unit =
     Game.players = Game.players.updated(index, playerUpdated)
     
-  def playerOnSpecialCell(specialCell: SpecialCell, steps: Int) =
+  def playerOnSpecialCell(specialCell: SpecialCell, steps: Int): Unit =
     specialCell.action(steps)

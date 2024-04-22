@@ -1,8 +1,7 @@
 package it.unibo.pps.duckgame.controller
 
-import it.unibo.pps.duckgame.model.Player
+import it.unibo.pps.duckgame.model.{CellStatus, Player}
 import it.unibo.pps.duckgame.utils.GameUtils
-
 /**
  * Object who manages the game logic
  */
@@ -25,6 +24,7 @@ object LogicController:
 
   /** Initialize players' list mixing its values */
   def startGame(): Unit =
+    Game.firstRound = true
     Game.players = GameUtils MixPlayers Game.players
 
   /** Close the game */
@@ -42,10 +42,14 @@ object LogicController:
     */
   def moveCurrentPlayer(steps: Int): Unit =
     PlayerController.updatePlayerWith(Game.currentPlayer, GameReader.currentPlayer.move(steps))
+    
+  def setNewPositionOfCurrentPlayer(position: Int): Unit =
+    PlayerController.updatePlayerWith(Game.currentPlayer, GameReader.currentPlayer.newPosition(position))
 
   /** Called when a player ends its turn */
   def endTurn(): Unit =
     Game.currentPlayer = (Game.currentPlayer + 1) % Game.players.length
+    if checkFirstRoundDone() then Game.firstRound = false
 
   /** Called when a player quits the game */
   def currentPlayerQuit(): Unit =
@@ -54,3 +58,13 @@ object LogicController:
     val nextPlayer = GameReader.currentPlayer
     Game removePlayer playerToDelete
     Game.currentPlayer = Game.players.indexOf(nextPlayer)
+
+  private def checkFirstRoundDone(): Boolean =
+    Game.currentPlayer == 0 && Game.firstRound
+    
+  def checkCellType: CellStatus =
+    val cell = GameUtils.getSpecialCellFromPlayerPosition()
+    println(cell)
+    cell match
+      case Some(_) => CellStatus.SPECIAL_CELL
+      case _ => CellStatus.STANDARD_CELL  

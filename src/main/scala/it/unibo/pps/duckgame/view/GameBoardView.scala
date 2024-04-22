@@ -96,7 +96,7 @@ class GameBoardView extends Initializable:
   @SuppressWarnings(
     Array("org.wartremover.warts.Null", "org.wartremover.warts.Var")
   )
-  private var playersHBox: MMap[String,HBox] = MMap.empty
+  private var playersHBox: MMap[String, HBox] = MMap.empty
 
   @SuppressWarnings(
     Array("org.wartremover.warts.Null", "org.wartremover.warts.Var")
@@ -113,8 +113,7 @@ class GameBoardView extends Initializable:
   private val dicesLabel: Label = new Label()
 
   override def initialize(url: URL, resourceBundle: ResourceBundle): Unit =
-    FxmlUtils.initUIElements(pane, gameBoard, GAME_STYLE, FxmlUtils.DEFAULT_WIDTH_PERC,
-      FxmlUtils.DEFAULT_HEIGHT_PERC)
+    FxmlUtils.initUIElements(pane, gameBoard, GAME_STYLE, FxmlUtils.DEFAULT_WIDTH_PERC, FxmlUtils.DEFAULT_HEIGHT_PERC)
     initializeCellGrid()
     val menuWidth = FxmlUtils.getResolution._1 - pane.getPrefHeight
     actionsMenu.setPrefWidth(menuWidth / 2)
@@ -126,11 +125,11 @@ class GameBoardView extends Initializable:
     currentPlayer.setSpacing(DEFAULT_SPACING)
     currentPlayer.setAlignment(geometry.Pos.CENTER)
     setCurrentPlayer()
-    GameReader.players.foreach(p => {
+    GameReader.players.foreach { p =>
       createPlayerBox(p)
       nameLabel += (p.name -> new Label(p.name))
       updatePlayerPosition(p)
-    })
+    }
     dicesView.getChildren.add(new Label("Dadi:"))
     dicesView.getChildren.add(dicesLabel)
 
@@ -138,8 +137,7 @@ class GameBoardView extends Initializable:
     nameLabel(GameReader.currentPlayer.name).setDisable(true)
     playersHBox(GameReader.currentPlayer.name).setDisable(true)
     GameBoardController.currentPlayerQuit()
-    if GameReader.players.nonEmpty then
-      setButtonsForTurnEnding(false)
+    if GameReader.players.nonEmpty then setButtonsForTurnEnding(false)
 
   private def setButtonsForTurnEnding(can: Boolean): Unit =
     endTurnButton.setDisable(!can)
@@ -175,27 +173,22 @@ class GameBoardView extends Initializable:
       spawnRows(tempGrid, N_ROWS_IN_CELL)
 
       mainGrid.add(tempGrid, i, j)
-      cellsGrid += ((i,j) -> tempGrid)
+      cellsGrid += ((i, j) -> tempGrid)
 
       def spawnColumns(grid: GridPane, numCol: Int): Unit =
         val col = new ColumnConstraints()
         col.setPercentWidth(CONSTRAINT_PERC)
-        for _ <- 0 until numCol
-        do
-          grid.getColumnConstraints.add(col)
+        for _ <- 0 until numCol do grid.getColumnConstraints.add(col)
 
       def spawnRows(grid: GridPane, numRows: Int): Unit =
         val row = new RowConstraints()
         row.setPercentHeight(CONSTRAINT_PERC)
-        for _ <- 0 until numRows
-        do
-          grid.getRowConstraints.add(row)
+        for _ <- 0 until numRows do grid.getRowConstraints.add(row)
 
   private def updatePlayerPosition(player: Player): Unit =
     val cellGrid = cellsGrid(GameUtils.getCoordinateFromPosition(player.actualPosition))
     val (col, row) = getFirstFreeCellStartingFrom(cellGrid, cellGrid.getChildren.size(), (0, 1))
-    if !cellGrid.getChildren.contains(nameLabel(player.name)) then
-      cellGrid.add(nameLabel(player.name), col, row)
+    if !cellGrid.getChildren.contains(nameLabel(player.name)) then cellGrid.add(nameLabel(player.name), col, row)
 
   private def getFirstFreeCellStartingFrom(gridPane: GridPane, nthCell: Int, startingCell: (Int, Int)): (Int, Int) =
     GameUtils.getNthCellInGridWithStartingPos(nthCell + 1, (N_COLS_IN_CELL, N_ROWS_IN_CELL), startingCell)
@@ -203,11 +196,8 @@ class GameBoardView extends Initializable:
   private def afterThrow(dice1: Int, dice2: Int): Unit =
     updatePlayerPosition(GameReader.currentPlayer)
     dicesLabel.setText(dice1.toString + " " + dice2.toString)
-    if EndGameController.checkVictory() then GameBoardController.showVictory()
-    else
-      if dice1 != dice2 then
-        setButtonsForTurnEnding(true)
+    if GameBoardController.checkVictory() then GameBoardController.showVictory()
+    else if dice1 != dice2 then setButtonsForTurnEnding(true)
 
   private def setCurrentPlayer(): Unit =
     currentPlayerLabel.setText(GameReader.currentPlayer.name)
-
