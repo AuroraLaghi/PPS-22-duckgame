@@ -11,14 +11,14 @@ class PlayerControllerTest extends AnyFlatSpec with should.Matchers:
   players.foreach(p => Game.addPlayer(p))
 
   "Method update player" should "update current player with new information" in {
-    GameStats.currentPlayer.actualPosition shouldBe 0
-    PlayerController.updatePlayerWith(Game.currentPlayer, GameStats.currentPlayer.move(10))
-    GameStats.currentPlayer.actualPosition shouldBe 10
+    GameReader.currentPlayer.actualPosition shouldBe 0
+    PlayerController.updatePlayerWith(Game.currentPlayer, GameReader.currentPlayer.move(10))
+    GameReader.currentPlayer.actualPosition shouldBe 10
   }
 
   "Method update player" should "return back when the number of steps is bigger than the gameboard" in {
-    GameController.endTurn()
-    GameStats.currentPlayer.actualPosition shouldBe 0
-    PlayerController.updatePlayerWith(Game.currentPlayer, GameStats.currentPlayer.move(67))
-    GameStats.currentPlayer.actualPosition shouldBe 59
+    GameBoardController.endTurn()
+    GameReader.currentPlayer.actualPosition shouldBe 0
+    PlayerController.updatePlayerWith(Game.currentPlayer, GameReader.currentPlayer.move(67))
+    GameReader.currentPlayer.actualPosition shouldBe 59
   }
