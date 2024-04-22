@@ -64,7 +64,6 @@ object LogicController:
     
   def checkCellType: CellStatus =
     val cell = GameUtils.getSpecialCellFromPlayerPosition
-    println(cell)
     cell match
       case Some(_) => CellStatus.SPECIAL_CELL
       case _ => CellStatus.STANDARD_CELL  

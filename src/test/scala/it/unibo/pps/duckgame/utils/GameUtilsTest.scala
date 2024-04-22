@@ -1,7 +1,8 @@
 package it.unibo.pps.duckgame.utils
 
-import it.unibo.pps.duckgame.controller.GameReader
-import it.unibo.pps.duckgame.model.Dice
+import it.unibo.pps.duckgame.controller.{GameReader, LogicController, MovementsController}
+import it.unibo.pps.duckgame.model.specialCell.SpecialCell
+import it.unibo.pps.duckgame.model.{CellStatus, Dice, Player}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should
 
@@ -101,6 +102,27 @@ class GameUtilsTest extends AnyFlatSpec with should.Matchers:
       STARTING_CELL
     ) shouldBe LAST_CELL
   }
+
+  val p1: Player = Player("p1")
+  val p2: Player = Player("p2")
+  val players: List[Player] = List(p1, p2)
+  players.foreach(p => LogicController.addPlayer(p))
+
+  "Method getSpecialCellFromPlayerPosition" should "give an empty return if current player is on a standard cell" in {
+    GameUtils.getSpecialCellFromPlayerPosition shouldBe empty
+  }
+
+  "Method getSpecialCellFromPlayerPosition" should "return, if present, the special cell located in player's position" in {
+    MovementsController.standardMove((2, 4))
+    GameUtils.getSpecialCellFromPlayerPosition should not be empty
+    LogicController.checkCellType shouldBe CellStatus.SPECIAL_CELL
+  }
+
+  "Method getSpecialCellFromPlayerPosition" should "throws NoSuchElementException if it is invoked get method on an empty return" in {
+    LogicController.endTurn()
+    a [NoSuchElementException] shouldBe thrownBy(GameUtils.getSpecialCellFromPlayerPosition.get)
+  }
+
 
 
 
