@@ -8,5 +8,4 @@ package it.unibo.pps.duckgame.model
 class CellImpl(_number: Int) extends Cell:
   def number: Int = _number
 object CellImpl:
-
   def apply(number: Int): CellImpl = new CellImpl(number)
