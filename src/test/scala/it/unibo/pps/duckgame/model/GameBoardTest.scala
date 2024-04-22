@@ -11,5 +11,5 @@ class GameBoardTest extends AnyFlatSpec with should.Matchers:
   }
   
   "A new gameboard created with an empty list" should "be empty" in {
-    GameBoard(List.empty).size shouldBe 0
+    GameBoard(List.empty, List.empty).size shouldBe 0
   }
