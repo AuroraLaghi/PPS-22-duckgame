@@ -1,6 +1,6 @@
 package it.unibo.pps.duckgame.utils
 
-import it.unibo.pps.duckgame.controller.GameStats
+import it.unibo.pps.duckgame.controller.GameReader
 import it.unibo.pps.duckgame.model.{GameBoard, Player}
 
 import scala.util.Random
@@ -20,7 +20,7 @@ object GameUtils:
    *  new player's position
    */
   def addSumToPosition(sum: Int, position: Int): Int = sum + position match  
-    case result if result >= GameStats.gameBoard.size => val updatedPosition = 63 - Math.abs(63 - result)
+    case result if result >= GameReader.gameBoard.size => val updatedPosition = 63 - Math.abs(63 - result)
         updatedPosition
     case result                                       => result
       

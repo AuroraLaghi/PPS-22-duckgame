@@ -5,7 +5,7 @@ object EndGameController:
   private val MIN_PLAYERS = 2
   
   def checkVictory(): Boolean =
-    GameStats.currentPlayer.actualPosition match
+    GameReader.currentPlayer.actualPosition match
       case 63 => Game.winner = Game.players.headOption
         true
       case _ => false
@@ -15,7 +15,7 @@ object EndGameController:
    * @return
    * true if only one player is left playing, false otherwise
    */
-  def checkVictoryForSurrender(): Boolean = GameStats.players.size match
+  def checkVictoryForSurrender(): Boolean = GameReader.players.size match
     case n if n == MIN_PLAYERS - 1 =>
       Game.winner = Game.players.headOption
       true
