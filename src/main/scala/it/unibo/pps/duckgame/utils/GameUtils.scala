@@ -107,7 +107,7 @@ object GameUtils:
       case _ if n % gridSize._1 != 0 => (n % gridSize._1 - 1, n / gridSize._1)
       case _ => (gridSize._1 - 1, n / gridSize._1 - 1)
 
-  def getSpecialCellFromPlayerPosition(): Option[SpecialCell] =
+  def getSpecialCellFromPlayerPosition: Option[SpecialCell] =
     GameReader.gameBoard.specialCells.find(
       _.number == GameReader.currentPlayer.actualPosition
     )

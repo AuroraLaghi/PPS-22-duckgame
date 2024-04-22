@@ -55,6 +55,6 @@ object GameBoardController:
     LogicController.checkCellType match
       case CellStatus.SPECIAL_CELL =>
         if !(Game.firstRound && steps == 9) then
-          val specialCell = GameUtils.getSpecialCellFromPlayerPosition()
+          val specialCell = GameUtils.getSpecialCellFromPlayerPosition
           specialCell.foreach(PlayerController.playerOnSpecialCell(_, steps))
       case CellStatus.STANDARD_CELL =>

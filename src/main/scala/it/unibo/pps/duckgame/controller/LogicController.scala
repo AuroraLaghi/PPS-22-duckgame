@@ -63,7 +63,7 @@ object LogicController:
     Game.currentPlayer == 0 && Game.firstRound
     
   def checkCellType: CellStatus =
-    val cell = GameUtils.getSpecialCellFromPlayerPosition()
+    val cell = GameUtils.getSpecialCellFromPlayerPosition
     println(cell)
     cell match
       case Some(_) => CellStatus.SPECIAL_CELL
