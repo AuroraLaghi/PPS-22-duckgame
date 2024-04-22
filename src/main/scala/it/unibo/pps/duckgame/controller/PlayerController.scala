@@ -1,6 +1,7 @@
 package it.unibo.pps.duckgame.controller
 
 import it.unibo.pps.duckgame.model.Player
+import it.unibo.pps.duckgame.model.specialCell.SpecialCell
 
 /**
  * Object class that controls player's movements
@@ -17,3 +18,6 @@ protected object PlayerController:
   @SuppressWarnings(Array("org.wartremover.warts.SeqUpdated"))
   def updatePlayerWith(index: Int, playerUpdated: Player): Unit =
     Game.players = Game.players.updated(index, playerUpdated)
+    
+  def playerOnSpecialCell(specialCell: SpecialCell, steps: Int) =
+    specialCell.action(steps)

@@ -22,6 +22,9 @@ final case class Player(
    */
   def move(steps: Int): Player =
     Player(GameUtils.addSumToPosition(steps, actualPosition), name)
+  
+  def newPosition(position: Int): Player =
+    Player(position, name)
     
 object Player:
   
