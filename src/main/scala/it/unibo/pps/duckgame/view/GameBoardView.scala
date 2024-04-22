@@ -1,6 +1,6 @@
 package it.unibo.pps.duckgame.view
 
-import it.unibo.pps.duckgame.controller.{GameController, GameStats}
+import it.unibo.pps.duckgame.controller.{EndGameController, GameBoardController, GameReader}
 import it.unibo.pps.duckgame.model.Player
 import it.unibo.pps.duckgame.utils.{FxmlUtils, GameUtils}
 import it.unibo.pps.duckgame.utils.resources.CssResources.GAME_STYLE
@@ -14,6 +14,8 @@ import javafx.fxml.{FXML, Initializable}
 import javafx.scene.control.{Button, Label, ListView, TableColumn, TableView}
 import javafx.scene.image.{Image, ImageView}
 import javafx.scene.layout
+import org.scalactic.TypeCheckedTripleEquals.convertToCheckingEqualizer
+
 import scala.collection.immutable.Map as MMap
 import java.net.URL
 import java.util.ResourceBundle
@@ -85,6 +87,12 @@ class GameBoardView extends Initializable:
   )
   private var currentPlayer: VBox = _
 
+  @FXML
+  @SuppressWarnings(
+    Array("org.wartremover.warts.Null", "org.wartremover.warts.Var")
+  )
+  private var dicesView: VBox = _
+
   @SuppressWarnings(
     Array("org.wartremover.warts.Null", "org.wartremover.warts.Var")
   )
@@ -102,8 +110,9 @@ class GameBoardView extends Initializable:
 
   private val currentPlayerLabel: Label = new Label()
 
+  private val dicesLabel: Label = new Label()
+
   override def initialize(url: URL, resourceBundle: ResourceBundle): Unit =
-    GameController.startGame()
     FxmlUtils.initUIElements(pane, gameBoard, GAME_STYLE, FxmlUtils.DEFAULT_WIDTH_PERC,
       FxmlUtils.DEFAULT_HEIGHT_PERC)
     initializeCellGrid()
@@ -117,17 +126,19 @@ class GameBoardView extends Initializable:
     currentPlayer.setSpacing(DEFAULT_SPACING)
     currentPlayer.setAlignment(geometry.Pos.CENTER)
     setCurrentPlayer()
-    GameStats.players.foreach(p => {
+    GameReader.players.foreach(p => {
       createPlayerBox(p)
       nameLabel += (p.name -> new Label(p.name))
       updatePlayerPosition(p)
     })
+    dicesView.getChildren.add(new Label("Dadi:"))
+    dicesView.getChildren.add(dicesLabel)
 
   def quitButtonClick(): Unit =
-    nameLabel(GameStats.currentPlayer.name).setDisable(true)
-    playersHBox(GameStats.currentPlayer.name).setDisable(true)
-    GameController.currentPlayerQuit()
-    if GameStats.players.nonEmpty then
+    nameLabel(GameReader.currentPlayer.name).setDisable(true)
+    playersHBox(GameReader.currentPlayer.name).setDisable(true)
+    GameBoardController.currentPlayerQuit()
+    if GameReader.players.nonEmpty then
       setButtonsForTurnEnding(false)
 
   private def setButtonsForTurnEnding(can: Boolean): Unit =
@@ -135,11 +146,11 @@ class GameBoardView extends Initializable:
     throwDiceButton.setDisable(can)
 
   def throwDiceButtonClick(): Unit =
-    val (dice1, dice2) = GameController.throwDice()
+    val (dice1, dice2) = GameBoardController.throwDice()
     afterThrow(dice1, dice2)
 
   def endTurnButtonClick(): Unit =
-    GameController.endTurn()
+    GameBoardController.endTurn()
     setCurrentPlayer()
     setButtonsForTurnEnding(false)
 
@@ -189,17 +200,14 @@ class GameBoardView extends Initializable:
   private def getFirstFreeCellStartingFrom(gridPane: GridPane, nthCell: Int, startingCell: (Int, Int)): (Int, Int) =
     GameUtils.getNthCellInGridWithStartingPos(nthCell + 1, (N_COLS_IN_CELL, N_ROWS_IN_CELL), startingCell)
 
-  @SuppressWarnings(Array("org.wartremover.warts.Equals"))
   private def afterThrow(dice1: Int, dice2: Int): Unit =
-    updatePlayerPosition(GameStats.currentPlayer)
-    nameLabel.foreach(t =>
-      GameStats.players.find(p => p.name == t._1) match
-        case None => t._2.setDisable(true)
-        case _ =>
-    )
-    if dice1 != dice2 then
-      setButtonsForTurnEnding(true)
+    updatePlayerPosition(GameReader.currentPlayer)
+    dicesLabel.setText(dice1.toString + " " + dice2.toString)
+    if EndGameController.checkVictory() then GameBoardController.showVictory()
+    else
+      if dice1 != dice2 then
+        setButtonsForTurnEnding(true)
 
   private def setCurrentPlayer(): Unit =
-    currentPlayerLabel.setText(GameStats.currentPlayer.name)
+    currentPlayerLabel.setText(GameReader.currentPlayer.name)
 
