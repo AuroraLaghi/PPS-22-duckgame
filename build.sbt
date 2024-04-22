@@ -1,6 +1,6 @@
 ThisBuild / version := "0.1.0"
 
-ThisBuild / scalaVersion := "3.2.2"
+ThisBuild / scalaVersion := "3.4.1"
 
 lazy val osNames = Seq("linux", "mac", "win")
 
