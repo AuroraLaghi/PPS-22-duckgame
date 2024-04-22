@@ -1,5 +1,9 @@
 package it.unibo.pps.duckgame.controller
 
+import it.unibo.pps.duckgame.controller
+import it.unibo.pps.duckgame.model.CellStatus.SPECIAL_CELL
+import it.unibo.pps.duckgame.model.specialCell.{SpecialCell, SpecialCellType}
+import it.unibo.pps.duckgame.model.specialCell.SpecialCellType.JAIL
 import it.unibo.pps.duckgame.model.{Cell, CellStatus, Dice, GameBoard, Player}
 import it.unibo.pps.duckgame.utils.resources.FxmlResources
 import it.unibo.pps.duckgame.utils.{AlertUtils, FxmlUtils, GameUtils}
@@ -25,7 +29,7 @@ object GameBoardController:
     */
   def throwDice(): (Int, Int) =
     val dicePair = Dice().roll()
-    LogicController.moveCurrentPlayer(dicePair._1 + dicePair._2)
+    movePlayer(dicePair)
     dicePair
 
   /** Prints victory message with the name of the winner, then closes the application */
@@ -35,6 +39,22 @@ object GameBoardController:
       LogicController.newGame()
       FxmlUtils.changeScene(FxmlResources.START_MENU.path)
     )
-    
+
   def checkVictory(): Boolean =
-    EndGameController.checkVictory()  
+    EndGameController.checkWinner()
+
+  private def movePlayer(dicePair: (Int, Int)): Unit =
+    if Game.firstRound then
+      MovementsController.firstRoundMoves(dicePair)
+    else
+      MovementsController.standardMove(dicePair)
+    checkSpecialCell(dicePair)
+
+  private def checkSpecialCell(dicePair: (Int, Int)): Unit =
+    val steps = dicePair._1 + dicePair._2
+    LogicController.checkCellType match
+      case CellStatus.SPECIAL_CELL =>
+        if !(Game.firstRound && steps == 9) then
+          val specialCell = GameUtils.getSpecialCellFromPlayerPosition()
+          specialCell.foreach(PlayerController.playerOnSpecialCell(_, steps))
+      case CellStatus.STANDARD_CELL =>
