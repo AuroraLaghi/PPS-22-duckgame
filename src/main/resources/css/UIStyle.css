@@ -1,14 +1,3 @@
-.green-background Label {
-    -fx-text-fill: green;
-}
-
-Button-actions {
-    -fx-background-radius: 0.5em;
-    -fx-font-size: 15pt;
-    -fx-min-width: 200;
-    -fx-wrap-text: "true"
-}
-
 Button {
     -fx-background-radius: 0.3em;
     -fx-font-size: 12pt;
@@ -20,12 +9,11 @@ Label {
     -fx-font-size: 12pt;
 }
 
-:disabled {
-    /* Stili per i nodi disabilitati */
-    -fx-opacity: 0.5; /* Opacità ridotta */
-    -fx-background-color: darkgray; /* Colore di sfondo */
-    -fx-text-fill: black; /* Colore del testo */
-}
+:disabled {/* Stili per i nodi disabilitati */
+    -fx-opacity: 0.5; 
+    -fx-background-color: darkgray;
+    -fx-text-fill: black;
+    }
 
 HBox {
     -fx-background-radius: 0.3em;
@@ -33,4 +21,8 @@ HBox {
 
 #currentPlayer {
     -fx-background-color: yellow;
+}
+
+BorderPane {
+-fx-background-color: white;
 }

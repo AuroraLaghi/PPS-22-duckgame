@@ -1,7 +1,8 @@
 package it.unibo.pps.duckgame.view
 
-import it.unibo.pps.duckgame.controller.{GameController, GameStats, PlayerMenuController}
+import it.unibo.pps.duckgame.controller.{GameBoardController, PlayerMenuController}
 import it.unibo.pps.duckgame.model.Player
+import it.unibo.pps.duckgame.utils.resources.CssResources.GAME_STYLE
 import it.unibo.pps.duckgame.utils.{AlertUtils, FxmlUtils}
 import it.unibo.pps.duckgame.utils.resources.{CssResources, FxmlResources}
 import javafx.fxml.{FXML, FXMLLoader, Initializable}
@@ -23,6 +24,10 @@ import javafx.stage.Screen
 class PlayersMenuView extends Initializable:
 
   private def NMENU = 2
+
+  private def WIDTH = 0.6
+
+  private def HEIGHT = 0.6
 
   @FXML
   @SuppressWarnings(Array("org.wartremover.warts.Null", "org.wartremover.warts.Var"))
@@ -69,8 +74,7 @@ class PlayersMenuView extends Initializable:
   private var removePlayerButton: Button = _
 
   override def initialize(url: URL, resourceBundle: ResourceBundle): Unit =
-    pane.getStylesheets.add(getClass.getResource(CssResources.GAME_STYLE.path).toExternalForm)
-    FxmlUtils.setPaneResolution(pane, 0.6, 0.6)
+    FxmlUtils.initUIElements(pane, GAME_STYLE, WIDTH, HEIGHT)
 
     initializeTableView()
     removePlayerButton.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel.getSelectedItems))

@@ -2,6 +2,7 @@ package it.unibo.pps.duckgame.controller
 
 import it.unibo.pps.duckgame.model.{GameBoard, Player}
 import it.unibo.pps.duckgame.utils.GameUtils
+import org.scalactic.TripleEquals._
 
 /** Game object that contains the current player, the list of players and, eventually, the winner
  */
@@ -86,7 +87,7 @@ protected object Game:
    *  the player to be removed
    */  
   def removePlayer(player: Player): Unit =
-    players = players.filter(_ != player)
+    players = players.filter(_ !== player)
 
   /** Reset the game to the initial parameters
    */
