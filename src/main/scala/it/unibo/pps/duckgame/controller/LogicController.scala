@@ -2,9 +2,9 @@ package it.unibo.pps.duckgame.controller
 
 import it.unibo.pps.duckgame.model.{CellStatus, Player}
 import it.unibo.pps.duckgame.utils.GameUtils
-/**
- * Object who manages the game logic
- */
+
+import scala.annotation.tailrec
+/** Object who manages the game logic */
 object LogicController:
   /** Add a player to the players' list
     *
@@ -42,14 +42,17 @@ object LogicController:
     */
   def moveCurrentPlayer(steps: Int): Unit =
     PlayerController.updatePlayerWith(Game.currentPlayer, GameReader.currentPlayer.move(steps))
-    
+
   def setNewPositionOfCurrentPlayer(position: Int): Unit =
     PlayerController.updatePlayerWith(Game.currentPlayer, GameReader.currentPlayer.newPosition(position))
 
   /** Called when a player ends its turn */
   def endTurn(): Unit =
-    Game.currentPlayer = (Game.currentPlayer + 1) % Game.players.length
-    if checkFirstRoundDone() then Game.firstRound = false
+    Game.currentPlayer = (GameReader.currentPlayerIndex + 1) % GameReader.players.length
+    if checkFirstRoundDone() then GameReader.endFirstRound()
+    if GameReader.playerInWell() == GameReader.currentPlayerIndex || 
+      GameReader.playerInJail() == GameReader.currentPlayerIndex
+    then nextPlayerFree()
 
   /** Called when a player quits the game */
   def currentPlayerQuit(): Unit =
@@ -60,10 +63,15 @@ object LogicController:
     Game.currentPlayer = Game.players.indexOf(nextPlayer)
 
   private def checkFirstRoundDone(): Boolean =
-    Game.currentPlayer == 0 && Game.firstRound
-    
+    GameReader.currentPlayerIndex == 0 && GameReader.isFirstRound
+
   def checkCellType: CellStatus =
     val cell = GameUtils.getSpecialCellFromPlayerPosition
     cell match
       case Some(_) => CellStatus.SPECIAL_CELL
-      case _ => CellStatus.STANDARD_CELL  
+      case _ => CellStatus.STANDARD_CELL
+  @tailrec
+  def nextPlayerFree(): Unit =
+    Game.currentPlayer = (GameReader.currentPlayerIndex + 1) % GameReader.players.length
+    if GameReader.currentPlayerIndex == GameReader.playerInJail() || GameReader.currentPlayerIndex == GameReader.playerInWell()
+    then nextPlayerFree()

@@ -43,8 +43,8 @@ object GameBoardController:
   def checkVictory(): Boolean =
     EndGameController.checkWinner()
 
-  private def movePlayer(dicePair: (Int, Int)): Unit =
-    if Game.firstRound then
+  def movePlayer(dicePair: (Int, Int)): Unit =
+    if GameReader.isFirstRound then
       MovementsController.firstRoundMoves(dicePair)
     else
       MovementsController.standardMove(dicePair)
@@ -54,7 +54,7 @@ object GameBoardController:
     val steps = dicePair._1 + dicePair._2
     LogicController.checkCellType match
       case CellStatus.SPECIAL_CELL =>
-        if !(Game.firstRound && steps == 9) then
+        if !(GameReader.isFirstRound && steps == 9) then
           val specialCell = GameUtils.getSpecialCellFromPlayerPosition
           specialCell.foreach(PlayerController.playerOnSpecialCell(_, steps))
       case CellStatus.STANDARD_CELL =>
