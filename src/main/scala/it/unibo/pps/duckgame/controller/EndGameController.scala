@@ -19,4 +19,7 @@ object EndGameController:
     case _ => false
 
   def setWinner(): Unit =
-    Game.winner = Game.players.headOption
+    Game.winner = Option(GameReader.currentPlayer)
+    
+  def isGameLocked: Boolean =
+    GameReader.players.length == 2 && GameReader.playerInJail() != -1 && GameReader.playerInWell() != -1
