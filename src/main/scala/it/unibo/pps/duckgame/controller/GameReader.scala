@@ -16,6 +16,8 @@ object GameReader:
    */
   def currentPlayer: Player = players(Game.currentPlayer)
 
+  def currentPlayerIndex: Int = Game.currentPlayer
+
   /** Return list of all players
    * 
    * @return
@@ -68,5 +70,15 @@ object GameReader:
         Game.winner = Game.players.headOption
         true
       case _ => false
+
+  def playerInWell(): Int =
+    Game.playerInWell
+
+  def playerInJail(): Int =
+    Game.playerInJail
+
+  def isFirstRound: Boolean = Game.firstRound
+
+  def endFirstRound(): Unit = Game.firstRound = false
 
 

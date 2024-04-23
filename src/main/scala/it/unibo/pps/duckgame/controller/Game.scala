@@ -14,6 +14,8 @@ protected object Game:
   private var _winner: Option[Player] = None
   private var _gameBoard: GameBoard = GameBoard()
   private var _firstRound: Boolean = false
+  private var _playerInJail: Int = -1
+  private var _playerInWell: Int = -1
 
   /** Return game board
    * 
@@ -78,6 +80,15 @@ protected object Game:
    */
   def winner_=(value: Option[Player]): Unit =
     _winner = value
+    
+  def playerInJail: Int = _playerInJail
+  def playerInJail_=(value: Int): Unit =
+    _playerInJail = value
+    
+  def playerInWell: Int = _playerInWell
+  
+  def playerInWell_=(value: Int): Unit =
+    _playerInWell = value
 
   /** Add a player to the game
    * 
