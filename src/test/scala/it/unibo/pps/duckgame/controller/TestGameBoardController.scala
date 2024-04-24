@@ -1,18 +1,20 @@
 package it.unibo.pps.duckgame.controller
 
 import it.unibo.pps.duckgame.model.{Dice, Player}
+import org.scalatest.BeforeAndAfterEach
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should
 
-class TestGameBoardController extends AnyFlatSpec with should.Matchers:
+class TestGameBoardController extends AnyFlatSpec with should.Matchers with BeforeAndAfterEach:
   val player1: Player = Player("luigi")
   val player2: Player = Player("marco")
   val player3: Player = Player("elena")
   val players: List[Player] = List(player1, player2, player3)
-
-  players.foreach(p => Game.addPlayer(p))
-
-  LogicController.startGame()
+  val DEFAULT_STARTING_POSITION = 0
+  override def beforeEach(): Unit =
+    LogicController.newGame()
+    players.foreach(p => Game.addPlayer(p))
+    LogicController.startGame()
 
   "When game is started it" should "have already a non-empty list of players" in {
     GameReader.players.length shouldBe players.length
@@ -27,21 +29,16 @@ class TestGameBoardController extends AnyFlatSpec with should.Matchers:
     GameBoardController.endTurn()
     GameReader.currentPlayer shouldBe shuffledPlayers.head
   }
-
-  val DEFAULT_STARTING_POSITION = 0
-  val startPosition: Int = GameReader.currentPlayer.actualPosition
-
   "Current player starting position" should "be 0" in {
-    startPosition shouldBe DEFAULT_STARTING_POSITION
+    GameReader.currentPlayer.actualPosition shouldBe DEFAULT_STARTING_POSITION
   }
-
   "When current player moves it" should "have a new position equal to the starting one plus the number got with dices" in {
     val dicePair = Dice().roll()
     val sum = dicePair._1 + dicePair._2
     LogicController.moveCurrentPlayer(sum)
     dicePair._1.isValidInt shouldBe true
     dicePair._2.isValidInt shouldBe true
-    GameReader.currentPlayer.actualPosition shouldBe startPosition + sum
+    GameReader.currentPlayer.actualPosition shouldBe DEFAULT_STARTING_POSITION + sum
   }
 
   "When a player quits, the list of players" should "remove it" in {
@@ -54,7 +51,7 @@ class TestGameBoardController extends AnyFlatSpec with should.Matchers:
   }
 
   "When the game starts it" should "have at least two players" in {
-    Game.reset()
+    LogicController.newGame()
     GameReader.canStartGame shouldBe false
     Game.addPlayer(player1)
     GameReader.canStartGame shouldBe false
@@ -63,9 +60,6 @@ class TestGameBoardController extends AnyFlatSpec with should.Matchers:
   }
 
   "Each game" should "have at maximum 6 players" in {
-    Game.reset()
-    GameReader.canAddPlayer shouldBe true
-    players.foreach(p => Game.addPlayer(p))
     GameReader.canAddPlayer shouldBe true
     Game.addPlayer(player1)
     GameReader.canAddPlayer shouldBe true
