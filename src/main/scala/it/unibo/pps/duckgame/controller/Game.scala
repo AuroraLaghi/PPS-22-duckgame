@@ -113,6 +113,9 @@ protected object Game:
     players = List.empty
     winner = None
     gameBoard = GameBoard()
+    firstRound = true
+    playerInJail = -1
+    playerInWell = -1
 
 
 
