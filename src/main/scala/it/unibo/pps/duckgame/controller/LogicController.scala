@@ -52,6 +52,7 @@ object LogicController:
   /** Called when a player ends its turn */
   def endTurn(): Unit =
     nextPlayerFree()
+    if checkFirstRoundDone() then GameReader.endFirstRound()
 
   /** Called when a player quits the game */
   def currentPlayerQuit(): Unit =
