@@ -70,4 +70,15 @@ Ordine del giorno:
     - Introduzione **caselle speciali**
     - Logica di fine partita
   - Suddivisione del lavoro
-- Pianificazione riunione successiva 
+- Pianificazione riunione successiva
+
+## Riunione 24/04/2024: 3° sprint review
+Ordine del giorno:
+- Verifica del lavoro svolto:
+  - Check codice prodotto (sviluppo e testing)
+  - Allineamento documentazione
+  - Controllo coverage tests
+- Aggiornamento product backlog
+- Riportare obiettivi raggiunti duranto lo sprint
+
+## 25 aprile non lavorativo
