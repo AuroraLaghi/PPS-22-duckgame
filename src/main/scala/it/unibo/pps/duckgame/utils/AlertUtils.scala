@@ -9,7 +9,7 @@ import java.util.Optional
 object AlertUtils:
 
   def showVictory(winner: Player): Optional[ButtonType] =
-    FxmlUtils.showAlert(AlertType.Confirmation, "VITTORIA", s"Complimenti, ${winner.name} è il vincitore!", "")
+    FxmlUtils.showAlert(AlertType.Information, "VITTORIA", s"Complimenti, ${winner.name} è il vincitore!", "")
 
   def notEnoughPlayersWarning(): Optional[ButtonType] =
     FxmlUtils.showAlert(
