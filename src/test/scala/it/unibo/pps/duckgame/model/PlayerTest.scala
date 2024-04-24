@@ -12,6 +12,12 @@ class PlayerTest extends AnyFlatSpec with should.Matchers:
     player.actualPosition shouldBe 0
   }
 
+  "A new player" should "not result as blocked for one turn" in {
+    player.isLocked shouldBe false
+  }
+
+
+
 
 
 
