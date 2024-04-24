@@ -1,6 +1,6 @@
 package it.unibo.pps.duckgame.model.specialCell
 
-import it.unibo.pps.duckgame.controller.{EndGameController, Game, GameReader, MovementsController, PlayerMenuController}
+import it.unibo.pps.duckgame.controller.{EndGameController, Game, GameReader, LogicController, MovementsController, PlayerMenuController}
 import it.unibo.pps.duckgame.model.CellStatus
 
 final case class SpecialCellBuilder(number: Int, specialCellType: SpecialCellType):
@@ -23,17 +23,17 @@ final case class SpecialCellBuilder(number: Int, specialCellType: SpecialCellTyp
     MovementsController.playerGoToJail(GameReader.currentPlayerIndex)  
     
   private def goInsideWell(steps: Int): Unit =
-    MovementsController.playerGoIntoWell(GameReader.currentPlayerIndex)  
+    MovementsController.playerGoIntoWell(GameReader.currentPlayerIndex)
 
-  private def noAction(steps: Int): Unit =
-    println("no action")
+  private def lockOneTurn(steps: Int): Unit =
+    LogicController.lockUnlockTurnPlayer(true)
 
   def build(): SpecialCell =
     val action = specialCellType match
       case SpecialCellType.BRIDGE => jumpToTwelve
       case SpecialCellType.DUCK => moveForward
       case SpecialCellType.FINAL => setWinner
-      case SpecialCellType.HOUSE => noAction
+      case SpecialCellType.HOUSE => lockOneTurn
       case SpecialCellType.JAIL => goInJail
       case SpecialCellType.LABYRINTH => jumpToThirtyNine
       case SpecialCellType.SKELETON => jumpToStart

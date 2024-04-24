@@ -42,17 +42,16 @@ object LogicController:
     */
   def moveCurrentPlayer(steps: Int): Unit =
     PlayerController.updatePlayerWith(Game.currentPlayer, GameReader.currentPlayer.move(steps))
+    
+  def lockUnlockTurnPlayer(lock: Boolean): Unit =
+    PlayerController.updatePlayerWith(Game.currentPlayer, GameReader.currentPlayer.lockUnlockPlayer(lock))  
 
   def setNewPositionOfCurrentPlayer(position: Int): Unit =
     PlayerController.updatePlayerWith(Game.currentPlayer, GameReader.currentPlayer.newPosition(position))
 
   /** Called when a player ends its turn */
   def endTurn(): Unit =
-    Game.currentPlayer = (GameReader.currentPlayerIndex + 1) % GameReader.players.length
-    if checkFirstRoundDone() then GameReader.endFirstRound()
-    if GameReader.playerInWell() == GameReader.currentPlayerIndex || 
-      GameReader.playerInJail() == GameReader.currentPlayerIndex
-    then nextPlayerFree()
+    nextPlayerFree()
 
   /** Called when a player quits the game */
   def currentPlayerQuit(): Unit =
@@ -71,7 +70,10 @@ object LogicController:
       case Some(_) => CellStatus.SPECIAL_CELL
       case _ => CellStatus.STANDARD_CELL
   @tailrec
-  def nextPlayerFree(): Unit =
+  private def nextPlayerFree(): Unit =
     Game.currentPlayer = (GameReader.currentPlayerIndex + 1) % GameReader.players.length
+    if GameReader.currentPlayer.isLocked then
+      LogicController.lockUnlockTurnPlayer(false)
+      Game.currentPlayer = (GameReader.currentPlayerIndex + 1) % GameReader.players.length
     if GameReader.currentPlayerIndex == GameReader.playerInJail() || GameReader.currentPlayerIndex == GameReader.playerInWell()
     then nextPlayerFree()
