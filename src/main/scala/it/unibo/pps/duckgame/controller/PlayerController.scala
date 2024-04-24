@@ -21,7 +21,3 @@ protected object PlayerController:
 
   def playerOnSpecialCell(specialCell: SpecialCell, steps: Int): Unit =
     specialCell.action(steps)
-    if EndGameController.isGameLocked then
-      AlertUtils.gameLockedWarning()
-      LogicController.newGame()
-      FxmlUtils.changeScene(FxmlResources.START_MENU.path)

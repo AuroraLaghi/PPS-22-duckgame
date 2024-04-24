@@ -197,6 +197,7 @@ class GameBoardView extends Initializable:
     updatePlayerPosition(GameReader.currentPlayer)
     dicesLabel.setText(dice1.toString + " " + dice2.toString)
     if GameBoardController.checkVictory() then GameBoardController.showVictory()
+    else if EndGameController.isGameLocked then GameBoardController.showGameLocked()
     else if dice1 != dice2 then setButtonsForTurnEnding(true)
 
   private def setCurrentPlayer(): Unit =

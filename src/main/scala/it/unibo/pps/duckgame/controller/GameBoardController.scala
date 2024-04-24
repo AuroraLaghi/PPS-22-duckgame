@@ -49,6 +49,7 @@ object GameBoardController:
     else
       MovementsController.standardMove(dicePair)
     checkSpecialCell(dicePair)
+      
 
   private def checkSpecialCell(dicePair: (Int, Int)): Unit =
     val steps = dicePair._1 + dicePair._2
@@ -58,3 +59,8 @@ object GameBoardController:
           val specialCell = GameUtils.getSpecialCellFromPlayerPosition
           specialCell.foreach(PlayerController.playerOnSpecialCell(_, steps))
       case CellStatus.STANDARD_CELL =>
+        
+  def showGameLocked(): Unit =
+    AlertUtils.gameLockedWarning()
+    LogicController.newGame()
+    FxmlUtils.changeScene(FxmlResources.START_MENU.path)
