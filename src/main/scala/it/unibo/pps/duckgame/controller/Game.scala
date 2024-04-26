@@ -1,8 +1,8 @@
 package it.unibo.pps.duckgame.controller
 
-import it.unibo.pps.duckgame.model.{GameBoard, Player}
+import it.unibo.pps.duckgame.model.{GameBoard, Player, Token}
 import it.unibo.pps.duckgame.utils.GameUtils
-import org.scalactic.TripleEquals._
+import org.scalactic.TripleEquals.*
 
 /** Game object that contains the current player, the list of players and, eventually, the winner
  */
@@ -16,6 +16,7 @@ protected object Game:
   private var _firstRound: Boolean = false
   private var _playerInJail: Int = -1
   private var _playerInWell: Int = -1
+  private var _availableTokens: List[Token] = Token.values.toList
 
   /** Return game board
    * 
@@ -90,6 +91,11 @@ protected object Game:
   def playerInWell_=(value: Int): Unit =
     _playerInWell = value
 
+  def availableTokens: List[Token] = _availableTokens
+
+  def availableTokens_=(value: List[Token]): Unit =
+    _availableTokens = value
+
   /** Add a player to the game
    * 
     * @param player
@@ -97,6 +103,7 @@ protected object Game:
    */  
   def addPlayer(player: Player): Unit =
     players = player::players
+    availableTokens = availableTokens.filter(_ != player.token)
 
   /** Removes a player from the game
    * 
@@ -104,7 +111,9 @@ protected object Game:
    *  the player to be removed
    */  
   def removePlayer(player: Player): Unit =
+    availableTokens = player.token :: availableTokens
     players = players.filter(_ !== player)
+
 
   /** Reset the game to the initial parameters
    */
@@ -116,6 +125,7 @@ protected object Game:
     firstRound = true
     playerInJail = -1
     playerInWell = -1
+    availableTokens = Token.values.toList
 
 
 

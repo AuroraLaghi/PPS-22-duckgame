@@ -1,6 +1,6 @@
 package it.unibo.pps.duckgame.controller
 
-import it.unibo.pps.duckgame.model.{GameBoard, Player}
+import it.unibo.pps.duckgame.model.{GameBoard, Player, Token}
 
 /**
  * Class that keep tracks of all the statistics of the game
@@ -80,5 +80,8 @@ object GameReader:
   def isFirstRound: Boolean = Game.firstRound
 
   def endFirstRound(): Unit = Game.firstRound = false
+  
+  def availableTokens(): List[Token] =
+    Game.availableTokens
 
 

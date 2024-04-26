@@ -1,6 +1,6 @@
 package it.unibo.pps.duckgame.controller
 
-import it.unibo.pps.duckgame.model.Player
+import it.unibo.pps.duckgame.model.{Player, Token}
 import it.unibo.pps.duckgame.utils.FxmlUtils
 import it.unibo.pps.duckgame.utils.resources.FxmlResources
 
@@ -47,3 +47,7 @@ object PlayerMenuController:
   /** Called if user wants to close game */
   def exitGame(): Unit =
     LogicController.exitGame()
+
+  def availableToken(): List[Token] =
+    GameReader.availableTokens()
+    
