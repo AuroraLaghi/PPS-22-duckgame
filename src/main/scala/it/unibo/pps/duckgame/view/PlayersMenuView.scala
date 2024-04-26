@@ -1,7 +1,7 @@
 package it.unibo.pps.duckgame.view
 
 import it.unibo.pps.duckgame.controller.{GameBoardController, PlayerMenuController}
-import it.unibo.pps.duckgame.model.Player
+import it.unibo.pps.duckgame.model.{Player, Token}
 import it.unibo.pps.duckgame.utils.resources.CssResources.GAME_STYLE
 import it.unibo.pps.duckgame.utils.{AlertUtils, FxmlUtils}
 import it.unibo.pps.duckgame.utils.resources.{CssResources, FxmlResources}
@@ -16,7 +16,7 @@ import java.util.ResourceBundle
 import scalafx.Includes.*
 import javafx.beans.binding.Bindings
 import javafx.collections.FXCollections
-import scalafx.beans.property.StringProperty
+import scalafx.beans.property.{ObjectProperty, StringProperty}
 import javafx.scene.control.{Button, ComboBox, TableColumn, TableView, TextField}
 import javafx.scene.layout.VBox
 import javafx.stage.Screen
@@ -59,7 +59,7 @@ class PlayersMenuView extends Initializable:
 
   @FXML
   @SuppressWarnings(Array("org.wartremover.warts.Null", "org.wartremover.warts.Var"))
-  private var playerTokenColumn: TableColumn[Player,String] = _
+  private var playerTokenColumn: TableColumn[Player,Token] = _
 
   @FXML
   @SuppressWarnings(Array("org.wartremover.warts.Null", "org.wartremover.warts.Var"))
@@ -75,27 +75,33 @@ class PlayersMenuView extends Initializable:
 
   @FXML
   @SuppressWarnings(Array("org.wartremover.warts.Null", "org.wartremover.warts.Var"))
-  private var addTokenComboBox: ComboBox[Int] = _
+  private var addTokenComboBox: ComboBox[Token] = _
 
   override def initialize(url: URL, resourceBundle: ResourceBundle): Unit =
     FxmlUtils.initUIElements(pane, GAME_STYLE, WIDTH, HEIGHT)
 
     initializeTableView()
+    updateTokenComboBox()
     removePlayerButton.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel.getSelectedItems))
 
   private def initializeTableView(): Unit =
     playerNameColumn.setCellValueFactory(p => StringProperty(p.getValue.name))
-    playerTokenColumn.setCellValueFactory(p => StringProperty(p.getValue.name))
+    playerTokenColumn.setCellValueFactory(p => ObjectProperty(p.getValue.token))
     tableView.setItems(FXCollections.observableArrayList[Player]())
 
   private def addPlayerToTableView(): Unit = addPlayerNameTextField.getText match
     case name if name.isEmpty => AlertUtils.emptyPlayerNameWarning()
     case _ =>
-      val newPlayer = Player(addPlayerNameTextField.getText)
+      val newPlayer = Player(addPlayerNameTextField.getText, addTokenComboBox.getValue)
       tableView.getItems.add(newPlayer)
       PlayerMenuController.addPlayer(newPlayer)
+      updateTokenComboBox()
       updateAddAndRemoveButton()
       addPlayerNameTextField.clear()
+
+  private def updateTokenComboBox(): Unit =
+    addTokenComboBox.getItems.setAll(FXCollections.observableArrayList(PlayerMenuController.availableToken(): _*))
+    addTokenComboBox.getSelectionModel.selectFirst()
 
   private def updateAddAndRemoveButton(): Unit =
     if PlayerMenuController.canAddPlayer then
@@ -107,6 +113,7 @@ class PlayersMenuView extends Initializable:
     val selectedPlayer = tableView.getSelectionModel.getSelectedItem
     tableView.getItems.remove(selectedPlayer)
     PlayerMenuController.removePlayer(selectedPlayer)
+    updateTokenComboBox()
     updateAddAndRemoveButton()
 
   def checkAndAddPlayerToTableView(): Unit =
