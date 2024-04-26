@@ -82,3 +82,13 @@ Ordine del giorno:
 - Riportare obiettivi raggiunti duranto lo sprint
 
 ## 25 aprile non lavorativo
+
+## Riunuone 26/04/2024: 4° sprint preview
+Ordine del giorno:
+- Impostazione 4° sprint:
+	- Proseguimento parte GUI:
+		- Aggiunta pedine giocatore
+		- Visualizzazione più completa della schermata di gioco (pedine, caselle 				speciali, lancio dadi)
+	- Inizio parte Prolog
+	- Suddivisione del lavoro
+- Pianificazione riunione successiva
