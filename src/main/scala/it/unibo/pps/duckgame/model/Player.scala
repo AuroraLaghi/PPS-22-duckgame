@@ -42,7 +42,8 @@ object Player:
   def apply(name: String, token: Token): Player =
     Player(DEFAULT_STARTING_POSITION, name, false, token)
   
-  def apply(): Player =
-    Player(DEFAULT_STARTING_POSITION, "", false, Token.RED)
+  def apply(name: String): Player =
+    Player(DEFAULT_STARTING_POSITION, name, false, Token.RED)
+
 
   
