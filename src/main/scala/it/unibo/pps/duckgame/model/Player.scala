@@ -12,7 +12,8 @@ import it.unibo.pps.duckgame.utils.GameUtils
 final case class Player(
       actualPosition: Int,
       name: String,
-      oneTurnStop: Boolean):
+      oneTurnStop: Boolean,
+      token: Token):
 
   /** Moves the player by the specified number of steps.
    *
@@ -22,26 +23,26 @@ final case class Player(
    *  A new `Player` instance with the updated position.
    */
   def move(steps: Int): Player =
-    Player(GameUtils.addSumToPosition(steps, actualPosition), name, oneTurnStop)
+    Player(GameUtils.addSumToPosition(steps, actualPosition), name, oneTurnStop, token)
   
   def newPosition(position: Int): Player =
-    Player(position, name, oneTurnStop)
+    Player(position, name, oneTurnStop, token)
 
   def isLocked: Boolean =
     this.oneTurnStop
 
   def lockUnlockPlayer(flag: Boolean): Player =
-    Player(actualPosition, name, flag)
+    Player(actualPosition, name, flag, token)
 
     
 object Player:
   
   private val DEFAULT_STARTING_POSITION = 0
   
-  def apply(name: String): Player =
-    Player(DEFAULT_STARTING_POSITION, name, false)
+  def apply(name: String, token: Token): Player =
+    Player(DEFAULT_STARTING_POSITION, name, false, token)
   
   def apply(): Player =
-    Player(DEFAULT_STARTING_POSITION, "", false)
+    Player(DEFAULT_STARTING_POSITION, "", false, Token.RED)
 
   
