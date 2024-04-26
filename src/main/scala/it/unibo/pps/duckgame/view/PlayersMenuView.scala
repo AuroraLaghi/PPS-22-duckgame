@@ -17,7 +17,7 @@ import scalafx.Includes.*
 import javafx.beans.binding.Bindings
 import javafx.collections.FXCollections
 import scalafx.beans.property.StringProperty
-import javafx.scene.control.{Button, TableColumn, TableView, TextField}
+import javafx.scene.control.{Button, ComboBox, TableColumn, TableView, TextField}
 import javafx.scene.layout.VBox
 import javafx.stage.Screen
 
@@ -72,6 +72,10 @@ class PlayersMenuView extends Initializable:
   @FXML
   @SuppressWarnings(Array("org.wartremover.warts.Null", "org.wartremover.warts.Var"))
   private var removePlayerButton: Button = _
+
+  @FXML
+  @SuppressWarnings(Array("org.wartremover.warts.Null", "org.wartremover.warts.Var"))
+  private var addTokenComboBox: ComboBox[Int] = _
 
   override def initialize(url: URL, resourceBundle: ResourceBundle): Unit =
     FxmlUtils.initUIElements(pane, GAME_STYLE, WIDTH, HEIGHT)

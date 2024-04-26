@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.control.ComboBox?>
 <BorderPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" styleClass="root" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="it.unibo.pps.duckgame.view.PlayersMenuView">
     <center>
             <GridPane alignment="CENTER">
@@ -30,6 +31,7 @@
                     <VBox prefHeight="200.0" prefWidth="100.0" spacing="20.0">
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                             <TextField fx:id="addPlayerNameTextField" promptText="Nome giocatore"/>
+                            <ComboBox fx:id="addTokenComboBox" prefWidth="150.0" promptText="Pedina"/>
                         </HBox>
                         <HBox alignment="TOP_CENTER" fillHeight="false" prefHeight="150.0" prefWidth="200.0"
                               spacing="10.0">
