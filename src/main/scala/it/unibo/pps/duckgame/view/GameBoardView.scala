@@ -1,7 +1,7 @@
 package it.unibo.pps.duckgame.view
 
 import it.unibo.pps.duckgame.controller.{EndGameController, GameBoardController, GameReader}
-import it.unibo.pps.duckgame.model.Player
+import it.unibo.pps.duckgame.model.{Player, Token}
 import it.unibo.pps.duckgame.utils.{FxmlUtils, GameUtils}
 import it.unibo.pps.duckgame.utils.resources.CssResources.GAME_STYLE
 import it.unibo.pps.duckgame.utils.resources.ImgResources
@@ -13,7 +13,7 @@ import javafx.stage.Screen
 import javafx.fxml.{FXML, Initializable}
 import javafx.scene.control.{Button, Label, ListView, TableColumn, TableView}
 import javafx.scene.image.{Image, ImageView}
-import javafx.scene.layout
+import javafx.scene.{image, layout}
 import org.scalactic.TypeCheckedTripleEquals.convertToCheckingEqualizer
 
 import scala.collection.immutable.Map as MMap
@@ -93,6 +93,18 @@ class GameBoardView extends Initializable:
   )
   private var dicesView: VBox = _
 
+  @FXML
+  @SuppressWarnings(
+    Array("org.wartremover.warts.Null", "org.wartremover.warts.Var")
+  )
+  private var diceImage1: ImageView = _
+
+  @FXML
+  @SuppressWarnings(
+    Array("org.wartremover.warts.Null", "org.wartremover.warts.Var")
+  )
+  private var diceImage2: ImageView = _
+
   @SuppressWarnings(
     Array("org.wartremover.warts.Null", "org.wartremover.warts.Var")
   )
@@ -106,11 +118,10 @@ class GameBoardView extends Initializable:
   @SuppressWarnings(
     Array("org.wartremover.warts.Null", "org.wartremover.warts.Var")
   )
-  private var nameLabel: MMap[String, Label] = MMap.empty
+  private var tokensMap: MMap[Token, ImageView] = MMap.empty
 
   private val currentPlayerLabel: Label = new Label()
 
-  private val dicesLabel: Label = new Label()
 
   override def initialize(url: URL, resourceBundle: ResourceBundle): Unit =
     FxmlUtils.initUIElements(pane, gameBoard, GAME_STYLE, FxmlUtils.DEFAULT_WIDTH_PERC, FxmlUtils.DEFAULT_HEIGHT_PERC)
@@ -127,14 +138,18 @@ class GameBoardView extends Initializable:
     setCurrentPlayer()
     GameReader.players.foreach { p =>
       createPlayerBox(p)
-      nameLabel += (p.name -> new Label(p.name))
+      val tokenImage = new ImageView(new Image(getClass.getResource(p.token.img.path).toString))
+      tokensMap += (p.token -> tokenImage)
+      setImageViewDimensions(tokenImage)
       updatePlayerPosition(p)
     }
-    dicesView.getChildren.add(new Label("Dadi:"))
-    dicesView.getChildren.add(dicesLabel)
+
+    setDiceImage(diceImage1)
+    setDiceImage(diceImage2)
+
 
   def quitButtonClick(): Unit =
-    nameLabel(GameReader.currentPlayer.name).setDisable(true)
+    tokensMap(GameReader.currentPlayer.token).setDisable(true)
     playersHBox(GameReader.currentPlayer.name).setDisable(true)
     GameBoardController.currentPlayerQuit()
     if GameReader.players.nonEmpty then setButtonsForTurnEnding(false)
@@ -188,17 +203,34 @@ class GameBoardView extends Initializable:
   private def updatePlayerPosition(player: Player): Unit =
     val cellGrid = cellsGrid(GameUtils.getCoordinateFromPosition(player.actualPosition))
     val (col, row) = getFirstFreeCellStartingFrom(cellGrid, cellGrid.getChildren.size(), (0, 1))
-    if !cellGrid.getChildren.contains(nameLabel(player.name)) then cellGrid.add(nameLabel(player.name), col, row)
+    if !cellGrid.getChildren.contains(tokensMap(player.token)) then cellGrid.add(tokensMap(player.token), col, row)
 
   private def getFirstFreeCellStartingFrom(gridPane: GridPane, nthCell: Int, startingCell: (Int, Int)): (Int, Int) =
     GameUtils.getNthCellInGridWithStartingPos(nthCell + 1, (N_COLS_IN_CELL, N_ROWS_IN_CELL), startingCell)
 
   private def afterThrow(dice1: Int, dice2: Int): Unit =
     updatePlayerPosition(GameReader.currentPlayer)
-    dicesLabel.setText(dice1.toString + " " + dice2.toString)
+    updateDiceImg(dice1, dice2)
+    val position: Int = GameReader.currentPlayer.actualPosition
     if GameBoardController.checkVictory() then GameBoardController.showVictory()
     else if EndGameController.isGameLocked then GameBoardController.showGameLocked()
-    else if dice1 != dice2 then setButtonsForTurnEnding(true)
+    else if dice1 != dice2 || position == 19 || position == 31 || position == 52 then setButtonsForTurnEnding(true)
 
   private def setCurrentPlayer(): Unit =
     currentPlayerLabel.setText(GameReader.currentPlayer.name)
+
+  private def setImageViewDimensions(imgView: ImageView): Unit =
+    imgView.setPreserveRatio(false)
+    imgView.setFitWidth(gameBoard.getFitWidth / (GameUtils.CELLS_IN_SIDE + 1) / N_COLS_IN_CELL)
+    imgView.setFitHeight(gameBoard.getFitHeight / (GameUtils.CELLS_IN_SIDE + 1) / N_COLS_IN_CELL)
+
+  private def setDiceImage(diceImage: ImageView): Unit =
+    diceImage.setFitWidth(pane.getPrefHeight / (GameReader.gameBoard.size / GameUtils.CELLS_IN_SIDE + 1))
+
+  private def updateDiceImg(dice1: Int, dice2: Int): Unit =
+    updateSingleDiceImg(dice1, diceImage1)
+    updateSingleDiceImg(dice2, diceImage2)
+
+  private def updateSingleDiceImg(dice: Int, diceImage: ImageView): Unit =
+    val dicePath: String = ImgResources.valueOf("DICE_" + dice.toString).path
+    diceImage.setImage(new Image(getClass.getResource(dicePath).toString))
