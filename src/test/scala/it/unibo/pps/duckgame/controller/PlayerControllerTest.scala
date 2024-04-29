@@ -30,6 +30,6 @@ class PlayerControllerTest extends AnyFlatSpec with should.Matchers with BeforeA
 
   "When a player goes into a special cell, it" should "be applied special cell's action" in {
     PlayerController.updatePlayerWith(GameReader.currentPlayerIndex, GameReader.currentPlayer.move(6))
-    PlayerController.playerOnSpecialCell(SpecialCellBuilder(6, SpecialCellType.BRIDGE).build(), 6)
+    PlayerController.playerOnSpecialCell(SpecialCellBuilder(6, SpecialCellType.BRIDGE, "").build(), 6)
     GameReader.currentPlayer.actualPosition shouldBe 12
   }
