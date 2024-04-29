@@ -9,3 +9,4 @@ enum SpecialCellType:
   case WELL
   case SKELETON
   case FINAL
+  case BLANK
