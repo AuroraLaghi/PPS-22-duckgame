@@ -26,3 +26,12 @@ HBox {
 BorderPane {
 -fx-background-color: white;
 }
+
+.columnPlayers {
+-fx-alignment: CENTER;
+}
+
+.listPlayers .table-row-cell {
+-fx-background-color: white;
+}
+

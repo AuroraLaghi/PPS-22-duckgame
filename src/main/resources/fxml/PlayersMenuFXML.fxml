@@ -17,7 +17,7 @@
                 <VBox prefHeight="200.0" prefWidth="400.0" spacing="10.0" GridPane.columnIndex="2"
                       GridPane.columnSpan="7" GridPane.rowIndex="1" GridPane.rowSpan="2">
                   
-                    <TableView fx:id="tableView" minHeight="240.0" prefHeight="105.0" prefWidth="333.0"
+                    <TableView fx:id="tableView" minHeight="175.0" prefHeight="105.0" prefWidth="333.0"
                                VBox.vgrow="ALWAYS">
                         <columns>
                             <TableColumn fx:id="playerNameColumn" prefWidth="210.0" text="Giocatori"/>
