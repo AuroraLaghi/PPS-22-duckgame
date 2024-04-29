@@ -14,7 +14,7 @@ import javafx.scene.layout.{BorderPane, ColumnConstraints, GridPane, HBox, RowCo
 import javafx.stage.Screen
 import javafx.fxml.{FXML, Initializable}
 import javafx.scene.control.cell.PropertyValueFactory
-import javafx.scene.control.{Button, Label, ListView, TableColumn, TableView}
+import javafx.scene.control.{Button, Label, ListView, TableColumn, TableView, TextArea}
 import javafx.scene.image.{Image, ImageView}
 import javafx.scene.{image, layout}
 
@@ -125,6 +125,12 @@ class GameBoardView extends Initializable:
   )
   private var playerTokenColumn: TableColumn[Player, ImageView] = _
 
+  @FXML
+  @SuppressWarnings(
+    Array("org.wartremover.warts.Null", "org.wartremover.warts.Var")
+  )
+  private var movementMessage: TextArea = _
+
   @SuppressWarnings(
     Array("org.wartremover.warts.Null", "org.wartremover.warts.Var")
   )
@@ -148,6 +154,7 @@ class GameBoardView extends Initializable:
     playerListBox.setPrefWidth(menuWidth / 2)
     currentPlayer.setPrefWidth(menuWidth / 2)
     playersTable.setPrefWidth(menuWidth)
+    movementMessage.setPrefWidth(menuWidth)
     currentPlayer.setAlignment(geometry.Pos.CENTER)
     setCurrentPlayer()
     GameReader.players.foreach { p =>
@@ -170,11 +177,14 @@ class GameBoardView extends Initializable:
     }
     playerTokenColumn.setCellValueFactory(p => SimpleObjectProperty(tokensMapForTable(p.getValue.token)))
     updatePlayersTable()
+    GameBoardController.view = this
 
   def quitButtonClick(): Unit =
     tokensMap(GameReader.currentPlayer.token).setDisable(true)
+    movementMessage.setText("Il giocatore " + GameReader.currentPlayer.name + " ha abbandonato la partita.")
     GameBoardController.currentPlayerQuit()
     if GameReader.players.nonEmpty then
+      setCurrentPlayer()
       setButtonsForTurnEnding(false)
       updatePlayersTable()
 
@@ -183,6 +193,7 @@ class GameBoardView extends Initializable:
     throwDiceButton.setDisable(can)
 
   def throwDiceButtonClick(): Unit =
+    movementMessage.setText("")
     val (dice1, dice2) = GameBoardController.throwDice()
     afterThrow(dice1, dice2)
 
@@ -227,9 +238,13 @@ class GameBoardView extends Initializable:
     updatePlayerPosition(GameReader.currentPlayer)
     updateDiceImg(dice1, dice2)
     val position: Int = GameReader.currentPlayer.actualPosition
+    playerMovement("Il giocatore è sulla casella: " + position.toString)
     if GameBoardController.checkVictory() then GameBoardController.showVictory()
     else if EndGameController.isGameLocked then GameBoardController.showGameLocked()
-    else if dice1 != dice2 || position == 19 || position == 31 || position == 52 then setButtonsForTurnEnding(true)
+      else if dice1 != dice2 || position == 19 || position == 31 || position == 52 then setButtonsForTurnEnding(true)
+      else playerMovement("Il giocatore ha fatto doppio, deve ritirare.")
+  def playerMovement(message: String) : Unit =
+    movementMessage.appendText(message + "\n")
 
   private def setCurrentPlayer(): Unit =
     currentPlayer.setText("É il turno di: " + GameReader.currentPlayer.name)

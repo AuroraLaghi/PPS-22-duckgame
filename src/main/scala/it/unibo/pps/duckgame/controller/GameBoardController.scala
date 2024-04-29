@@ -7,12 +7,20 @@ import it.unibo.pps.duckgame.model.specialCell.SpecialCellType.JAIL
 import it.unibo.pps.duckgame.model.{Cell, CellStatus, Dice, GameBoard, Player}
 import it.unibo.pps.duckgame.utils.resources.FxmlResources
 import it.unibo.pps.duckgame.utils.{AlertUtils, FxmlUtils, GameUtils}
+import it.unibo.pps.duckgame.view.GameBoardView
 
 import scala.annotation.tailrec
 import scala.util.Try
 
 /** Controller for the [[it.unibo.pps.duckgame.view.GameBoardView]] */
 object GameBoardController:
+  private var _view: GameBoardView = _
+
+  def view: GameBoardView = _view
+
+  def view_=(value: GameBoardView) : Unit =
+    _view = value
+
   /** Called when a player quits the game */
   def currentPlayerQuit(): Unit =
     LogicController.currentPlayerQuit()
@@ -57,10 +65,14 @@ object GameBoardController:
       case CellStatus.SPECIAL_CELL =>
         if !(GameReader.isFirstRound && steps == 9) then
           val specialCell = GameUtils.getSpecialCellFromPlayerPosition
+          viewPlayerMovement(specialCell.get.message)
           specialCell.foreach(PlayerController.playerOnSpecialCell(_, steps))
       case CellStatus.STANDARD_CELL =>
-        
   def showGameLocked(): Unit =
     AlertUtils.gameLockedWarning()
     LogicController.newGame()
     FxmlUtils.changeScene(FxmlResources.START_MENU.path)
+
+  def viewPlayerMovement(message: String): Unit =
+    if _view != null then
+      _view.playerMovement(message)

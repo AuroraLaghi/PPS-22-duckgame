@@ -6,8 +6,12 @@ import it.unibo.pps.duckgame.utils.GameUtils
 object MovementsController:
 
   def firstRoundMoves(dicePair: (Int, Int)): Unit = dicePair match
-    case (6, 3) | (3, 6) if GameReader.currentPlayer.actualPosition == 0 => LogicController.moveCurrentPlayer(26)
-    case (5, 4) | (4, 5) if GameReader.currentPlayer.actualPosition == 0 => LogicController.moveCurrentPlayer(53)
+    case (6, 3) | (3, 6) if GameReader.currentPlayer.actualPosition == 0 =>
+      LogicController.moveCurrentPlayer(26)
+      GameBoardController.viewPlayerMovement("Dal tiro dei dadi è uscito 3 e 6 quindi il giocatore va alla casella 26.")
+    case (5, 4) | (4, 5) if GameReader.currentPlayer.actualPosition == 0 =>
+      LogicController.moveCurrentPlayer(53)
+      GameBoardController.viewPlayerMovement("Dal tiro dei dadi è uscito 4 e 5 quindi il giocatore va alla casella 53.")
     case _ => LogicController.moveCurrentPlayer(dicePair._1 + dicePair._2)
 
   def standardMove(dicePair: (Int, Int)): Unit =
