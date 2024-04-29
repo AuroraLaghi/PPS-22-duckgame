@@ -3,20 +3,27 @@ package it.unibo.pps.duckgame.utils.deserialization
 import com.google.gson.stream.JsonReader
 import it.unibo.pps.duckgame.model.specialCell.{SpecialCell, SpecialCellBuilder, SpecialCellType}
 
+import scala.annotation.tailrec
+
 object SpecialCellDeserializer extends Deserializer[SpecialCell]:
   override def read(reader: JsonReader): SpecialCell =
     var number = -1
     var cellType = ""
     var message = ""
 
+    @tailrec
+    def readJson(reader: JsonReader): Unit =
+      if (reader.hasNext)
+        val currentName = reader.nextName()
+        currentName match
+          case "number" => number = reader.nextInt()
+          case "cellType" => cellType = reader.nextString()
+          case "message" => message = reader.nextString()
+          case _ => reader.skipValue()
+        readJson(reader)
+
     reader.beginObject()
-    while (reader.hasNext)
-      val currentName = reader.nextName()
-      currentName match
-        case "number" => number = reader.nextInt()
-        case "spaceType" => cellType = reader.nextString()
-        case "message" => message = reader.nextString()
-        case _ => reader.skipValue()
+    readJson(reader)
     reader.endObject()
 
     cellType match
@@ -29,4 +36,3 @@ object SpecialCellDeserializer extends Deserializer[SpecialCell]:
       case "skeleton" => SpecialCellBuilder(number, SpecialCellType.SKELETON, message).build()
       case "final" => SpecialCellBuilder(number, SpecialCellType.FINAL, message).build()
       case _ => SpecialCellBuilder(number, SpecialCellType.BLANK, message).build()
-
