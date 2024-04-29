@@ -26,6 +26,9 @@ class TestLogicController extends AnyFlatSpec with should.Matchers with BeforeAn
     LogicController.endTurn()
     GameBoardController.movePlayer((30, 22))
     LogicController.endTurn()
+    GameReader.currentPlayer shouldBe p3
+    LogicController.endTurn()
+    GameReader.currentPlayer shouldBe p3
     LogicController.endTurn()
     GameReader.currentPlayer shouldBe p3
   }
