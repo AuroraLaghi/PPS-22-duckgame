@@ -13,6 +13,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TextArea?>
 <BorderPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unibo.pps.duckgame.view.GameBoardView">
     <center>
         <StackPane BorderPane.alignment="CENTER">
@@ -44,11 +45,12 @@
     <left>
         <VBox fx:id="playerListBox" alignment="CENTER" prefHeight="500.0" prefWidth="100.0" spacing="20.0" BorderPane.alignment="CENTER">
             <Label fx:id="currentPlayer" alignment="CENTER" text="É il turno di: "/>
+            <TextArea fx:id="movementMessage" editable="false" prefHeight="130"/>
             <Label text="Elenco giocatori: " alignment="CENTER"/>
             <TableView fx:id="playersTable" styleClass="listPlayers" prefHeight="250" prefWidth="250">
                 <columns>
-                    <TableColumn fx:id="playerNameColumn" styleClass="columnPlayers" editable="false" prefWidth="75" sortable="false" text="Nome:" />
-                    <TableColumn fx:id="playerTokenColumn" styleClass="columnPlayers" editable="false" prefWidth="75" sortable="false" text="Token:" />
+                    <TableColumn fx:id="playerNameColumn" styleClass="columnPlayers" editable="false" prefWidth="75" sortable="false" text="Nome" />
+                    <TableColumn fx:id="playerTokenColumn" styleClass="columnPlayers" editable="false" prefWidth="75" sortable="false" text="Token" />
                 </columns>
                 <columnResizePolicy>
                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>

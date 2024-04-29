@@ -24,14 +24,23 @@ HBox {
 }
 
 BorderPane {
--fx-background-color: white;
+    -fx-background-color: white;
 }
 
 .columnPlayers {
--fx-alignment: CENTER;
+    -fx-alignment: CENTER;
 }
 
 .listPlayers .table-row-cell {
--fx-background-color: white;
+    -fx-background-color: white;
 }
+
+TextArea {
+    -fx-wrap-text: "true";
+    -fx-focus-color: "transparent";
+    -fx-border-style: none;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+}
+
 
