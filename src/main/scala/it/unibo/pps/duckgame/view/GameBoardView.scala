@@ -5,16 +5,18 @@ import it.unibo.pps.duckgame.model.{Player, Token}
 import it.unibo.pps.duckgame.utils.{FxmlUtils, GameUtils}
 import it.unibo.pps.duckgame.utils.resources.CssResources.GAME_STYLE
 import it.unibo.pps.duckgame.utils.resources.ImgResources
+import javafx.beans.property.SimpleObjectProperty
+import scalafx.beans.property.StringProperty
 import javafx.{fxml, geometry}
 import javafx.fxml.{FXML, Initializable}
 import javafx.geometry.{Insets, Pos}
 import javafx.scene.layout.{BorderPane, ColumnConstraints, GridPane, HBox, RowConstraints, VBox}
 import javafx.stage.Screen
 import javafx.fxml.{FXML, Initializable}
+import javafx.scene.control.cell.PropertyValueFactory
 import javafx.scene.control.{Button, Label, ListView, TableColumn, TableView}
 import javafx.scene.image.{Image, ImageView}
 import javafx.scene.{image, layout}
-import org.scalactic.TypeCheckedTripleEquals.convertToCheckingEqualizer
 
 import scala.collection.immutable.Map as MMap
 import java.net.URL
@@ -85,7 +87,7 @@ class GameBoardView extends Initializable:
   @SuppressWarnings(
     Array("org.wartremover.warts.Null", "org.wartremover.warts.Var")
   )
-  private var currentPlayer: VBox = _
+  private var currentPlayer: Label = _
 
   @FXML
   @SuppressWarnings(
@@ -105,6 +107,24 @@ class GameBoardView extends Initializable:
   )
   private var diceImage2: ImageView = _
 
+  @FXML
+  @SuppressWarnings(
+    Array("org.wartremover.warts.Null", "org.wartremover.warts.Var")
+  )
+  private var playersTable: TableView[Player] = _
+
+  @FXML
+  @SuppressWarnings(
+    Array("org.wartremover.warts.Null", "org.wartremover.warts.Var")
+  )
+  private var playerNameColumn: TableColumn[Player, String] = _
+
+  @FXML
+  @SuppressWarnings(
+    Array("org.wartremover.warts.Null", "org.wartremover.warts.Var")
+  )
+  private var playerTokenColumn: TableColumn[Player, ImageView] = _
+
   @SuppressWarnings(
     Array("org.wartremover.warts.Null", "org.wartremover.warts.Var")
   )
@@ -120,9 +140,6 @@ class GameBoardView extends Initializable:
   )
   private var tokensMap: MMap[Token, ImageView] = MMap.empty
 
-  private val currentPlayerLabel: Label = new Label()
-
-
   override def initialize(url: URL, resourceBundle: ResourceBundle): Unit =
     FxmlUtils.initUIElements(pane, gameBoard, GAME_STYLE, FxmlUtils.DEFAULT_WIDTH_PERC, FxmlUtils.DEFAULT_HEIGHT_PERC)
     initializeCellGrid()
@@ -130,14 +147,10 @@ class GameBoardView extends Initializable:
     actionsMenu.setPrefWidth(menuWidth / 2)
     playerListBox.setPrefWidth(menuWidth / 2)
     currentPlayer.setPrefWidth(menuWidth / 2)
-    playerListBox.getChildren.add(new Label("Elenco giocatori:"))
-    currentPlayer.getChildren.add(new Label("È il turno di"))
-    currentPlayer.getChildren.add(currentPlayerLabel)
-    currentPlayer.setSpacing(DEFAULT_SPACING)
+    playersTable.setPrefWidth(menuWidth)
     currentPlayer.setAlignment(geometry.Pos.CENTER)
     setCurrentPlayer()
     GameReader.players.foreach { p =>
-      createPlayerBox(p)
       val tokenImage = new ImageView(new Image(getClass.getResource(p.token.img.path).toString))
       tokensMap += (p.token -> tokenImage)
       setImageViewDimensions(tokenImage)
@@ -147,12 +160,23 @@ class GameBoardView extends Initializable:
     setDiceImage(diceImage1)
     setDiceImage(diceImage2)
 
+    playerNameColumn.setCellValueFactory(p => StringProperty(p.getValue.name))
+
+    val tokensMapForTable: Map[Token, ImageView] = tokensMap.foldLeft(Map.empty[Token, ImageView]) { (acc, entry) =>
+      val (token, imageView) = entry
+      val imageTokenTable = new ImageView(imageView.getImage)
+      setImageViewDimensions(imageTokenTable)
+      acc + (token -> imageTokenTable)
+    }
+    playerTokenColumn.setCellValueFactory(p => SimpleObjectProperty(tokensMapForTable(p.getValue.token)))
+    updatePlayersTable()
 
   def quitButtonClick(): Unit =
     tokensMap(GameReader.currentPlayer.token).setDisable(true)
-    playersHBox(GameReader.currentPlayer.name).setDisable(true)
     GameBoardController.currentPlayerQuit()
-    if GameReader.players.nonEmpty then setButtonsForTurnEnding(false)
+    if GameReader.players.nonEmpty then
+      setButtonsForTurnEnding(false)
+      updatePlayersTable()
 
   private def setButtonsForTurnEnding(can: Boolean): Unit =
     endTurnButton.setDisable(!can)
@@ -166,15 +190,6 @@ class GameBoardView extends Initializable:
     GameBoardController.endTurn()
     setCurrentPlayer()
     setButtonsForTurnEnding(false)
-
-  private def createPlayerBox(player: Player): Unit =
-    val playerHBox: HBox = new HBox()
-    playerListBox.getChildren.add(playerHBox)
-    val playerLabel: Label = new Label(player.name)
-    playerHBox.getChildren.add(playerLabel)
-    playerHBox.setSpacing(DEFAULT_SPACING)
-    playerHBox.setAlignment(geometry.Pos.CENTER)
-    playersHBox += (player.name -> playerHBox)
 
   private def initializeCellGrid(): Unit =
     val CONSTRAINT_PERC = 50
@@ -217,7 +232,7 @@ class GameBoardView extends Initializable:
     else if dice1 != dice2 || position == 19 || position == 31 || position == 52 then setButtonsForTurnEnding(true)
 
   private def setCurrentPlayer(): Unit =
-    currentPlayerLabel.setText(GameReader.currentPlayer.name)
+    currentPlayer.setText("É il turno di: " + GameReader.currentPlayer.name)
 
   private def setImageViewDimensions(imgView: ImageView): Unit =
     imgView.setPreserveRatio(false)
@@ -234,3 +249,11 @@ class GameBoardView extends Initializable:
   private def updateSingleDiceImg(dice: Int, diceImage: ImageView): Unit =
     val dicePath: String = ImgResources.valueOf("DICE_" + dice.toString).path
     diceImage.setImage(new Image(getClass.getResource(dicePath).toString))
+
+  private def updatePlayersTable(): Unit =
+    val rowHeight = 35
+    playersTable.getItems.clear()
+    GameReader.players.foreach(p => playersTable.getItems.add(p))
+    val numRows = playersTable.getItems.size() + 1
+    val newHeight = numRows * rowHeight
+    playersTable.setPrefHeight(newHeight)
