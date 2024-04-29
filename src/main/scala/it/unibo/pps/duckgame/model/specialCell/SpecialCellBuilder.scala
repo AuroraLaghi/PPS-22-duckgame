@@ -2,8 +2,9 @@ package it.unibo.pps.duckgame.model.specialCell
 
 import it.unibo.pps.duckgame.controller.{EndGameController, Game, GameReader, LogicController, MovementsController, PlayerMenuController}
 import it.unibo.pps.duckgame.model.CellStatus
+import it.unibo.pps.duckgame.model.specialCell.SpecialCellType.BLANK
 
-final case class SpecialCellBuilder(number: Int, specialCellType: SpecialCellType):
+final case class SpecialCellBuilder(number: Int, specialCellType: SpecialCellType, message: String):
   private def jumpToStart(steps: Int): Unit =
     MovementsController.fixedPositionMove(0)
     
@@ -28,6 +29,8 @@ final case class SpecialCellBuilder(number: Int, specialCellType: SpecialCellTyp
   private def lockOneTurn(steps: Int): Unit =
     LogicController.lockUnlockTurnPlayer(true)
 
+  private def noAction(steps: Int): Unit = return
+
   def build(): SpecialCell =
     val action = specialCellType match
       case SpecialCellType.BRIDGE => jumpToTwelve
@@ -38,5 +41,6 @@ final case class SpecialCellBuilder(number: Int, specialCellType: SpecialCellTyp
       case SpecialCellType.LABYRINTH => jumpToThirtyNine
       case SpecialCellType.SKELETON => jumpToStart
       case SpecialCellType.WELL => goInsideWell
+      case SpecialCellType.BLANK => noAction
 
-    new SpecialCell(number, specialCellType, action)
+    new SpecialCell(number, specialCellType, message, action)

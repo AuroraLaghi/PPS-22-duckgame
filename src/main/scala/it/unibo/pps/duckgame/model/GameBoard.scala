@@ -55,15 +55,15 @@ object GameBoard:
       case number: Int => List(number)
     }
     var specialCells = List(
-      SpecialCellBuilder(6, SpecialCellType.BRIDGE).build(),
-      SpecialCellBuilder(31, SpecialCellType.WELL).build(),
-      SpecialCellBuilder(42, SpecialCellType.LABYRINTH).build(),
-      SpecialCellBuilder(58, SpecialCellType.SKELETON).build(),
-      SpecialCellBuilder(52, SpecialCellType.JAIL).build(),
-      SpecialCellBuilder(19, SpecialCellType.HOUSE).build(),
-      SpecialCellBuilder(63, SpecialCellType.FINAL).build()
+      SpecialCellBuilder(6, SpecialCellType.BRIDGE, "").build(),
+      SpecialCellBuilder(31, SpecialCellType.WELL, "").build(),
+      SpecialCellBuilder(42, SpecialCellType.LABYRINTH, "").build(),
+      SpecialCellBuilder(58, SpecialCellType.SKELETON, "").build(),
+      SpecialCellBuilder(52, SpecialCellType.JAIL, "").build(),
+      SpecialCellBuilder(19, SpecialCellType.HOUSE, "").build(),
+      SpecialCellBuilder(63, SpecialCellType.FINAL, "").build()
     )
-    val duckList = duckNumbers.map(n => SpecialCellBuilder(n, SpecialCellType.DUCK).build())
+    val duckList = duckNumbers.map(n => SpecialCellBuilder(n, SpecialCellType.DUCK, "").build())
     specialCells = specialCells++duckList
     val numbers: List[Cell] = listNormal.map(n => CellImpl(n))++specialCells
     new GameBoard(numbers, specialCells)
