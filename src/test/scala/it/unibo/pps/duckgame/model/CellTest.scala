@@ -11,7 +11,7 @@ class CellTest extends AnyFlatSpec with should.Matchers:
   private def FINAL_CELL = 63
 
   "Skeleton's special cell in the gameboard cells's list" should "have index 58" in {
-    GameReader.gameBoard.gameBoardList(SKELETON_CELL) shouldBe a [SpecialCell]
+    GameReader.gameBoard.specialCells.find(cell => cell.number == SKELETON_CELL) shouldBe defined
   }
 
   "Standard cells" should "be returned as they are" in {
