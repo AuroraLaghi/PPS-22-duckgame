@@ -56,18 +56,7 @@ object GameBoardController:
       MovementsController.firstRoundMoves(dicePair)
     else
       MovementsController.standardMove(dicePair)
-    checkSpecialCell(dicePair)
       
-
-  private def checkSpecialCell(dicePair: (Int, Int)): Unit =
-    val steps = dicePair._1 + dicePair._2
-    LogicController.checkCellType match
-      case CellStatus.SPECIAL_CELL =>
-        if !(GameReader.isFirstRound && steps == 9) then
-          val specialCell = GameUtils.getSpecialCellFromPlayerPosition
-          viewPlayerMovement(specialCell.get.message)
-          specialCell.foreach(PlayerController.playerOnSpecialCell(_, steps))
-      case CellStatus.STANDARD_CELL =>
   def showGameLocked(): Unit =
     AlertUtils.gameLockedWarning()
     LogicController.newGame()
