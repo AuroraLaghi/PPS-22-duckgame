@@ -113,7 +113,7 @@ class GameUtilsTest extends AnyFlatSpec with should.Matchers:
   }
 
   "Method getSpecialCellFromPlayerPosition" should "return, if present, the special cell located in player's position" in {
-    MovementsController.standardMove((2, 4))
+    MovementsController.fixedPositionMove(6)
     GameUtils.getSpecialCellFromPlayerPosition should not be empty
     LogicController.checkCellType shouldBe CellStatus.SPECIAL_CELL
   }
