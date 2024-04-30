@@ -83,5 +83,8 @@ object GameReader:
   
   def availableTokens(): List[Token] =
     Game.availableTokens
+    
+  def nextPlayer(): Unit =
+    Game.currentPlayer = (currentPlayerIndex + 1) % players.length  
 
 
