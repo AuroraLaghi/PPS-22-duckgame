@@ -1,5 +1,6 @@
 package it.unibo.pps.duckgame.controller
 
+import it.unibo.pps.duckgame.controller.GameReader.{currentPlayerIndex, players}
 import it.unibo.pps.duckgame.model.{CellStatus, Player}
 import it.unibo.pps.duckgame.utils.GameUtils
 
@@ -42,9 +43,9 @@ object LogicController:
     */
   def moveCurrentPlayer(steps: Int): Unit =
     PlayerController.updatePlayerWith(Game.currentPlayer, GameReader.currentPlayer.move(steps))
-    
+
   def lockUnlockTurnPlayer(lock: Boolean): Unit =
-    PlayerController.updatePlayerWith(Game.currentPlayer, GameReader.currentPlayer.lockUnlockPlayer(lock))  
+    PlayerController.updatePlayerWith(Game.currentPlayer, GameReader.currentPlayer.lockUnlockPlayer(lock))
 
   def setNewPositionOfCurrentPlayer(position: Int): Unit =
     PlayerController.updatePlayerWith(Game.currentPlayer, GameReader.currentPlayer.newPosition(position))
@@ -70,11 +71,14 @@ object LogicController:
     cell match
       case Some(_) => CellStatus.SPECIAL_CELL
       case _ => CellStatus.STANDARD_CELL
+  
   @tailrec
   private def nextPlayerFree(): Unit =
-    Game.currentPlayer = (GameReader.currentPlayerIndex + 1) % GameReader.players.length
+    GameReader.nextPlayer()
     if GameReader.currentPlayer.isLocked then
       LogicController.lockUnlockTurnPlayer(false)
-      Game.currentPlayer = (GameReader.currentPlayerIndex + 1) % GameReader.players.length
-    if GameReader.currentPlayerIndex == GameReader.playerInJail() || GameReader.currentPlayerIndex == GameReader.playerInWell()
-    then nextPlayerFree()
+    else if GameReader.currentPlayerIndex != GameReader.playerInWell()
+      && GameReader.currentPlayerIndex != GameReader.playerInJail() then
+      return
+    nextPlayerFree()
+
