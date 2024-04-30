@@ -82,7 +82,7 @@
   {
     "number": 42,
     "cellType": "labyrinth",
-    "message": "Giocatore finito sulla casella del labirinto quindi dovrà indietreggiare fino alla casella n°39."
+    "message": "Giocatore finito sulla casella del labirinto, quindi dovrà indietreggiare fino alla casella n°39."
   },
   {
     "number": 52,
@@ -92,7 +92,7 @@
   {
     "number": 58,
     "cellType": "skeleton",
-    "message": "Giocatore finito sulla casella dello scheletro quindi verrà mandato alla casella di start."
+    "message": "Giocatore finito sulla casella dello scheletro, quindi tornerà alla casella iniziale."
   },
   {
     "number": 63,
