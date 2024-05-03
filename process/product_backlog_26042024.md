@@ -15,4 +15,4 @@ dei dati e maggiori informazioni visualizzate nella schermata principale. Avvio 
 
 
 ## Sprint result
-Al termine di questo sprint,
+Al termine di questo sprint, è possibile visualizzare le pedine relative ai giocatori, il risultato del lancio dei dati e le informazioni relative alle caselle raggiunte dai giocatori. Inoltre, sono stati creati i file con il codice prolog, da integrare all'applicativo nel prossimo sprint.
