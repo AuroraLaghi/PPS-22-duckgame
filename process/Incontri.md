@@ -79,16 +79,27 @@ Ordine del giorno:
   - Allineamento documentazione
   - Controllo coverage tests
 - Aggiornamento product backlog
-- Riportare obiettivi raggiunti duranto lo sprint
+- Riportare obiettivi raggiunti durante lo sprint
 
 ## 25 aprile non lavorativo
 
-## Riunuone 26/04/2024: 4° sprint preview
+## Riunione 26/04/2024: 4° sprint preview
 Ordine del giorno:
 - Impostazione 4° sprint:
 	- Proseguimento parte GUI:
 		- Aggiunta pedine giocatore
-		- Visualizzazione più completa della schermata di gioco (pedine, caselle 				speciali, lancio dadi)
+		- Visualizzazione più completa della schermata di gioco (pedine, caselle speciali, lancio dadi)
 	- Inizio parte Prolog
 	- Suddivisione del lavoro
 - Pianificazione riunione successiva
+
+## 1 maggio non lavorativo
+
+## Riunione 03/05/2024: 4° sprint review
+Ordine del giorno:
+- Verifica del lavoro svolto:
+	- Check codice sviluppato e di testing
+ 	- Allineamento documentazione
+  	- Controllo coverage tests
+- Aggiornamento product backlog   
+- Aggiungere obiettivi raggiunti durante lo sprint
