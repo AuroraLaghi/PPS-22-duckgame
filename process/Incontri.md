@@ -103,3 +103,11 @@ Ordine del giorno:
   	- Controllo coverage tests
 - Aggiornamento product backlog   
 - Aggiungere obiettivi raggiunti durante lo sprint
+
+## Riunione 04/05/2024: 5° sprint preview
+Ordine del giorno:
+- Impostazione 5° sprint:
+    - Integrazione codice Prolog in Scala
+    - Miglioramento qualità del codice
+    - Avanzamento stesura relazione
+- Pianificare prossima riunione
