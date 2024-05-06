@@ -1,6 +1,6 @@
 package it.unibo.pps.duckgame.controller
 
-import it.unibo.pps.duckgame.controller.GameReader.{currentPlayerIndex, players}
+import it.unibo.pps.duckgame.controller.GameReader.{currentPlayerIndex, nextPlayer, players}
 import it.unibo.pps.duckgame.model.{CellStatus, Player}
 import it.unibo.pps.duckgame.utils.GameUtils
 
@@ -75,10 +75,11 @@ object LogicController:
   @tailrec
   private def nextPlayerFree(): Unit =
     GameReader.nextPlayer()
-    if GameReader.currentPlayer.isLocked then
-      LogicController.lockUnlockTurnPlayer(false)
-    else if GameReader.currentPlayerIndex != GameReader.playerInWell()
-      && GameReader.currentPlayerIndex != GameReader.playerInJail() then
-      return
-    nextPlayerFree()
+    GameReader.currentPlayer.isLocked match
+      case true => LogicController.lockUnlockTurnPlayer(false)
+        nextPlayerFree()
+      case false if GameReader.currentPlayerIndex != GameReader.playerInWell()
+        && GameReader.currentPlayerIndex != GameReader.playerInJail() =>
+      case _ => nextPlayerFree()
+
 

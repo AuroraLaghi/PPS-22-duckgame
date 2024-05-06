@@ -29,7 +29,7 @@ final case class SpecialCellBuilder(number: Int, specialCellType: SpecialCellTyp
   private def lockOneTurn(steps: Int): Unit =
     LogicController.lockUnlockTurnPlayer(true)
 
-  private def noAction(steps: Int): Unit = return
+  private def noAction(steps: Int): Unit = {}
 
   def build(): SpecialCell =
     val action = specialCellType match
