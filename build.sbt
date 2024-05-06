@@ -9,12 +9,11 @@ lazy val root = (project in file("."))
     name := "PPS-22-duckgame",
     assembly / assemblyJarName := "duckgame.jar",
     libraryDependencies ++= Seq(
-      "org.scalatest" %% "scalatest" % "3.2.17" % Test,
+      "org.scalatest" %% "scalatest" % "3.2.18" % Test,
       "org.scalafx" %% "scalafx" % "16.0.0-R24",
       "it.unibo.alice.tuprolog" % "2p-core" % "4.1.1",
       "it.unibo.alice.tuprolog" % "2p-ui" % "4.1.1",
       "org.controlsfx" % "controlsfx" % "11.2.1",
-      "org.scalactic" %% "scalactic" % "3.2.13",
       "org.junit.jupiter" % "junit-jupiter" % "5.10.2" % Test, // aggregator of junit-jupiter-api and junit-jupiter-engine (runtime)
       "org.junit.jupiter" % "junit-jupiter-engine" % "5.10.2" % Test, // for org.junit.platform
       "org.junit.vintage" % "junit-vintage-engine" % "5.10.2" % Test,
@@ -27,7 +26,8 @@ lazy val root = (project in file("."))
     Test / parallelExecution := false
   )
 
-wartremoverWarnings ++= Warts.allBut(
+
+Compile/compile/wartremoverWarnings ++= Warts.allBut(
   Wart.Any,
   Wart.AsInstanceOf,
   Wart.Null,
@@ -41,7 +41,12 @@ wartremoverWarnings ++= Warts.allBut(
   Wart.Overloading,
   Wart.Var,
   Wart.SeqApply,
-  Wart.IterableOps
+  Wart.SeqUpdated,
+  Wart.IterableOps,
+  Wart.While,
+  Wart.MutableDataStructures,
+  Wart.ImplicitConversion,
+  Wart.SizeIs
 )
 
 assembly / mainClass := Some("it.unibo.pps.duckgame.Main")
