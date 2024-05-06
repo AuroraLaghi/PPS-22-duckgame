@@ -228,11 +228,8 @@ class GameBoardView extends Initializable:
 
   private def updatePlayerPosition(player: Player): Unit =
     val cellGrid = cellsGrid(GameUtils.getCoordinateFromPosition(player.actualPosition))
-    val (col, row) = getFirstFreeCellStartingFrom(cellGrid, cellGrid.getChildren.size(), (0, 1))
+    val (col, row) = GameUtils.getNthSlotFromCell(cellGrid.getChildren.size() + 1, (N_COLS_IN_CELL, N_ROWS_IN_CELL))
     if !cellGrid.getChildren.contains(tokensMap(player.token)) then cellGrid.add(tokensMap(player.token), col, row)
-
-  private def getFirstFreeCellStartingFrom(gridPane: GridPane, nthCell: Int, startingCell: (Int, Int)): (Int, Int) =
-    GameUtils.getNthCellInGridWithStartingPos(nthCell + 1, (N_COLS_IN_CELL, N_ROWS_IN_CELL), startingCell)
 
   private def afterThrow(dice1: Int, dice2: Int): Unit =
     updatePlayerPosition(GameReader.currentPlayer)
