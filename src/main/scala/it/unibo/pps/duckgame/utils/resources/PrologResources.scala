@@ -5,7 +5,7 @@ enum PrologResources(_path: String):
   case GAMEUTILS_PROLOG extends PrologResources("prolog/GameUtils.pl")
   case ROLLDICE_PROLOG extends PrologResources("prolog/RollDice.pl")
 
-  /** @retyrn
+  /** @return
     *   the path of Prolog's resource
     */
   val path: String = _path
