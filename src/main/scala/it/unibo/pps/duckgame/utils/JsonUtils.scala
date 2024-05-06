@@ -27,7 +27,6 @@ object JsonUtils:
     js.close()
     cells
 
-  @SuppressWarnings(Array("org.wartremover.warts.MutableDataStructures", "org.wartremover.warts.While"))
   private def readCells[T](in: Reader, deserializer: Deserializer[T]): List[T] =
     val reader = new JsonReader(in)
     val cells = new ListBuffer[T]

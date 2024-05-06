@@ -30,51 +30,39 @@ class PlayersMenuView extends Initializable:
   private def HEIGHT = 0.6
 
   @FXML
-  @SuppressWarnings(Array("org.wartremover.warts.Null", "org.wartremover.warts.Var"))
   private var startButton: Button = _
 
   @FXML
-  @SuppressWarnings(Array("org.wartremover.warts.Null", "org.wartremover.warts.Var"))
   private var exitButton: Button = _
 
   @FXML
-  @SuppressWarnings(Array("org.wartremover.warts.Null", "org.wartremover.warts.Var"))
   private var pane: BorderPane = _
 
   @FXML
-  @SuppressWarnings(Array("org.wartremover.warts.Null", "org.wartremover.warts.Var"))
   private var leftBorderPaneVBox: VBox = _
 
   @FXML
-  @SuppressWarnings(Array("org.wartremover.warts.Null", "org.wartremover.warts.Var"))
   private var rightBorderPaneVBox: VBox = _
 
   @FXML
-  @SuppressWarnings(Array("org.wartremover.warts.Null", "org.wartremover.warts.Var"))
   private var tableView: TableView[Player] = _
 
   @FXML
-  @SuppressWarnings(Array("org.wartremover.warts.Null", "org.wartremover.warts.Var"))
   private var playerNameColumn: TableColumn[Player, String] = _
 
   @FXML
-  @SuppressWarnings(Array("org.wartremover.warts.Null", "org.wartremover.warts.Var"))
   private var playerTokenColumn: TableColumn[Player,Token] = _
 
   @FXML
-  @SuppressWarnings(Array("org.wartremover.warts.Null", "org.wartremover.warts.Var"))
   private var addPlayerNameTextField: TextField = _
 
   @FXML
-  @SuppressWarnings(Array("org.wartremover.warts.Null", "org.wartremover.warts.Var"))
   private var addPlayerButton: Button = _
 
   @FXML
-  @SuppressWarnings(Array("org.wartremover.warts.Null", "org.wartremover.warts.Var"))
   private var removePlayerButton: Button = _
 
   @FXML
-  @SuppressWarnings(Array("org.wartremover.warts.Null", "org.wartremover.warts.Var"))
   private var addTokenComboBox: ComboBox[Token] = _
 
   override def initialize(url: URL, resourceBundle: ResourceBundle): Unit =

@@ -24,15 +24,12 @@ class StartMenuView extends Initializable:
   private def HEIGHT = 0.4
 
   @FXML
-  @SuppressWarnings(Array("org.wartremover.warts.Null", "org.wartremover.warts.Var"))
   private var pane: BorderPane = _
 
   @FXML
-  @SuppressWarnings(Array("org.wartremover.warts.Null", "org.wartremover.warts.Var"))
   private var startButton: Button = _
 
   @FXML
-  @SuppressWarnings(Array("org.wartremover.warts.Null", "org.wartremover.warts.Var"))
   private var exitButton: Button = _
 
   @FXML
