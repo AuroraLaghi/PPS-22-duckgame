@@ -14,7 +14,6 @@ import javafx.scene.layout.BorderPane
 import scalafx.scene.control.Alert.AlertType
 import javafx.scene.control.ButtonType
 import scalafx.stage.{Screen, Stage}
-import org.scalactic.TripleEquals.convertToEqualizer
 
 import java.io.IOException
 import java.util.Optional

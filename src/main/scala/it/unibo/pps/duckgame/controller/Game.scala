@@ -1,8 +1,7 @@
 package it.unibo.pps.duckgame.controller
 
 import it.unibo.pps.duckgame.model.{GameBoard, Player, Token}
-import it.unibo.pps.duckgame.utils.GameUtils
-import org.scalactic.TripleEquals.*
+import it.unibo.pps.duckgame.utils.{AnyOps, GameUtils}
 
 /** Game object that contains the current player, the list of players and, eventually, the winner
  */
@@ -103,7 +102,7 @@ protected object Game:
    */  
   def addPlayer(player: Player): Unit =
     players = player::players
-    availableTokens = availableTokens.filter(_ != player.token)
+    availableTokens = availableTokens.filter(_ =/= player.token)
 
   /** Removes a player from the game
    * 
@@ -112,7 +111,7 @@ protected object Game:
    */  
   def removePlayer(player: Player): Unit =
     availableTokens = player.token :: availableTokens
-    players = players.filter(_ !== player)
+    players = players.filter(_ =/= player)
 
 
   /** Reset the game to the initial parameters

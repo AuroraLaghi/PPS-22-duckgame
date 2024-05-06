@@ -6,7 +6,7 @@ import it.unibo.pps.duckgame.model.specialCell.{SpecialCell, SpecialCellType}
 import it.unibo.pps.duckgame.model.specialCell.SpecialCellType.JAIL
 import it.unibo.pps.duckgame.model.{Cell, CellStatus, Dice, GameBoard, Player}
 import it.unibo.pps.duckgame.utils.resources.FxmlResources
-import it.unibo.pps.duckgame.utils.{AlertUtils, FxmlUtils, GameUtils}
+import it.unibo.pps.duckgame.utils.{AlertUtils, AnyOps, FxmlUtils, GameUtils}
 import it.unibo.pps.duckgame.view.GameBoardView
 
 import scala.annotation.tailrec
@@ -63,5 +63,5 @@ object GameBoardController:
     FxmlUtils.changeScene(FxmlResources.START_MENU.path)
 
   def viewPlayerMovement(message: String): Unit =
-    if _view != null then
+    if _view =/= null then
       _view.playerMovement(message)
