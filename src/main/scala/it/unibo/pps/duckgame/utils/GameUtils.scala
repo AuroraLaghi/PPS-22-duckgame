@@ -7,7 +7,7 @@ import it.unibo.pps.duckgame.utils.PrologGameUtils.PrologEngine.PrologEngine
 import it.unibo.pps.duckgame.utils.resources.PrologResources
 import alice.tuprolog.SolveInfo
 import PrologGameUtils.PrologTheory.given
-import PrologGameUtils.{PrologSolution, PrologTheory, CellInGridTerm}
+import PrologGameUtils.{PrologSolution, PrologTheory, ConversionTerm}
 
 
 import scala.util.Random

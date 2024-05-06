@@ -10,8 +10,9 @@ import org.scalatest.matchers.should
 import scala.util.Random
 
 class GameUtilsTest extends AnyFlatSpec with should.Matchers:
+  val MAX_DICE_VALUE = 6
   val RANDOM_POSITION: Int = Random.between(1, GameReader.gameBoard.size / 2)
-  val RANDOM_STEPS: Int = Random.between(1, Dice.MAX_DICE_VALUE * 2 + 1)
+  val RANDOM_STEPS: Int = Random.between(1, MAX_DICE_VALUE * 2 + 1)
 
   "Method addSumToPosition" should "make arithmetic sum of given values" in {
     GameUtils.addSumToPosition(RANDOM_STEPS, RANDOM_POSITION) shouldBe RANDOM_STEPS + RANDOM_POSITION
