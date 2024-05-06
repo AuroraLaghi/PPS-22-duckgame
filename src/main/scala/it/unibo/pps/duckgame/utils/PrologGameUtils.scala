@@ -4,7 +4,7 @@ import alice.tuprolog.{Prolog, SolveInfo, Term, Theory}
 import it.unibo.pps.duckgame.model.Dice
 
 import java.util.Scanner
-import scala.io.Source
+import scala.io.{Codec, Source}
 import scala.language.implicitConversions
 import it.unibo.pps.duckgame.utils.PrologGameUtils.ConversionTerm.given
 import it.unibo.pps.duckgame.utils.PrologGameUtils.PrologSolution.given
@@ -84,7 +84,7 @@ object PrologGameUtils:
   object PrologTheory:
     given Conversion[String, Theory] = e => Theory.parseWithStandardOperators(getStringTheory(e))
 
-    private def getStringTheory(resourcePath: String): String = Source.fromResource(resourcePath)("UTF-8").mkString
+    private def getStringTheory(resourcePath: String): String = Source.fromResource(resourcePath)(Codec.UTF8).mkString
 
   /** Contains useful operator for building [[Term]]. */
   object ConversionTerm:
