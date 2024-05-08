@@ -2,9 +2,9 @@ package it.unibo.pps.duckgame.model
 
 import it.unibo.pps.duckgame.model.specialCell.SpecialCellType.DUCK
 import it.unibo.pps.duckgame.model.specialCell.{SpecialCell, SpecialCellBuilder, SpecialCellType}
-import it.unibo.pps.duckgame.utils.JsonUtils
-import it.unibo.pps.duckgame.utils.deserialization.SpecialCellDeserializer
-import it.unibo.pps.duckgame.utils.resources.JsonResources
+import it.unibo.pps.duckgame.utils.SetupFromFile
+import it.unibo.pps.duckgame.utils.config.Parser.SpecialCellsParser
+import it.unibo.pps.duckgame.utils.resources.TxtResources
 import scalafx.scene.control
 
 /** Represents the game board
@@ -35,7 +35,10 @@ class GameBoard(
 
 object GameBoard:
   def apply(): GameBoard =
-    new GameBoard((0 to 63).map(n => CellImpl(n)).toList, JsonUtils.readCellsType[SpecialCell](JsonResources.SPECIAL_CELLS, SpecialCellDeserializer ))
+    new GameBoard(
+      (0 to 63).map(n => CellImpl(n)).toList,
+      SetupFromFile.setup[SpecialCell](TxtResources.SPECIAL_CELL_TXT.path, SpecialCellsParser)
+    )
 
   def apply(cells: List[Cell], specialCell: List[SpecialCell]): GameBoard =
     new GameBoard(cells, specialCell)
