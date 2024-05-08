@@ -18,8 +18,8 @@
                     <HBox.margin>
                         <Insets top="50.0"/>
                     </HBox.margin>
-                    <Button fx:id="startButton" onAction="#playGame" text="Gioca"/>
-                    <Button fx:id="exitButton" onAction="#exitGame" text="Esci"/>
+                    <Button onAction="#playGame" text="Gioca"/>
+                    <Button onAction="#exitGame" text="Esci"/>
                 </HBox>
             </VBox>
         </StackPane>
