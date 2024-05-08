@@ -17,8 +17,7 @@ lazy val root = (project in file("."))
       "org.junit.jupiter" % "junit-jupiter" % "5.10.2" % Test, // aggregator of junit-jupiter-api and junit-jupiter-engine (runtime)
       "org.junit.jupiter" % "junit-jupiter-engine" % "5.10.2" % Test, // for org.junit.platform
       "org.junit.vintage" % "junit-vintage-engine" % "5.10.2" % Test,
-      "org.junit.platform" % "junit-platform-launcher" % "1.10.2" % Test,
-      "com.google.code.gson" % "gson" % "2.10.1"
+      "org.junit.platform" % "junit-platform-launcher" % "1.10.2" % Test
     ) ++ osNames.flatMap(os =>
       Seq("base", "controls", "fxml", "graphics", "media", "swing", "web")
         .map(m => "org.openjfx" % s"javafx-$m" % "20" classifier os) ),
@@ -43,7 +42,6 @@ Compile/compile/wartremoverWarnings ++= Warts.allBut(
   Wart.SeqApply,
   Wart.SeqUpdated,
   Wart.IterableOps,
-  Wart.While,
   Wart.MutableDataStructures,
   Wart.ImplicitConversion,
   Wart.SizeIs
