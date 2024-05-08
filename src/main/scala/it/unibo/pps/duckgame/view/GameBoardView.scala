@@ -2,30 +2,28 @@ package it.unibo.pps.duckgame.view
 
 import it.unibo.pps.duckgame.controller.{EndGameController, GameBoardController, GameReader}
 import it.unibo.pps.duckgame.model.{Player, Token}
-import it.unibo.pps.duckgame.utils.{FxmlUtils, GameUtils}
 import it.unibo.pps.duckgame.utils.resources.CssResources.GAME_STYLE
 import it.unibo.pps.duckgame.utils.resources.ImgResources
+import it.unibo.pps.duckgame.utils.{FxmlUtils, GameUtils}
 import javafx.beans.property.SimpleObjectProperty
-import scalafx.beans.property.StringProperty
-import javafx.{fxml, geometry}
 import javafx.fxml.{FXML, Initializable}
 import javafx.geometry.{Insets, Pos}
-import javafx.scene.layout.{BorderPane, ColumnConstraints, GridPane, HBox, RowConstraints, VBox}
-import javafx.stage.Screen
-import javafx.fxml.{FXML, Initializable}
+import javafx.scene.control.*
 import javafx.scene.control.cell.PropertyValueFactory
-import javafx.scene.control.{Button, Label, ListView, TableColumn, TableView, TextArea}
 import javafx.scene.image.{Image, ImageView}
+import javafx.scene.layout.*
 import javafx.scene.{image, layout}
+import javafx.stage.Screen
+import javafx.{fxml, geometry}
+import scalafx.beans.property.StringProperty
 
-import scala.collection.immutable.Map as MMap
 import java.net.URL
 import java.util.ResourceBundle
-import scala.::
+import scala.collection.immutable.Map as MMap
 
 class GameBoardView extends Initializable:
 
-  private def DEFAULT_SPACING = 10
+  private def NMENU = 2
   private def N_COLS_IN_CELL = 3
   private def N_ROWS_IN_CELL = 2
 
@@ -33,16 +31,10 @@ class GameBoardView extends Initializable:
   private var actionsMenu: VBox = _
 
   @FXML
-  private var turnLabel: Label = _
-
-  @FXML
   private var throwDiceButton: Button = _
 
   @FXML
   private var endTurnButton: Button = _
-
-  @FXML
-  private var exitButton: Button = _
 
   @FXML
   private var gameBoard: ImageView = _
@@ -58,9 +50,6 @@ class GameBoardView extends Initializable:
 
   @FXML
   private var currentPlayer: Label = _
-
-  @FXML
-  private var dicesView: VBox = _
 
   @FXML
   private var diceImage1: ImageView = _
@@ -80,10 +69,6 @@ class GameBoardView extends Initializable:
   @FXML
   private var movementMessage: TextArea = _
 
-
-  private var playersHBox: MMap[String, HBox] = MMap.empty
-
-
   private var cellsGrid: MMap[(Int, Int), GridPane] = MMap.empty
 
   private var tokensMap: MMap[Token, ImageView] = MMap.empty
@@ -92,9 +77,9 @@ class GameBoardView extends Initializable:
     FxmlUtils.initUIElements(pane, gameBoard, GAME_STYLE, FxmlUtils.DEFAULT_WIDTH_PERC, FxmlUtils.DEFAULT_HEIGHT_PERC)
     initializeCellGrid()
     val menuWidth = FxmlUtils.getResolution._1 - pane.getPrefHeight
-    actionsMenu.setPrefWidth(menuWidth / 2)
-    playerListBox.setPrefWidth(menuWidth / 2)
-    currentPlayer.setPrefWidth(menuWidth / 2)
+    actionsMenu.setPrefWidth(menuWidth / NMENU)
+    playerListBox.setPrefWidth(menuWidth / NMENU)
+    currentPlayer.setPrefWidth(menuWidth / NMENU)
     playersTable.setPrefWidth(menuWidth)
     movementMessage.setPrefWidth(menuWidth)
     currentPlayer.setAlignment(geometry.Pos.CENTER)
@@ -180,9 +165,9 @@ class GameBoardView extends Initializable:
     playerMovement("Il giocatore è sulla casella: " + position.toString)
     if GameBoardController.checkVictory() then GameBoardController.showVictory()
     else if EndGameController.isGameLocked then GameBoardController.showGameLocked()
-      else if dice1 != dice2 || position == 19 || position == 31 || position == 52 then setButtonsForTurnEnding(true)
-      else playerMovement("Il giocatore ha fatto doppio, deve ritirare.")
-  def playerMovement(message: String) : Unit =
+    else if dice1 != dice2 || position == 19 || position == 31 || position == 52 then setButtonsForTurnEnding(true)
+    else playerMovement("Il giocatore ha fatto doppio, deve ritirare.")
+  def playerMovement(message: String): Unit =
     movementMessage.appendText(message + "\n")
 
   private def setCurrentPlayer(): Unit =

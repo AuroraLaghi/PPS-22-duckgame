@@ -3,46 +3,30 @@ package it.unibo.pps.duckgame.view
 import it.unibo.pps.duckgame.controller.{GameBoardController, PlayerMenuController}
 import it.unibo.pps.duckgame.model.{Player, Token}
 import it.unibo.pps.duckgame.utils.resources.CssResources.GAME_STYLE
-import it.unibo.pps.duckgame.utils.{AlertUtils, FxmlUtils}
 import it.unibo.pps.duckgame.utils.resources.{CssResources, FxmlResources}
+import it.unibo.pps.duckgame.utils.{AlertUtils, FxmlUtils}
+import javafx.beans.binding.Bindings
+import javafx.collections.FXCollections
 import javafx.fxml.{FXML, FXMLLoader, Initializable}
-import javafx.scene.layout.{AnchorPane, BorderPane}
+import javafx.scene.control.*
+import javafx.scene.layout.{AnchorPane, BorderPane, VBox}
+import javafx.scene.{Scene, control as jfxsc, layout as jfxsl}
+import javafx.stage.Screen
 import javafx.{event as jfxe, fxml as jfxf, scene as jfxs}
-import javafx.scene.{control as jfxsc, layout as jfxsl}
-import javafx.scene.Scene
+import scalafx.Includes.*
+import scalafx.beans.property.{ObjectProperty, StringProperty}
 
 import java.net.URL
 import java.util.ResourceBundle
-import scalafx.Includes.*
-import javafx.beans.binding.Bindings
-import javafx.collections.FXCollections
-import scalafx.beans.property.{ObjectProperty, StringProperty}
-import javafx.scene.control.{Button, ComboBox, TableColumn, TableView, TextField}
-import javafx.scene.layout.VBox
-import javafx.stage.Screen
 
 class PlayersMenuView extends Initializable:
-
-  private def NMENU = 2
 
   private def WIDTH = 0.6
 
   private def HEIGHT = 0.6
 
   @FXML
-  private var startButton: Button = _
-
-  @FXML
-  private var exitButton: Button = _
-
-  @FXML
   private var pane: BorderPane = _
-
-  @FXML
-  private var leftBorderPaneVBox: VBox = _
-
-  @FXML
-  private var rightBorderPaneVBox: VBox = _
 
   @FXML
   private var tableView: TableView[Player] = _

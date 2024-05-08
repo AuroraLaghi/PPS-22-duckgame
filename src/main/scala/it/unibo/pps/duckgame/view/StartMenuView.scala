@@ -5,33 +5,25 @@ import it.unibo.pps.duckgame.utils.FxmlUtils
 import it.unibo.pps.duckgame.utils.resources.CssResources.GAME_STYLE
 import it.unibo.pps.duckgame.utils.resources.{CssResources, FxmlResources, ImgResources}
 import javafx.fxml.{FXML, FXMLLoader, Initializable}
-import javafx.scene.image.Image
+import javafx.scene.image.{Image, ImageView}
 import javafx.scene.layout.{AnchorPane, BorderPane}
-import javafx.{event as jfxe, fxml as jfxf, scene as jfxs}
 import javafx.scene.{control as jfxsc, layout as jfxsl}
+import javafx.{event as jfxe, fxml as jfxf, scene as jfxs}
+import scalafx.Includes.*
 import scalafx.scene.Scene
+import scalafx.scene.control.Button
+import scalafx.stage.Screen
 
 import java.net.URL
 import java.util.ResourceBundle
-import scalafx.Includes.*
-import scalafx.scene.control.Button
-import javafx.scene.image.ImageView
-import scalafx.stage.Screen
 
 class StartMenuView extends Initializable:
-  
+
   private def WIDTH = 0.4
   private def HEIGHT = 0.4
 
   @FXML
   private var pane: BorderPane = _
-
-  @FXML
-  private var startButton: Button = _
-
-  @FXML
-  private var exitButton: Button = _
-
   @FXML
   private var logo: ImageView = _
 
@@ -46,5 +38,3 @@ class StartMenuView extends Initializable:
 
   def exitGame(): Unit =
     StartMenuController.closeGame()
-
-
