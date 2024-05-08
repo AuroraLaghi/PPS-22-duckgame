@@ -1,0 +1,17 @@
+5;duck;Giocatore finito sulla casella della papera quindi avanzerà dello stesso numero effettuato
+9;duck;Giocatore finito sulla casella della papera quindi avanzerà dello stesso numero effettuato
+14;duck;Giocatore finito sulla casella della papera quindi avanzerà dello stesso numero effettuato
+18;duck;Giocatore finito sulla casella della papera quindi avanzerà dello stesso numero effettuato
+23;duck;Giocatore finito sulla casella della papera quindi avanzerà dello stesso numero effettuato
+27;duck;Giocatore finito sulla casella della papera quindi avanzerà dello stesso numero effettuato
+36;duck;Giocatore finito sulla casella della papera quindi avanzerà dello stesso numero effettuato
+50;duck;Giocatore finito sulla casella della papera quindi avanzerà dello stesso numero effettuato
+54;duck;Giocatore finito sulla casella della papera quindi avanzerà dello stesso numero effettuato
+59;duck;Giocatore finito sulla casella della papera quindi avanzerà dello stesso numero effettuato
+6;bridge;Giocatore finito sulla casella del ponte quindi proseguirà fino alla casella n°12
+19;house;Giocatore finito sulla casella della casa quindi dovrà restare fermo per un turno
+31;well;Giocatore finito sulla casella del pozzo, dovrà rimanere fermo fin quando un altro giocatore non si fermerà nella stessa casella
+42;labyrinth;Giocatore finito sulla casella del labirinto, quindi dovrà indietreggiare fino alla casella n°39
+52;jail;Giocatore finito sulla casella della prigione, dovrà rimanere fermo fin quando un altro giocatore non si fermerà nella stessa casella
+58;skeleton;Giocatore finito sulla casella dello scheletro, quindi tornerà alla casella iniziale
+63;final;Giocatore finito esattamente sulla casella n°63, quindi ha vinto la partita
