@@ -1,17 +1,20 @@
-5;duck;Giocatore finito sulla casella della papera quindi avanzerà dello stesso numero effettuato
-9;duck;Giocatore finito sulla casella della papera quindi avanzerà dello stesso numero effettuato
-14;duck;Giocatore finito sulla casella della papera quindi avanzerà dello stesso numero effettuato
-18;duck;Giocatore finito sulla casella della papera quindi avanzerà dello stesso numero effettuato
-23;duck;Giocatore finito sulla casella della papera quindi avanzerà dello stesso numero effettuato
-27;duck;Giocatore finito sulla casella della papera quindi avanzerà dello stesso numero effettuato
-36;duck;Giocatore finito sulla casella della papera quindi avanzerà dello stesso numero effettuato
-50;duck;Giocatore finito sulla casella della papera quindi avanzerà dello stesso numero effettuato
-54;duck;Giocatore finito sulla casella della papera quindi avanzerà dello stesso numero effettuato
-59;duck;Giocatore finito sulla casella della papera quindi avanzerà dello stesso numero effettuato
-6;bridge;Giocatore finito sulla casella del ponte quindi proseguirà fino alla casella n°12
-19;house;Giocatore finito sulla casella della casa quindi dovrà restare fermo per un turno
-31;well;Giocatore finito sulla casella del pozzo, dovrà rimanere fermo fin quando un altro giocatore non si fermerà nella stessa casella
-42;labyrinth;Giocatore finito sulla casella del labirinto, quindi dovrà indietreggiare fino alla casella n°39
-52;jail;Giocatore finito sulla casella della prigione, dovrà rimanere fermo fin quando un altro giocatore non si fermerà nella stessa casella
-58;skeleton;Giocatore finito sulla casella dello scheletro, quindi tornerà alla casella iniziale
-63;final;Giocatore finito esattamente sulla casella n°63, quindi ha vinto la partita
+5;duck;Il giocatore è finito sulla casella della papera, quindi avanza dello stesso numero ottenuto coi dadi
+9;duck;Il giocatore è finito sulla casella della papera, quindi avanza dello stesso numero ottenuto coi dadi
+14;duck;Il giocatore è finito sulla casella della papera, quindi avanza dello stesso numero ottenuto coi dadi
+18;duck;Il giocatore è finito sulla casella della papera, quindi avanza dello stesso numero ottenuto coi dadi
+23;duck;Il giocatore è finito sulla casella della papera, quindi avanza dello stesso numero ottenuto coi dadi
+27;duck;Il giocatore è finito sulla casella della papera, quindi avanza dello stesso numero ottenuto coi dadi
+32;duck;Il giocatore è finito sulla casella della papera, quindi avanza dello stesso numero ottenuto coi dadi
+36;duck;Il giocatore è finito sulla casella della papera, quindi avanza dello stesso numero ottenuto coi dadi
+41;duck;Il giocatore è finito sulla casella della papera, quindi avanza dello stesso numero ottenuto coi dadi
+45;duck;Il giocatore è finito sulla casella della papera, quindi avanza dello stesso numero ottenuto coi dadi
+50;duck;Il giocatore è finito sulla casella della papera, quindi avanza dello stesso numero ottenuto coi dadi
+54;duck;Il giocatore è finito sulla casella della papera, quindi avanza dello stesso numero ottenuto coi dadi
+59;duck;Il giocatore è finito sulla casella della papera, quindi avanza dello stesso numero ottenuto coi dadi
+6;bridge;Il giocatore è finito sulla casella del ponte, quindi avanza fino alla casella n°12
+19;house;Il giocatore è finito sulla casella della casa, quindi deve rimanere fermo per un turno
+31;well;Nel pozzo resti finchè un altro altro giocatore non ci cade
+42;labyrinth;Il giocatore è finito nel labirinto, indietreggia fino alla casella n°39
+52;jail;In prigione devi stare finchè un altro giocatore non ti viene a trovare
+58;skeleton;Il giocatore è finito nella trappola dello scheletro, quindi ritorna allo START
+63;final;Il giocatore ha ottenuto 63 col lancio dei dadi ed è il nuovo vincitore
