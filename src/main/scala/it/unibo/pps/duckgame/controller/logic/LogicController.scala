@@ -22,7 +22,7 @@ object LogicController:
 
   def movePlayer(dicePair: (Int, Int)): Unit =
     if GameReader.isFirstRound then MovementsController.firstRoundMoves(dicePair)
-    else MovementsController.standardMove(dicePair)
+    else MovementsController.moveWithSteps(dicePair._1 + dicePair._2)
 
   /** Sets current player's new position
     *

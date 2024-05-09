@@ -17,7 +17,7 @@ final case class SpecialCellBuilder(number: Int, specialCellType: SpecialCellTyp
     MovementsController.fixedPositionMove(12)  
 
   private def moveForward(steps: Int): Unit =
-    MovementsController.specialCellMove(steps)
+    MovementsController.moveWithSteps(steps)
 
   private def setWinner(steps: Int): Unit =
     EndGameController.setWinner()
