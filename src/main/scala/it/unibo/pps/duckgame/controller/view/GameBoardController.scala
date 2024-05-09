@@ -20,7 +20,7 @@ object GameBoardController:
 
   def view: GameBoardView = _view
 
-  def view_=(value: GameBoardView) : Unit =
+  def view_=(value: GameBoardView): Unit =
     _view = value
 
   /** Called when a player quits the game */
@@ -54,16 +54,12 @@ object GameBoardController:
     EndGameController.checkWinner()
 
   def movePlayer(dicePair: (Int, Int)): Unit =
-    if GameReader.isFirstRound then
-      MovementsController.firstRoundMoves(dicePair)
-    else
-      MovementsController.standardMove(dicePair)
-      
+    LogicController.movePlayer(dicePair)
+
   def showGameLocked(): Unit =
     AlertUtils.gameLockedWarning()
     LogicController.newGame()
     FxmlUtils.changeScene(FxmlResources.START_MENU.path)
 
   def viewPlayerMovement(message: String): Unit =
-    if _view =/= null then
-      _view.playerMovement(message)
+    if _view =/= null then _view.playerMovement(message)
