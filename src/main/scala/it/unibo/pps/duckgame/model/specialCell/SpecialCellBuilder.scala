@@ -1,6 +1,8 @@
 package it.unibo.pps.duckgame.model.specialCell
 
-import it.unibo.pps.duckgame.controller.{EndGameController, Game, GameReader, LogicController, MovementsController, PlayerMenuController}
+import it.unibo.pps.duckgame.controller.logic.{EndGameController, LogicController, MovementsController}
+import it.unibo.pps.duckgame.controller.view.PlayerMenuController
+import it.unibo.pps.duckgame.controller.{Game, GameReader}
 import it.unibo.pps.duckgame.model.CellStatus
 import it.unibo.pps.duckgame.model.specialCell.SpecialCellType.BLANK
 
@@ -21,10 +23,10 @@ final case class SpecialCellBuilder(number: Int, specialCellType: SpecialCellTyp
     EndGameController.setWinner()
     
   private def goInJail(steps: Int): Unit =
-    MovementsController.playerGoToJail(GameReader.currentPlayerIndex)  
+    MovementsController.playerCantPlay(GameReader.currentPlayerIndex)
     
   private def goInsideWell(steps: Int): Unit =
-    MovementsController.playerGoIntoWell(GameReader.currentPlayerIndex)
+    MovementsController.playerCantPlay(GameReader.currentPlayerIndex)
 
   private def lockOneTurn(steps: Int): Unit =
     LogicController.lockUnlockTurnPlayer(true)
