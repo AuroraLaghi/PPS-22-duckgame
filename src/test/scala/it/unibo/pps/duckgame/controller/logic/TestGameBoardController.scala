@@ -17,7 +17,7 @@ class TestGameBoardController extends AnyFlatSpec with should.Matchers with Befo
   override def beforeEach(): Unit =
     LogicController.newGame()
     players.foreach(p => Game.addPlayer(p))
-    LogicController.startGame()
+    LogicController.initializeGame()
 
   "When game is started it" should "have already a non-empty list of players" in {
     GameReader.players.length shouldBe players.length
