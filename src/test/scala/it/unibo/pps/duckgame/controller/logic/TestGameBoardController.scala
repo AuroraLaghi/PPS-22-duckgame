@@ -58,7 +58,7 @@ class TestGameBoardController extends AnyFlatSpec with should.Matchers with Befo
     GameReader.canStartGame shouldBe false
     GameReader addPlayer player1
     GameReader.canStartGame shouldBe false
-    GamReader addPlayer player2
+    GameReader addPlayer player2
     GameReader.canStartGame shouldBe true
   }
 
@@ -74,6 +74,6 @@ class TestGameBoardController extends AnyFlatSpec with should.Matchers with Befo
 
   "When there's a game winner it" should "be set somewhere" in {
     GameReader.winner shouldBe None
-    GameReader.winner = Some(player1)
+    GameReader setWinner Option(player1)
     GameReader.winner shouldBe Some(player1)
   }
