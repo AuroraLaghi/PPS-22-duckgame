@@ -1,6 +1,7 @@
-package it.unibo.pps.duckgame.controller
+package it.unibo.pps.duckgame.controller.logic
 
 import it.unibo.pps.duckgame.controller.GameReader.{currentPlayerIndex, nextPlayer, players}
+import it.unibo.pps.duckgame.controller.{Game, GameReader}
 import it.unibo.pps.duckgame.model.{CellStatus, Player}
 import it.unibo.pps.duckgame.utils.GameUtils
 

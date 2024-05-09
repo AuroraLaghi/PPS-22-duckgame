@@ -1,7 +1,9 @@
-package it.unibo.pps.duckgame.controller
+package it.unibo.pps.duckgame.controller.logic
 
+import it.unibo.pps.duckgame.controller.view.GameBoardController
+import it.unibo.pps.duckgame.controller.{Game, GameReader}
 import it.unibo.pps.duckgame.model.CellStatus
-import it.unibo.pps.duckgame.utils.GameUtils
+import it.unibo.pps.duckgame.utils.{AnyOps, GameUtils}
 
 object MovementsController:
 
@@ -33,19 +35,20 @@ object MovementsController:
   def fixedPositionMove(position: Int): Unit =
     LogicController.setNewPositionOfCurrentPlayer(position)
 
-  def playerGoToJail(player: Int): Unit =
-    if GameReader.playerInJail() != -1 then
-      GameBoardController.viewPlayerMovement(
-        "Ora " + GameReader.players(GameReader.playerInJail()).name + " può ricominciare a giocare"
-      )
-    Game.playerInJail = player
-
-  def playerGoIntoWell(player: Int): Unit =
-    if GameReader.playerInWell() != -1 then
-      GameBoardController.viewPlayerMovement(
-        "Ora " + GameReader.players(GameReader.playerInWell()).name + " può ricominciare a giocare"
-      )
-    Game.playerInWell = player
+  def playerCantPlay(player: Int): Unit = GameReader.players(player).actualPosition match
+    case 31 =>
+      if GameReader.playerInWell() =/= -1 then
+        GameBoardController.viewPlayerMovement(
+          "Ora " + GameReader.players(GameReader.playerInWell()).name + " può ricominciare a giocare"
+        )
+      Game.playerInWell = player
+    case 52 =>
+      if GameReader.playerInJail() =/= -1 then
+        GameBoardController.viewPlayerMovement(
+          "Ora " + GameReader.players(GameReader.playerInJail()).name + " può ricominciare a giocare"
+        )
+      Game.playerInJail = player
+    case _ =>
 
   private def checkSpecialCell(steps: Int): Unit =
     LogicController.checkCellType match

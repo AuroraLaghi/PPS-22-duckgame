@@ -1,9 +1,10 @@
-package it.unibo.pps.duckgame.controller
+package it.unibo.pps.duckgame.controller.logic
 
+import it.unibo.pps.duckgame.controller.Game
 import it.unibo.pps.duckgame.model.Player
 import it.unibo.pps.duckgame.model.specialCell.SpecialCell
-import it.unibo.pps.duckgame.utils.{AlertUtils, FxmlUtils}
 import it.unibo.pps.duckgame.utils.resources.FxmlResources
+import it.unibo.pps.duckgame.utils.{AlertUtils, FxmlUtils}
 
 /** Object class that controls player's movements */
 protected object PlayerController:

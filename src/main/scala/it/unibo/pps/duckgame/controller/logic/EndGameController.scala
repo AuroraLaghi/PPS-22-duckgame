@@ -1,4 +1,6 @@
-package it.unibo.pps.duckgame.controller
+package it.unibo.pps.duckgame.controller.logic
+
+import it.unibo.pps.duckgame.controller.{Game, GameReader}
 
 object EndGameController:
 

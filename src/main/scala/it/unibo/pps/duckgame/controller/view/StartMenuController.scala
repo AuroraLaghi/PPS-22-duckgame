@@ -1,5 +1,6 @@
-package it.unibo.pps.duckgame.controller
+package it.unibo.pps.duckgame.controller.view
 
+import it.unibo.pps.duckgame.controller.logic.LogicController
 import it.unibo.pps.duckgame.utils.FxmlUtils
 import it.unibo.pps.duckgame.utils.resources.FxmlResources
 
