@@ -3,11 +3,10 @@ package it.unibo.pps.duckgame.controller
 import it.unibo.pps.duckgame.model.{GameBoard, Player, Token}
 import it.unibo.pps.duckgame.utils.{AnyOps, GameUtils}
 
-/** Game object that contains the current player, the list of players and, eventually, the winner
- */
+/** Game object that contains the current player, the list of players and, eventually, the winner */
 protected object Game:
 
-  private val DEFAULT_CURRENT_PLAYER: Int = 0
+  private def DEFAULT_CURRENT_PLAYER: Int = 0
   private var _currentPlayer: Int = DEFAULT_CURRENT_PLAYER
   private var _players: List[Player] = List.empty
   private var _winner: Option[Player] = None
@@ -18,75 +17,75 @@ protected object Game:
   private var _availableTokens: List[Token] = Token.values.toList
 
   /** Return game board
-   * 
-   * @return
-   *  current gameboard
-   */
+    *
+    * @return
+    *   current gameboard
+    */
   def gameBoard: GameBoard = _gameBoard
 
   /** Sets current gameboard
-   * 
-   * @param value
-   *  gameboard to set
-   */
+    *
+    * @param value
+    *   gameboard to set
+    */
   def gameBoard_=(value: GameBoard): Unit =
     _gameBoard = value
-    
-  def firstRound: Boolean = _firstRound 
-  
+
+  def firstRound: Boolean = _firstRound
+
   def firstRound_=(value: Boolean): Unit =
     _firstRound = value
 
   /** Sets the current player
-   * 
-   * @return
-   *  the current player
-   */
+    *
+    * @return
+    *   the current player
+    */
   def currentPlayer: Int = _currentPlayer
 
   /** Sets the current player
-   * 
-   * @param value 
-   *  the new current player's position in the players' list
-   */
+    *
+    * @param value
+    *   the new current player's position in the players' list
+    */
   def currentPlayer_=(value: Int): Unit =
     _currentPlayer = value
 
   /** Return the list of players
-   *
-   * @return
-   * the list of players
-   */
+    *
+    * @return
+    *   the list of players
+    */
   def players: List[Player] = _players
 
   /** Sets the list of players
-   * 
-   * @param value
-   *  the new list of players
-   */
+    *
+    * @param value
+    *   the new list of players
+    */
   def players_=(value: List[Player]): Unit =
     _players = value
 
   /** Return the winner
-   * 
-   * @return
-   *  the winner
-   */
+    *
+    * @return
+    *   the winner
+    */
   def winner: Option[Player] = _winner
-  
+
   /** Sets the winner of the game
-   * @param value
-   *  the new winner*
-   */
+    * @param value
+    *   the new winner*
+    */
   def winner_=(value: Option[Player]): Unit =
     _winner = value
-    
+
   def playerInJail: Int = _playerInJail
   def playerInJail_=(value: Int): Unit =
     _playerInJail = value
-    
+
   def playerInWell: Int = _playerInWell
-  
+
   def playerInWell_=(value: Int): Unit =
     _playerInWell = value
 
@@ -96,26 +95,24 @@ protected object Game:
     _availableTokens = value
 
   /** Add a player to the game
-   * 
+    *
     * @param player
-   *  the new player to be added
-   */  
+    *   the new player to be added
+    */
   def addPlayer(player: Player): Unit =
-    players = player::players
+    players = player :: players
     availableTokens = availableTokens.filter(_ =/= player.token)
 
   /** Removes a player from the game
-   * 
-   * @param player
-   *  the player to be removed
-   */  
+    *
+    * @param player
+    *   the player to be removed
+    */
   def removePlayer(player: Player): Unit =
     availableTokens = player.token :: availableTokens
     players = players.filter(_ =/= player)
 
-
-  /** Reset the game to the initial parameters
-   */
+  /** Reset the game to the initial parameters */
   def reset(): Unit =
     currentPlayer = DEFAULT_CURRENT_PLAYER
     players = List.empty
@@ -125,9 +122,3 @@ protected object Game:
     playerInJail = -1
     playerInWell = -1
     availableTokens = Token.values.toList
-
-
-
-
-
-
