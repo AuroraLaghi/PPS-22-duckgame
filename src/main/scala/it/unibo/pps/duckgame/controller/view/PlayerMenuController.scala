@@ -14,7 +14,7 @@ object PlayerMenuController:
     *   The player to add
     */
   def addPlayer(player: Player): Unit =
-    LogicController addPlayer player
+    GameReader addPlayer player
 
   /** Called when user wants to delete one player from the game
     *
@@ -22,7 +22,7 @@ object PlayerMenuController:
     *   the player to delete
     */
   def removePlayer(player: Player): Unit =
-    LogicController removePlayer player
+    GameReader removePlayer player
 
   /** Called before adding a new player to the game
     *
@@ -43,7 +43,7 @@ object PlayerMenuController:
   /** Called after the canStartGame check returned positive Starts the game and changes scene
     */
   def playGame(): Unit =
-    LogicController.startGame()
+    LogicController.initializeGame()
     FxmlUtils.changeScene(FxmlResources.GAME_VIEW.path)
 
   /** Called if user wants to close game */

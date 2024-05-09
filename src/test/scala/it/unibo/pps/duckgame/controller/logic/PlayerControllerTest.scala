@@ -16,7 +16,7 @@ class PlayerControllerTest extends AnyFlatSpec with should.Matchers with BeforeA
 
   override def beforeEach(): Unit =
     LogicController.newGame()
-    players.foreach(p => LogicController.addPlayer(p))
+    players.foreach(p => GameReader addPlayer p)
 
   "Method update player" should "update current player with new information" in {
     GameReader.currentPlayer.actualPosition shouldBe 0
@@ -27,7 +27,7 @@ class PlayerControllerTest extends AnyFlatSpec with should.Matchers with BeforeA
   "Method update player" should "return back when the number of steps is bigger than the gameboard" in {
     GameBoardController.endTurn()
     GameReader.currentPlayer.actualPosition shouldBe 0
-    PlayerController.updatePlayerWith(Game.currentPlayer, GameReader.currentPlayer.move(67))
+    PlayerController.updatePlayerWith(GameReader.currentPlayerIndex, GameReader.currentPlayer.move(67))
     GameReader.currentPlayer.actualPosition shouldBe 59
   }
 

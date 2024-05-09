@@ -16,10 +16,10 @@ class TestLogicController extends AnyFlatSpec with should.Matchers with BeforeAn
 
   override def beforeEach(): Unit =
     LogicController.newGame()
-    players.foreach(p => LogicController.addPlayer(p))
+    players.foreach(p => GameReader addPlayer p)
 
   "When startGame is called, firstRound variable" should "be true" in {
-    LogicController.startGame()
+    LogicController.initializeGame()
     GameReader.isFirstRound shouldBe true
   }
 
@@ -43,10 +43,10 @@ class TestLogicController extends AnyFlatSpec with should.Matchers with BeforeAn
   }
 
   "If a player get 9 by dices at first turn and ends in duck cell it" should "not win but go in cell 26 or 53, depending the result of dices throw" in {
-    GameBoardController.movePlayer((3,6))
+    GameBoardController.movePlayer((3, 6))
     GameReader.currentPlayer.actualPosition shouldBe 26
     LogicController.endTurn()
-    GameBoardController.movePlayer((4,5))
+    GameBoardController.movePlayer((4, 5))
     GameReader.currentPlayer.actualPosition shouldBe 53
   }
 
@@ -63,4 +63,14 @@ class TestLogicController extends AnyFlatSpec with should.Matchers with BeforeAn
   "When a player go into a special cell it" should "be noted" in {
     LogicController.moveCurrentPlayer(6)
     LogicController.checkCellType shouldBe CellStatus.SPECIAL_CELL
+  }
+
+  "If one player is blocked in well, another one has to stop for one turn and the third one leaves game, " +
+    "then the new current player" should "be the one stopped for one turn" in {
+    LogicController.movePlayer((10, 9))
+    LogicController.endTurn()
+    LogicController.movePlayer((20, 11))
+    LogicController.endTurn()
+    LogicController.currentPlayerQuit()
+    GameReader.currentPlayer.name shouldBe p3.name
   }

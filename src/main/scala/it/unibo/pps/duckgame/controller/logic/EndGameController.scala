@@ -7,7 +7,7 @@ object EndGameController:
   private val MIN_PLAYERS = 2
 
   def checkWinner(): Boolean =
-    Game.winner.isDefined
+    GameReader.winner.isDefined
 
   /** Checks if there's only one player actually playing the game
     *
@@ -16,12 +16,12 @@ object EndGameController:
     */
   def checkVictoryForSurrender(): Boolean = GameReader.players.size match
     case n if n == MIN_PLAYERS - 1 =>
-      Game.winner = Game.players.headOption
+      setWinner()
       true
     case _ => false
 
   def setWinner(): Unit =
-    Game.winner = Option(GameReader.currentPlayer)
+    GameReader.setWinner(Option(GameReader.currentPlayer))
     
   def isGameLocked: Boolean =
     GameReader.players.length == 2 && GameReader.playerInJail() != -1 && GameReader.playerInWell() != -1

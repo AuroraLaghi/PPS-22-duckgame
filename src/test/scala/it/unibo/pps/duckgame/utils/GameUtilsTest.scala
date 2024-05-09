@@ -71,7 +71,7 @@ class GameUtilsTest extends AnyFlatSpec with should.Matchers:
   val p1: Player = Player("p1")
   val p2: Player = Player("p2")
   val players: List[Player] = List(p1, p2)
-  players.foreach(p => LogicController.addPlayer(p))
+  players.foreach(p => GameReader addPlayer p)
 
   "Method getSpecialCellFromPlayerPosition" should "give an empty return if current player is on a standard cell" in {
     GameUtils.getSpecialCellFromPlayerPosition shouldBe empty
