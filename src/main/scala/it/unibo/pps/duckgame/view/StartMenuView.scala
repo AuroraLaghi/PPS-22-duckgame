@@ -1,6 +1,6 @@
 package it.unibo.pps.duckgame.view
 
-import it.unibo.pps.duckgame.controller.StartMenuController
+import it.unibo.pps.duckgame.controller.view.StartMenuController
 import it.unibo.pps.duckgame.utils.FxmlUtils
 import it.unibo.pps.duckgame.utils.resources.CssResources.GAME_STYLE
 import it.unibo.pps.duckgame.utils.resources.{CssResources, FxmlResources, ImgResources}

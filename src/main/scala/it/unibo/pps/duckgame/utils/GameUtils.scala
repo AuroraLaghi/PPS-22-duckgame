@@ -1,6 +1,6 @@
 package it.unibo.pps.duckgame.utils
 
-import it.unibo.pps.duckgame.controller.{GameReader, LogicController}
+import it.unibo.pps.duckgame.controller.GameReader
 import it.unibo.pps.duckgame.model.specialCell.SpecialCell
 import it.unibo.pps.duckgame.model.{Cell, GameBoard, Player}
 import it.unibo.pps.duckgame.utils.PrologGameUtils.PrologEngine.PrologEngine
@@ -8,6 +8,7 @@ import it.unibo.pps.duckgame.utils.resources.PrologResources
 import alice.tuprolog.SolveInfo
 import PrologGameUtils.PrologTheory.given
 import PrologGameUtils.{PrologSolution, PrologTheory, ConversionTerm}
+import it.unibo.pps.duckgame.controller.logic.LogicController
 
 
 import scala.util.Random

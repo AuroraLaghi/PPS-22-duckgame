@@ -1,6 +1,6 @@
 package it.unibo.pps.duckgame.view
 
-import it.unibo.pps.duckgame.controller.{GameBoardController, PlayerMenuController}
+import it.unibo.pps.duckgame.controller.view.{GameBoardController, PlayerMenuController}
 import it.unibo.pps.duckgame.model.{Player, Token}
 import it.unibo.pps.duckgame.utils.resources.CssResources.GAME_STYLE
 import it.unibo.pps.duckgame.utils.resources.{CssResources, FxmlResources}
