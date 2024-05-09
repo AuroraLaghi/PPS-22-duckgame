@@ -3,31 +3,14 @@ package it.unibo.pps.duckgame.controller.logic
 import it.unibo.pps.duckgame.controller.GameReader.{currentPlayerIndex, nextPlayer, players}
 import it.unibo.pps.duckgame.controller.{Game, GameReader}
 import it.unibo.pps.duckgame.model.{CellStatus, Player}
-import it.unibo.pps.duckgame.utils.GameUtils
+import it.unibo.pps.duckgame.utils.{AnyOps, GameUtils}
 
 import scala.annotation.tailrec
 /** Object who manages the game logic */
 object LogicController:
-  /** Add a player to the players' list
-    *
-    * @param player
-    *   the player to be added
-    */
-  def addPlayer(player: Player): Unit =
-    Game addPlayer player
-
-  /** Removes a player from the game
-    *
-    * @param player
-    *   player entity to be removed
-    */
-  def removePlayer(player: Player): Unit =
-    Game removePlayer player
-
   /** Initialize players' list mixing its values */
-  def startGame(): Unit =
-    Game.firstRound = true
-    Game.players = GameUtils MixPlayers Game.players
+  def initializeGame(): Unit =
+    GameReader.startGame()
 
   /** Close the game */
   def exitGame(): Unit =
@@ -35,7 +18,11 @@ object LogicController:
 
   /** Reset the game to the initial stats */
   def newGame(): Unit =
-    Game.reset()
+    GameReader.resetGame()
+
+  def movePlayer(dicePair: (Int, Int)): Unit =
+    if GameReader.isFirstRound then MovementsController.firstRoundMoves(dicePair)
+    else MovementsController.standardMove(dicePair)
 
   /** Sets current player's new position
     *
@@ -43,13 +30,13 @@ object LogicController:
     *   Number of cells to sum to old position
     */
   def moveCurrentPlayer(steps: Int): Unit =
-    PlayerController.updatePlayerWith(Game.currentPlayer, GameReader.currentPlayer.move(steps))
+    PlayerController.updatePlayerWith(GameReader.currentPlayerIndex, GameReader.currentPlayer.move(steps))
 
   def lockUnlockTurnPlayer(lock: Boolean): Unit =
-    PlayerController.updatePlayerWith(Game.currentPlayer, GameReader.currentPlayer.lockUnlockPlayer(lock))
+    PlayerController.updatePlayerWith(GameReader.currentPlayerIndex, GameReader.currentPlayer.lockUnlockPlayer(lock))
 
   def setNewPositionOfCurrentPlayer(position: Int): Unit =
-    PlayerController.updatePlayerWith(Game.currentPlayer, GameReader.currentPlayer.newPosition(position))
+    PlayerController.updatePlayerWith(GameReader.currentPlayerIndex, GameReader.currentPlayer.newPosition(position))
 
   /** Called when a player ends its turn */
   def endTurn(): Unit =
@@ -60,9 +47,9 @@ object LogicController:
   def currentPlayerQuit(): Unit =
     val playerToDelete = GameReader.currentPlayer
     endTurn()
-    val nextPlayer = GameReader.currentPlayer
-    Game removePlayer playerToDelete
-    Game.currentPlayer = Game.players.indexOf(nextPlayer)
+    //control for particular case if the other active players are locked for 1 turn
+    if GameReader.currentPlayer === playerToDelete then endTurn()
+    GameReader.afterPlayerQuit(playerToDelete)
 
   private def checkFirstRoundDone(): Boolean =
     GameReader.currentPlayerIndex == 0 && GameReader.isFirstRound
@@ -72,15 +59,15 @@ object LogicController:
     cell match
       case Some(_) => CellStatus.SPECIAL_CELL
       case _ => CellStatus.STANDARD_CELL
-  
+
   @tailrec
   private def nextPlayerFree(): Unit =
     GameReader.nextPlayer()
     GameReader.currentPlayer.isLocked match
-      case true => LogicController.lockUnlockTurnPlayer(false)
+      case true =>
+        LogicController.lockUnlockTurnPlayer(false)
         nextPlayerFree()
-      case false if GameReader.currentPlayerIndex != GameReader.playerInWell()
-        && GameReader.currentPlayerIndex != GameReader.playerInJail() =>
+      case false
+          if GameReader.currentPlayerIndex != GameReader.playerInWell()
+            && GameReader.currentPlayerIndex != GameReader.playerInJail() =>
       case _ => nextPlayerFree()
-
-
