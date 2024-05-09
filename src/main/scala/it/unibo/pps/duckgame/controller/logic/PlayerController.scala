@@ -1,6 +1,6 @@
 package it.unibo.pps.duckgame.controller.logic
 
-import it.unibo.pps.duckgame.controller.Game
+import it.unibo.pps.duckgame.controller.{Game, GameReader}
 import it.unibo.pps.duckgame.model.Player
 import it.unibo.pps.duckgame.model.specialCell.SpecialCell
 import it.unibo.pps.duckgame.utils.resources.FxmlResources
@@ -17,7 +17,7 @@ protected object PlayerController:
     *   updated player to replace in the list
     */
   def updatePlayerWith(index: Int, playerUpdated: Player): Unit =
-    Game.players = Game.players.updated(index, playerUpdated)
+    GameReader.updatePlayers(index, playerUpdated)
 
   def playerOnSpecialCell(specialCell: SpecialCell, steps: Int): Unit =
     specialCell.action(steps)
