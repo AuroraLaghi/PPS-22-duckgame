@@ -1,5 +1,8 @@
-package it.unibo.pps.duckgame.controller
+package it.unibo.pps.duckgame.controller.logic
 
+import it.unibo.pps.duckgame.controller.GameReader
+import it.unibo.pps.duckgame.controller.logic.LogicController
+import it.unibo.pps.duckgame.controller.view.GameBoardController
 import it.unibo.pps.duckgame.model.{CellStatus, Player}
 import org.scalatest.BeforeAndAfterEach
 import org.scalatest.flatspec.AnyFlatSpec
