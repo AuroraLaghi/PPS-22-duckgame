@@ -16,7 +16,7 @@ class TestGameBoardController extends AnyFlatSpec with should.Matchers with Befo
   val DEFAULT_STARTING_POSITION = 0
   override def beforeEach(): Unit =
     LogicController.newGame()
-    players.foreach(p => Game.addPlayer(p))
+    players.foreach(p => GameReader addPlayer p)
     LogicController.initializeGame()
 
   "When game is started it" should "have already a non-empty list of players" in {
@@ -56,24 +56,24 @@ class TestGameBoardController extends AnyFlatSpec with should.Matchers with Befo
   "When the game starts it" should "have at least two players" in {
     LogicController.newGame()
     GameReader.canStartGame shouldBe false
-    Game.addPlayer(player1)
+    GameReader addPlayer player1
     GameReader.canStartGame shouldBe false
-    Game.addPlayer(player2)
+    GamReader addPlayer player2
     GameReader.canStartGame shouldBe true
   }
 
   "Each game" should "have at maximum 6 players" in {
     GameReader.canAddPlayer shouldBe true
-    Game.addPlayer(player1)
+    GameReader addPlayer player1
     GameReader.canAddPlayer shouldBe true
-    Game.addPlayer(player2)
+    GameReader addPlayer player2
     GameReader.canAddPlayer shouldBe true
-    Game.addPlayer(player3)
+    GameReader addPlayer player3
     GameReader.canAddPlayer shouldBe false
   }
 
   "When there's a game winner it" should "be set somewhere" in {
     GameReader.winner shouldBe None
-    Game.winner = Some(player1)
+    GameReader.winner = Some(player1)
     GameReader.winner shouldBe Some(player1)
   }
