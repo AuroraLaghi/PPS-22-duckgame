@@ -47,7 +47,7 @@ object MovementsController:
     *   new player's position
     */
   def fixedPositionMove(position: Int): Unit =
-    LogicController.setNewPositionOfCurrentPlayer(position)
+    PlayerController.updatePlayerWith(GameReader.currentPlayerIndex, GameReader.currentPlayer.newPosition(position))
 
   /** Checks if current player ended in well or jail cell and got locked
     *

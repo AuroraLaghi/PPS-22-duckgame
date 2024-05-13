@@ -6,6 +6,11 @@ object EndGameController:
 
   private val MIN_PLAYERS = 2
 
+  /** Determines if a winner has been declared in the current game state.
+    *
+    * @return
+    *   `true` if a winner has been declared, `false` otherwise.
+    */
   def checkWinner(): Boolean =
     GameReader.winner.isDefined
 
@@ -20,8 +25,16 @@ object EndGameController:
       true
     case _ => false
 
+  /** Sets the current player as the winner of the game. This method does not return a value (hence `Unit`), but it
+    * modifies the internal game state.
+    */
   def setWinner(): Unit =
     GameReader.setWinner(Option(GameReader.currentPlayer))
-    
+
+  /** Checks if the game is in a locked state, where only two players remain and both are either in jail or the well.
+    *
+    * @return
+    *   `true` if the game is locked (two players, both in jail or well), `false` otherwise.
+    */
   def isGameLocked: Boolean =
     GameReader.players.length == 2 && GameReader.playerInJail() != -1 && GameReader.playerInWell() != -1
