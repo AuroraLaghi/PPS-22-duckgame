@@ -63,3 +63,16 @@ object AlertUtils:
       "Entrambi i giocatori sono bloccati nel pozzo o nella prigione",
       "Premere ok per tornare alla schermata iniziale"
     )
+    
+  def exchangePlayerInWellOrJailInfo(newName: String, oldName: String): Optional[ButtonType] =
+    var message = ""
+    oldName match
+      case "" => message = message.concat("Il giocatore " + newName + " è bloccato nel pozzo/prigione")
+      case _ => message = message.concat("Il giocatore " + newName + " è bloccato nel pozzo/prigione e quindi " + oldName
+        + " può riprendere il gioco")
+    FxmlUtils.showAlert(
+      AlertType.Information,
+      "Duckgame",
+      message,
+      "Premere ok per tornare al gicoo"
+    )  

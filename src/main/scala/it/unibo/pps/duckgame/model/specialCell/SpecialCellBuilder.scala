@@ -66,6 +66,8 @@ final case class SpecialCellBuilder(number: Int, specialCellType: SpecialCellTyp
     *   Number steps (not utilize)
     */
   private def goInJail(steps: Int): Unit =
+    LogicController.playerCantPlay(GameReader.currentPlayerIndex)
+    
     MovementsController.playerCantPlay(GameReader.currentPlayerIndex)
 
   /** The current player goes onto well, so it can't play
@@ -74,7 +76,7 @@ final case class SpecialCellBuilder(number: Int, specialCellType: SpecialCellTyp
     *   Number steps (not utilize)
     */
   private def goInsideWell(steps: Int): Unit =
-    MovementsController.playerCantPlay(GameReader.currentPlayerIndex)
+    LogicController.playerCantPlay(GameReader.currentPlayerIndex)
 
   /** The current player goes onto house, so it must stop for one turn
     * @param steps
