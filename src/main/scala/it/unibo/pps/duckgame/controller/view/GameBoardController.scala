@@ -19,11 +19,10 @@ object GameBoardController:
   private var _view: Option[GameBoardView] = None
 
   /** Gets a reference to the currently associated game board view.
-    *
-    * @return
-    *   The currently associated `GameBoardView` object, or `null` if no view is set.
-    */
-  def view: GameBoardView = _view
+   *
+   * @return
+   * The currently associated `GameBoardView` object, or `null` if no view is set.
+   */
   def view: Option[GameBoardView] = _view
 
   /** Sets the associated game board view for this object.
