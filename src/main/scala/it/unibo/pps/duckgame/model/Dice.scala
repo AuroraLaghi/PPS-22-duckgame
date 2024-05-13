@@ -1,10 +1,11 @@
 package it.unibo.pps.duckgame.model
 
 import it.unibo.pps.duckgame.utils.PrologGameUtils.PrologEngine.PrologEngine
-import it.unibo.pps.duckgame.utils.resources.PrologResources
 import it.unibo.pps.duckgame.utils.PrologGameUtils.PrologTheory.given
-import it.unibo.pps.duckgame.utils.PrologGameUtils.{PrologSolution, PrologTheory, ConversionTerm}
+import it.unibo.pps.duckgame.utils.PrologGameUtils.{ConversionTerm, PrologSolution, PrologTheory}
+import it.unibo.pps.duckgame.utils.resources.PrologResources
 
+import scala.language.implicitConversions
 import scala.util.Random
 /** Represents a dice manager that can roll two dice.
   * @param dice
