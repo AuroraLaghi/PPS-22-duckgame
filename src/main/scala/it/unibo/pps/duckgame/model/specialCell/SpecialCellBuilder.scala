@@ -23,10 +23,10 @@ final case class SpecialCellBuilder(number: Int, specialCellType: SpecialCellTyp
     EndGameController.setWinner()
     
   private def goInJail(steps: Int): Unit =
-    MovementsController.playerCantPlay(GameReader.currentPlayerIndex)
+    LogicController.playerCantPlay(GameReader.currentPlayerIndex)
     
   private def goInsideWell(steps: Int): Unit =
-    MovementsController.playerCantPlay(GameReader.currentPlayerIndex)
+    LogicController.playerCantPlay(GameReader.currentPlayerIndex)
 
   private def lockOneTurn(steps: Int): Unit =
     LogicController.lockUnlockTurnPlayer(true)

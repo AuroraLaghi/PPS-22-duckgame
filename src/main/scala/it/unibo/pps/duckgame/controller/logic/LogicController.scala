@@ -1,9 +1,10 @@
 package it.unibo.pps.duckgame.controller.logic
 
 import it.unibo.pps.duckgame.controller.GameReader.{currentPlayerIndex, nextPlayer, players}
+import it.unibo.pps.duckgame.controller.view.GameBoardController
 import it.unibo.pps.duckgame.controller.{Game, GameReader}
 import it.unibo.pps.duckgame.model.{CellStatus, Player}
-import it.unibo.pps.duckgame.utils.{AnyOps, GameUtils}
+import it.unibo.pps.duckgame.utils.{AlertUtils, AnyOps, GameUtils}
 
 import scala.annotation.tailrec
 /** Object who manages the game logic */
@@ -34,10 +35,7 @@ object LogicController:
 
   def lockUnlockTurnPlayer(lock: Boolean): Unit =
     PlayerController.updatePlayerWith(GameReader.currentPlayerIndex, GameReader.currentPlayer.lockUnlockPlayer(lock))
-
-  def setNewPositionOfCurrentPlayer(position: Int): Unit =
-    PlayerController.updatePlayerWith(GameReader.currentPlayerIndex, GameReader.currentPlayer.newPosition(position))
-
+  
   /** Called when a player ends its turn */
   def endTurn(): Unit =
     nextPlayerFree()
@@ -71,3 +69,15 @@ object LogicController:
           if GameReader.currentPlayerIndex != GameReader.playerInWell()
             && GameReader.currentPlayerIndex != GameReader.playerInJail() =>
       case _ => nextPlayerFree()
+
+  /** Locks current player in well or jail and eventually unlock the precedent one
+    *
+    * @param player
+    *   index of current player
+    */
+  def playerCantPlay(player: Int): Unit =
+    GameBoardController.playerLockedAlert(GameReader.players(player))
+    GameReader.players(player).actualPosition match
+      case 31 => GameReader.playerGoesInWellOrJail(player, true)
+      case 52 => GameReader.playerGoesInWellOrJail(player, false)
+      case _ =>
