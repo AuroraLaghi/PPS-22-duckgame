@@ -4,8 +4,10 @@ import it.unibo.pps.duckgame.model.specialCell.SpecialCell
 import it.unibo.pps.duckgame.utils.config.Parser
 import it.unibo.pps.duckgame.utils.config.Parser.Parser
 import it.unibo.pps.duckgame.utils.resources.TxtResources
+
+import java.nio.charset.StandardCharsets
 import scala.collection.mutable.ListBuffer
-import scala.io.Source
+import scala.io.{Codec, Source}
 
 object SetupFromFile:
   def setup[T](filePath: String, parser: Parser[T]): List[T] =
@@ -14,4 +16,4 @@ object SetupFromFile:
     cells.toList
 
   private def readLinesFromFile(filePath: String): Seq[String] =
-    Source.fromInputStream(getClass.getResourceAsStream(filePath)).getLines().toList
+    Source.fromInputStream(getClass.getResourceAsStream(filePath))(Codec.UTF8).getLines().toList
