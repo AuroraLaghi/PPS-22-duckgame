@@ -10,13 +10,22 @@ import scalafx.scene.control
 /** Represents the game board
   *
   * @param cells
-  *   list of cells
+  *   A list of cells
+  * @param _specialCells
+  *   A list of SpecialCell objects representing special cells with unique effects on gameplay. These cells might
+  *   provide bonuses, penalties, or trigger events when a player lands on them.
   */
 class GameBoard(
     cells: List[Cell],
     _specialCells: List[SpecialCell]
 ):
 
+  /** Gets a reference to the list of special cells on the game board.
+    *
+    * @return
+    *   An immutable list of `SpecialCell` objects on the game board. Modifying this list will not affect the internal
+    *   game state.
+    */
   def specialCells: List[SpecialCell] = _specialCells
 
   /** Returns the game board map.

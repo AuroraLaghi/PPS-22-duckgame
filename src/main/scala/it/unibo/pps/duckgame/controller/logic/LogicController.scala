@@ -33,9 +33,16 @@ object LogicController:
   def moveCurrentPlayer(steps: Int): Unit =
     PlayerController.updatePlayerWith(GameReader.currentPlayerIndex, GameReader.currentPlayer.move(steps))
 
+  /** Locks or unlocks the current player in the game.
+    *
+    * @param lock
+    *   A boolean flag indicating whether to lock (`true`) or unlock (`false`) the current player.
+    */
+
   def lockUnlockTurnPlayer(lock: Boolean): Unit =
     PlayerController.updatePlayerWith(GameReader.currentPlayerIndex, GameReader.currentPlayer.lockUnlockPlayer(lock))
-  
+
+
   /** Called when a player ends its turn */
   def endTurn(): Unit =
     nextPlayerFree()
@@ -49,15 +56,22 @@ object LogicController:
     if GameReader.currentPlayer === playerToDelete then endTurn()
     GameReader.afterPlayerQuit(playerToDelete)
 
+  /** Checked if the first round is done */
   private def checkFirstRoundDone(): Boolean =
     GameReader.currentPlayerIndex == 0 && GameReader.isFirstRound
 
+  /** Determines the type of cell the current player is on.
+    *
+    * @return
+    *   CellStatus: `SPECIAL_CELL` or `STANDARD_CELL`
+    */
   def checkCellType: CellStatus =
     val cell = GameUtils.getSpecialCellFromPlayerPosition
     cell match
       case Some(_) => CellStatus.SPECIAL_CELL
       case _ => CellStatus.STANDARD_CELL
 
+  /** Finds the next available player, skipping locked players or those in jail/well. */
   @tailrec
   private def nextPlayerFree(): Unit =
     GameReader.nextPlayer()

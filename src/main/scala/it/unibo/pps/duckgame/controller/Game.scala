@@ -31,8 +31,18 @@ protected object Game:
   def gameBoard_=(value: GameBoard): Unit =
     _gameBoard = value
 
+  /** Checks if the current game round is the first round.
+    *
+    * @return
+    *   `true` if the current round is the first round, `false` otherwise.
+    */
   def firstRound: Boolean = _firstRound
 
+  /** Sets a flag indicating whether the current game round is the first round.
+    *
+    * @param value
+    *   `true` to set the current round as the first round, `false` otherwise.
+    */
   def firstRound_=(value: Boolean): Unit =
     _firstRound = value
 
@@ -80,17 +90,49 @@ protected object Game:
   def winner_=(value: Option[Player]): Unit =
     _winner = value
 
+  /** Gets the index of the player currently in jail (if any).
+    *
+    * @return
+    *   The index of the player in jail (integer), or -1 if no player is in jail.
+    */
   def playerInJail: Int = _playerInJail
+
+  /** Sets the index of the player who is in jail (or -1 if no player is in jail).
+    *
+    * @param value
+    *   The index of the player to be marked as in jail, or -1 to indicate no player in jail.
+    */
   def playerInJail_=(value: Int): Unit =
     _playerInJail = value
 
+  /** Gets the index of the player currently in the well (if any).
+    *
+    * @return
+    *   The index of the player in the well (integer), or -1 if no player is in the well.
+    */
   def playerInWell: Int = _playerInWell
 
+  /** Sets the index of the player who is in the well (or -1 if no player is in the well).
+    *
+    * @param value
+    *   The index of the player to be marked as in the well, or -1 to indicate no player in the well.
+    */
   def playerInWell_=(value: Int): Unit =
     _playerInWell = value
 
+  /** Gets a reference to the list of currently available tokens in the game.
+    *
+    * @return
+    *   An immutable list of `Token` objects representing the currently available tokens. Modifying the returned list
+    *   will not affect the internal state.
+    */
   def availableTokens: List[Token] = _availableTokens
 
+  /** Sets the list of currently available tokens in the game.
+    *
+    * @param value
+    *   The list of `Token` objects to be set as the new available tokens.
+    */
   def availableTokens_=(value: List[Token]): Unit =
     _availableTokens = value
 

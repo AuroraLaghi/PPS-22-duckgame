@@ -1,6 +1,10 @@
 package it.unibo.pps.duckgame.utils.resources
 
-/** Enumeration of the TXT resource used in the game. */
+/** Enumeration representing TXT resource used in the Duck Game application.
+  *
+  * @param _path
+  *   Indicates the path
+  */
 enum TxtResources(_path: String):
   case SPECIAL_CELL_TXT extends TxtResources("/config/specialCells.txt")
 

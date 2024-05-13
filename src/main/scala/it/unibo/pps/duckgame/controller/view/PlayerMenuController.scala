@@ -40,8 +40,7 @@ object PlayerMenuController:
   def canStartGame: Boolean =
     GameReader.canStartGame
 
-  /** Called after the canStartGame check returned positive Starts the game and changes scene
-    */
+  /** Called after the canStartGame check returned positive Starts the game and changes scene */
   def playGame(): Unit =
     LogicController.initializeGame()
     FxmlUtils.changeScene(FxmlResources.GAME_VIEW.path)
@@ -50,6 +49,11 @@ object PlayerMenuController:
   def exitGame(): Unit =
     LogicController.exitGame()
 
+  /** Retrieves a list of available tokens (presumably for the game).
+    *
+    * @return
+    *   A list of `Token` objects representing the available tokens. The format and content of the `Token` objects
+    *   depend on the game's token system.
+    */
   def availableToken(): List[Token] =
     GameReader.availableTokens()
-    

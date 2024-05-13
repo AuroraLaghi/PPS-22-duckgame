@@ -19,5 +19,12 @@ protected object PlayerController:
   def updatePlayerWith(index: Int, playerUpdated: Player): Unit =
     GameReader.updatePlayers(index, playerUpdated)
 
+  /** Executes the action associated with a specific special cell for the current player.
+    *
+    * @param specialCell
+    *   The `SpecialCell` object representing the special cell the player is on.
+    * @param steps
+    *   The number of steps the player rolled (potentially relevant for the special cell's action).
+    */
   def playerOnSpecialCell(specialCell: SpecialCell, steps: Int): Unit =
     specialCell.action(steps)

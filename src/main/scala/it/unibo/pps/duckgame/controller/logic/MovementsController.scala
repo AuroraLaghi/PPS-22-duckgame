@@ -50,6 +50,26 @@ object MovementsController:
   def fixedPositionMove(position: Int): Unit =
     PlayerController.updatePlayerWith(GameReader.currentPlayerIndex, GameReader.currentPlayer.newPosition(position))
 
+  /** Checks if current player ended in well or jail cell and got locked
+    *
+    * @param player
+    *   index of current player
+    */
+  def playerCantPlay(player: Int): Unit = GameReader.players(player).actualPosition match
+    case 31 =>
+      if GameReader.playerInWell() =/= -1 then
+        GameBoardController.viewPlayerMovement(
+          "Ora " + GameReader.players(GameReader.playerInWell()).name + " può ricominciare a giocare"
+        )
+      GameReader.playerGoesInWellOrJail(player, true)
+    case 52 =>
+      if GameReader.playerInJail() =/= -1 then
+        GameBoardController.viewPlayerMovement(
+          "Ora " + GameReader.players(GameReader.playerInJail()).name + " può ricominciare a giocare"
+        )
+      GameReader.playerGoesInWellOrJail(player, false)
+    case _ =>
+
   /** Checks if player finished on a special cells and calls the related action
     *
     * @param steps
