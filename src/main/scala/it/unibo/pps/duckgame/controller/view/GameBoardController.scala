@@ -16,12 +16,12 @@ import scala.util.Try
 
 /** Controller for the [[it.unibo.pps.duckgame.view.GameBoardView]] */
 object GameBoardController:
-  private var _view: GameBoardView = _
+  private var _view: Option[GameBoardView] = None
 
-  def view: GameBoardView = _view
+  def view: Option[GameBoardView] = _view
 
   def view_=(value: GameBoardView): Unit =
-    _view = value
+    _view = Some(value)
 
   /** Called when a player quits the game */
   def currentPlayerQuit(): Unit =
@@ -62,4 +62,21 @@ object GameBoardController:
     FxmlUtils.changeScene(FxmlResources.START_MENU.path)
 
   def viewPlayerMovement(message: String): Unit =
-    if _view =/= null then _view.playerMovement(message)
+    if _view.isDefined then _view.get.playerMovement(message)
+
+  /** Emits an alert telling that current player got locked If the special cell was already occupied, tells that old
+    * player locked now is unlocked
+    *
+    * @param player
+    *   player that ended in jail or well cell
+    */
+  def playerLockedAlert(player: Player): Unit =
+    if _view.isDefined then
+      player.actualPosition match
+        case 31 =>
+          if GameReader.playerInWell() =/= -1 then
+            AlertUtils.exchangePlayerInWellOrJailInfo(player.name, GameReader.players(GameReader.playerInWell()).name)
+        case 52 =>
+          if GameReader.playerInJail() =/= -1 then
+            AlertUtils.exchangePlayerInWellOrJailInfo(player.name, GameReader.players(GameReader.playerInWell()).name)
+        case _ => AlertUtils.exchangePlayerInWellOrJailInfo(player.name, "")
