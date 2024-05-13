@@ -72,11 +72,5 @@ object GameBoardController:
     */
   def playerLockedAlert(player: Player): Unit =
     if _view.isDefined then
-      player.actualPosition match
-        case 31 =>
-          if GameReader.playerInWell() =/= -1 then
-            AlertUtils.exchangePlayerInWellOrJailInfo(player.name, GameReader.players(GameReader.playerInWell()).name)
-        case 52 =>
-          if GameReader.playerInJail() =/= -1 then
-            AlertUtils.exchangePlayerInWellOrJailInfo(player.name, GameReader.players(GameReader.playerInWell()).name)
-        case _ => AlertUtils.exchangePlayerInWellOrJailInfo(player.name, "")
+      AlertUtils.exchangePlayerInWellOrJailInfo(player.name)
+      

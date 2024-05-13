@@ -168,7 +168,7 @@ class GameBoardView extends Initializable:
     if GameBoardController.checkVictory() then GameBoardController.showVictory()
     else if EndGameController.isGameLocked then GameBoardController.showGameLocked()
     else if dice1 != dice2 || position == 19 || position == 31 || position == 52 then setButtonsForTurnEnding(true)
-    else playerMovement("Il giocatore ha fatto doppio, deve ritirare.")
+    else playerMovement("Dal lancio dei dadi si è ottenuto un doppio, quindi bisogna ritirarli")
   def playerMovement(message: String): Unit =
     movementMessage.appendText(message + "\n")
 
