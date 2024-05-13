@@ -8,7 +8,7 @@ import org.scalatest.BeforeAndAfterEach
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should
 
-class TestGameBoardController extends AnyFlatSpec with should.Matchers with BeforeAndAfterEach:
+class GameBoardControllerTest extends AnyFlatSpec with should.Matchers with BeforeAndAfterEach:
   val player1: Player = Player("luigi")
   val player2: Player = Player("marco")
   val player3: Player = Player("elena")

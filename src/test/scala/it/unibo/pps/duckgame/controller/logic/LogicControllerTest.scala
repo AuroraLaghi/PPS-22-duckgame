@@ -8,7 +8,7 @@ import org.scalatest.BeforeAndAfterEach
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should
 
-class TestLogicController extends AnyFlatSpec with should.Matchers with BeforeAndAfterEach:
+class LogicControllerTest extends AnyFlatSpec with should.Matchers with BeforeAndAfterEach:
   val p1: Player = Player("p1")
   val p2: Player = Player("p2")
   val p3: Player = Player("p3")
@@ -73,4 +73,10 @@ class TestLogicController extends AnyFlatSpec with should.Matchers with BeforeAn
     LogicController.endTurn()
     LogicController.currentPlayerQuit()
     GameReader.currentPlayer.name shouldBe p3.name
+  }
+
+  "When one player got stuck in jail, then it" should "appear as locked in dedicated variable" in {
+    MovementsController.fixedPositionMove(52)
+    LogicController.playerCantPlay(GameReader.currentPlayerIndex)
+    GameReader.playerInJail() shouldBe 0 //p3
   }
