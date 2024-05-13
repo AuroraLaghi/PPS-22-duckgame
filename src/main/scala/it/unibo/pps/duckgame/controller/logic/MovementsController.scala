@@ -3,6 +3,7 @@ package it.unibo.pps.duckgame.controller.logic
 import it.unibo.pps.duckgame.controller.view.GameBoardController
 import it.unibo.pps.duckgame.controller.{Game, GameReader}
 import it.unibo.pps.duckgame.model.CellStatus
+import it.unibo.pps.duckgame.model.specialCell.{SpecialCellBuilder, SpecialCellType}
 import it.unibo.pps.duckgame.utils.{AnyOps, GameUtils}
 
 /** Class that control all players' movements and manages special cells */
@@ -59,6 +60,8 @@ object MovementsController:
       case CellStatus.SPECIAL_CELL =>
         if !(GameReader.isFirstRound && steps == 9) then
           val specialCell = GameUtils.getSpecialCellFromPlayerPosition
-          GameBoardController.viewPlayerMovement(specialCell.get.message)
+          GameBoardController.viewPlayerMovement(
+            specialCell.getOrElse(SpecialCellBuilder(-1, SpecialCellType.BLANK, "").build()).message
+          )
           specialCell.foreach(PlayerController.playerOnSpecialCell(_, steps))
       case CellStatus.STANDARD_CELL =>
