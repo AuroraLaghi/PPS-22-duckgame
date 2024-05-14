@@ -5,7 +5,7 @@ del _pattern architetturale MVC_ per la progettazione e l'implementazione dell'a
 ## Architettura complessiva
 A seguire è riportato il diagramma ad alto livello del sistema implementato seguendo il pattern MVC.
 
-![Design MVC](../img/design_architetturale.svg)
+<img src="../img/design_architetturale.svg" width="500"/>
 
 I componenti come si evince dallo schema sono 3:
 - **Model**: al cui interno sono state poste tutte le entità che si occupano di gestire la logica di gioco.
