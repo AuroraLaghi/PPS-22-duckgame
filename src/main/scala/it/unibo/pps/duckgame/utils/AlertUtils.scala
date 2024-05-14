@@ -68,7 +68,7 @@ object AlertUtils:
     FxmlUtils.showAlert(
       AlertType.Information,
       "Duckgame",
-      "Il giocatore " + name + " è finito nel pozzo/prigione ed ora è bloccato \nSe un giocatore era " +
-        "finito in precedenza sulla casella, ora può riprendere il gioco",
+      "Il giocatore " + name + " è bloccato nel pozzo/prigione\nSe sulla casella era già presente un altro " +
+        "giocatore,\nora può riprendere a giocare",
       "Premere ok per continuare"
     )

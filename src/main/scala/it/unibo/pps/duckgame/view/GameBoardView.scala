@@ -227,7 +227,7 @@ class GameBoardView extends Initializable:
     if GameBoardController.checkVictory() then GameBoardController.showVictory()
     else if EndGameController.isGameLocked then GameBoardController.showGameLocked()
     else if dice1 != dice2 || position == 19 || position == 31 || position == 52 then setButtonsForTurnEnding(true)
-    else playerMovement("Dal lancio dei dadi si è ottenuto un doppio, quindi bisogna ritirarli")
+    else playerMovement("Dal lancio dei dadi si è ottenuto un doppio, quindi il giocatore può effettuare un altro tiro")
 
   /** Updates the movement message text area with the provided message.
     *
