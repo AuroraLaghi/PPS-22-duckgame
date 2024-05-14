@@ -105,7 +105,7 @@ I vari strumenti di supporto impiegati sono:
   l'applicativo viene compilato e testato su diversi sistemi operativi con JVM 11 e 16
 - **Trello**, come strumento per la collaborazione all'interno del team
 
-### 1.5.1 Strumenti per Continuos Integration e Build Automation
+### 1.4.1 Strumenti per Continuos Integration e Build Automation
 Per aumentare il significato dei commit si è scelto di utilizzare la [conventional commit specification](https://www.conventionalcommits.org/en/v1.0.0/), per uniformare la struttura dei commit tra i membri del team e renderne il flusso più leggibile.
 
 Ogni push del codice fa partire un workflow attivato da **GitHub Actions** che esegue tutti i test presenti e stila un report di coverage di quest'ultimi.
