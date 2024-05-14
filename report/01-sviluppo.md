@@ -53,30 +53,27 @@ e valutare il lavoro svolto dal team di sviluppo.
 
 ## 1.2 Suddivisione in itinere dei task
 
-Alla fine di ogni Sprint Planning, prendendo come base lo Sprint Backlog, attraverso il software **Trello**, sono stati 
-rappresentati i task all'interno di una **Sprint Task Board**. Ciascun task è stato assegnato ad uno o più componenti del 
-team.
-Nella Task Board sono presenti diverse liste, ognuna rappresentativa di uno stato evolutivo del task.
-Le tipologie di liste utilizzate sono: _TO-DO_, _Doing_, _Testing_, _Done_, _Waiting_.
+Alla fine di ogni Sprint Planning, prendendo come base lo Sprint Backlog, attraverso il software **Trello**, sono stati rappresentati i task all'interno di una **Sprint Task Board**.
+Tale strumento permette di assegnare i task agli sviluppatori, suddivindedoli in liste in base all'avanzamento di stato del task stesso:
+- _To Do_: nuovi task ancora da inizializzare
+- _Doing_: task presi in carico ed in fase di svolgimento/conclusione
+- _Done_: task considerati conclusi
+
 Attraverso questo schema, ogni componente del team avrà una panoramica sul lavoro totale.
 
 A seconda della tipologia, i task sono stati assegnati ad un singolo membro, oppure sfruttando il _pair-programming_.
-Per ogni task individuato e stata considerata la seguente _definition of done_: una funzionalità è da considerarsi 
-conclusa nel momento in cui viene testata, documentata, passa una _code review_ (manuale o automatica) e soddisfa le 
-aspettative del committente.
+Per ogni task individuato e stata considerata la seguente _definition of done_: una funzionalità è da considerarsi conclusa nel momento in cui viene testata, documentata, passa una _code review_ (manuale o automatica) e soddisfa le aspettative del committente.
 
 ## 1.2.1 Revisione in itinere dei task
 
-Al termine di ogni sprint è stata effettuata la revisione del lavoro svolto durante la settimana: in particolare, viene 
-verificata la realizzazione dei task assegnati ad ogni membro, analizzandone la loro completezza in base al _definition 
-of done_ stabilito.
+Al termine di ogni sprint è stata effettuata la revisione del lavoro svolto durante la settimana: in particolare, viene verificata la realizzazione dei task assegnati ad ogni membro, analizzandone la loro completezza in base alla _definition of done_ stabilita, secondo cui un task può definirsi completato se soddisfa le seguenti condizioni:
+- è stato adeguatamente testato
+- tutti i test vengono completati in modo positivo
+- le aspettative del committente vengono soddisfatte
 
-Durante l'incontro, se vengono evidenziati alcuni aspetti del lavoro effettuato che possono essere migliorati, o in caso 
-di incompletezza nel lavoro svolto, si richiede al membro responsabile di correggere o completare il lavoro, prima di 
-passare allo sprint succesivo.
+Durante l'incontro, se vengono evidenziati alcuni aspetti del lavoro effettuato che possono essere migliorati, o in caso di incompletezza nel lavoro svolto, si richiede al membro responsabile di correggere o completare il lavoro, prima di passare allo sprint succesivo.
 
-Infine, dopo aver effettuato lo Sprint Review, è possibile effettuare il _refactoring_ di elementi già realizzati, creando 
-nuovi task da concludere nello sprint successivo.
+Infine, dopo aver effettuato lo Sprint Review, è possibile effettuare il _refactoring_ di elementi già realizzati, creando nuovi task da concludere nello sprint successivo.
 
 ## 1.3 Workflow
 
@@ -88,12 +85,9 @@ scelto di adottare **Git Flow**: questo prevede l'impiego di diversi _branch_:
 - Un branch **feature/<nome-feature>** dove sarà presente il codice necessario all'implementazione di una determinata 
 feature.
 
-Nell'immagine seguente è possibile avere un riassunto di questa metodologia di lavoro
+Nell'immagine seguente è possibile avere un riassunto di questa metodologia di lavoro:
 
-![Git Flow Workflow](../img/gitflow.jpg)
-
-Per concludere, si è fatto utilizzo della [conventional commit specification](https://www.conventionalcommits.org/en/v1.0.0/), 
-per uniformare la struttura dei commit tra i membri del team.
+<img src="../img/gitflow.jpg" alt="workflow" width="500" />
 
 ## 1.4 Strumenti utilizzati
 
@@ -110,3 +104,10 @@ I vari strumenti di supporto impiegati sono:
   - È stato definito un file _YAML_ per descrivere le pipelines: ad ogni _push_/_pull_ sul branch main o develop, 
   l'applicativo viene compilato e testato su diversi sistemi operativi con JVM 11 e 16
 - **Trello**, come strumento per la collaborazione all'interno del team
+
+### 1.5.1 Strumenti per Continuos Integration e Build Automation
+Per aumentare il significato dei commit si è scelto di utilizzare la [conventional commit specification](https://www.conventionalcommits.org/en/v1.0.0/), per uniformare la struttura dei commit tra i membri del team e renderne il flusso più leggibile.
+
+Ogni push del codice fa partire un workflow attivato da **GitHub Actions** che esegue tutti i test presenti e stila un report di coverage di quest'ultimi.
+
+La build automation è stata gestita tramite **Scala-Build Tool** (Sbt), un build tool automator che permette un controllo efficiente del progetto mediante la gestione delle dipendenze e dei vari plugins utili, come ad asempio [sbt-jacoco](https://www.scala-sbt.org/sbt-jacoco/) per la copertura dei test.
