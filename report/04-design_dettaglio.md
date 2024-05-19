@@ -57,9 +57,24 @@ Object che si occupa di controllare i movimenti dei giocatori esponendo i metodi
 - `isGameLocked`: controlla se il gioco si trova in uno stato di 'stallo', cioè rimangono in gioco solo due giocatori ed entrambi sono bloccati sulle caselle speciali, Pozzo e Prigione.
 
 ### Game
-Questo object modella il concetto di “gioco” ed è accessibile solamente all’interno del modulo *Controller*. In particolare, viene richiamato e modifficato solamente dal `GameReader`.
+Questo object modella il concetto di “gioco” ed è accessibile solamente all’interno del modulo *Controller*. In particolare, viene richiamato e modifficato solamente dal `GameReader`. Espone i seguenti metodi:
+- `players`: lista dei giocatori
+- `availableTokens`: lista delle pedine ancora disponibili 
+- `gameBoard`: tabellone di gioco
+- `winner`: eventuale vincitore del gioco
+- `palyerInJail`: giocatore sulla casella speciale della prigione
+- `playerInWell`: giocatore sulla casella speciale del pozzo
+- `reset`: resetta lo stato di gioco (in particolare setta i valori di default `currentPlayer`, `players`, `winner`, `gameBoard`, `firstRound`, `playerInWell`, `playerInJail`, `availableTokens`
 
 ### GameReader
+Tramite questo object è possibile leggere tutti i dati del `Game`, aggiornando le viste senza infrangere la logica del pattern MVC:
+- `currentPlayer`:
+- `canStartGame`:
+- `canAddPlayer`:
+- `checkVictory`:
+- `playerGoesInWellOrJail`:
+- `afterPlayerQuit`:
+- `nextPlayer`:
 
 ## Model
 
