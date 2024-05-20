@@ -223,7 +223,7 @@ class GameBoardView extends Initializable:
     updatePlayerPosition(GameReader.currentPlayer)
     updateDiceImg(dice1, dice2)
     val position: Int = GameReader.currentPlayer.actualPosition
-    playerMovement("Il giocatore è sulla casella: " + position.toString)
+    playerMovement("Posizione aggiornata del giocatore: " + position.toString)
     if GameBoardController.checkVictory() then GameBoardController.showVictory()
     else if EndGameController.isGameLocked then GameBoardController.showGameLocked()
     else if dice1 != dice2 || position == 19 || position == 31 || position == 52 then setButtonsForTurnEnding(true)
