@@ -1,16 +1,16 @@
-5;duck;Il giocatore è finito sulla casella della papera, quindi avanza dello stesso numero ottenuto coi dadi
-9;duck;Il giocatore è finito sulla casella della papera, quindi avanza dello stesso numero ottenuto coi dadi
-14;duck;Il giocatore è finito sulla casella della papera, quindi avanza dello stesso numero ottenuto coi dadi
-18;duck;Il giocatore è finito sulla casella della papera, quindi avanza dello stesso numero ottenuto coi dadi
-23;duck;Il giocatore è finito sulla casella della papera, quindi avanza dello stesso numero ottenuto coi dadi
-27;duck;Il giocatore è finito sulla casella della papera, quindi avanza dello stesso numero ottenuto coi dadi
-32;duck;Il giocatore è finito sulla casella della papera, quindi avanza dello stesso numero ottenuto coi dadi
-36;duck;Il giocatore è finito sulla casella della papera, quindi avanza dello stesso numero ottenuto coi dadi
-41;duck;Il giocatore è finito sulla casella della papera, quindi avanza dello stesso numero ottenuto coi dadi
-45;duck;Il giocatore è finito sulla casella della papera, quindi avanza dello stesso numero ottenuto coi dadi
-50;duck;Il giocatore è finito sulla casella della papera, quindi avanza dello stesso numero ottenuto coi dadi
-54;duck;Il giocatore è finito sulla casella della papera, quindi avanza dello stesso numero ottenuto coi dadi
-59;duck;Il giocatore è finito sulla casella della papera, quindi avanza dello stesso numero ottenuto coi dadi
+5;duck;Il giocatore è finito sulla casella dell'oca, quindi avanza dello stesso numero ottenuto col tiro dei dadi
+9;duck;Il giocatore è finito sulla casella dell'oca, quindi avanza dello stesso numero ottenuto col tiro dei dadi
+14;duck;Il giocatore è finito sulla casella dell'oca, quindi avanza dello stesso numero ottenuto col tiro dei dadi
+18;duck;Il giocatore è finito sulla casella dell'oca, quindi avanza dello stesso numero ottenuto col tiro dei dadi
+23;duck;Il giocatore è finito sulla casella dell'oca, quindi avanza dello stesso numero ottenuto col tiro dei dadi
+27;duck;Il giocatore è finito sulla casella dell'oca, quindi avanza dello stesso numero ottenuto col tiro dei dadi
+32;duck;Il giocatore è finito sulla casella dell'oca, quindi avanza dello stesso numero ottenuto col tiro dei dadi
+36;duck;Il giocatore è finito sulla casella dell'oca, quindi avanza dello stesso numero ottenuto col tiro dei dadi
+41;duck;Il giocatore è finito sulla casella dell'oca, quindi avanza dello stesso numero ottenuto col tiro dei dadi
+45;duck;Il giocatore è finito sulla casella dell'oca, quindi avanza dello stesso numero ottenuto col tiro dei dadi
+50;duck;Il giocatore è finito sulla casella dell'oca, quindi avanza dello stesso numero ottenuto col tiro dei dadi
+54;duck;Il giocatore è finito sulla casella dell'oca, quindi avanza dello stesso numero ottenuto col tiro dei dadi
+59;duck;Il giocatore è finito sulla casella dell'oca, quindi avanza dello stesso numero ottenuto col tiro dei dadi
 6;bridge;Il giocatore è finito sulla casella del ponte, quindi avanza fino alla casella n°12
 19;house;Il giocatore è finito sulla casella della casa, quindi deve rimanere fermo per un turno
 31;well;Nel pozzo resti finchè un altro altro giocatore non ci cade
