@@ -1,10 +1,10 @@
 package it.unibo.pps.duckgame.controller.logic
 
+import it.unibo.pps.duckgame.controller.GameReader
 import it.unibo.pps.duckgame.controller.GameReader.{currentPlayerIndex, nextPlayer, players}
 import it.unibo.pps.duckgame.controller.view.GameBoardController
-import it.unibo.pps.duckgame.controller.{Game, GameReader}
-import it.unibo.pps.duckgame.model.{CellStatus, Player}
-import it.unibo.pps.duckgame.utils.{AlertUtils, AnyOps, GameUtils}
+import it.unibo.pps.duckgame.model.CellStatus
+import it.unibo.pps.duckgame.utils.{AnyOps, GameUtils}
 
 import scala.annotation.tailrec
 /** Object who manages the game logic */
