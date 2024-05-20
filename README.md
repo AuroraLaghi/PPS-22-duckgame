@@ -10,7 +10,7 @@
 - [Processo di sviluppo adottato](report/01-sviluppo)
 - [Requisiti](report/02-requisiti.md)
 - [Design architetturale](report/03-design_architetturale.md)
-- [Design di dettaglio]
-- [Implementazione]
+- [Design di dettaglio](report/04-design_dettaglio.md)
+- [Implementazione](report/05-implementation.md)
 - [Retrospettiva]
 - [Guida utente]
