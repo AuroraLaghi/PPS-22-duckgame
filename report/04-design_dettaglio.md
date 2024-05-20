@@ -6,14 +6,18 @@ sono divisi in sotto-moduli, è presente 1 package ulteriore contenente vari ogg
 Nella figura sottostante è schematizzata la gerarchia su cui sono stati organizzati i vari moduli
 del progetto.
 
-<img src="../img/design_dettaglio.svg" width="500"/>
+<div align="center">
+  <img src="../img/design_dettaglio.svg" width="500"/>
+</div>
 
 A seguire l'analisi di ogni singolo modulo coi rispettivi sotto-moduli.
 
 ## Controller
 In figura viene mostrato il modulo *Controller* insieme ai rispettivi sotto-moduli *logic* e *view*.
 
-<img src="../img/diagramma_controller.svg" />
+<div align="center">
+  <img src="../img/diagramma_controller.svg" />
+</div>
 
 ### View
 Al suo interno sono state raggruppate le logiche di interazione tra View e Model rispettando il pattern MVC attraverso le classi seguenti.
@@ -93,7 +97,10 @@ Tramite questo object è possibile leggere tutti i dati del `Game`, aggiornando 
 ## Model
 
 Nell'immagine seguente è rappresentato il diagramma delle classi relativo al package `model`, contenente il sotto-modulo `cell`.
-<img src="../img/modelClassDiagram.svg" width="900" />
+
+<div align="center">
+  <img src="../img/modelClassDiagram.svg" width="900" />
+</div>
 
 All'interno di questo *package* sono state implementate le varie entità che rappresentano gli elementi del dominio
 
@@ -146,7 +153,9 @@ anche la rispettiva azione
 ## View
 A seguire viene mostrato il modulo *view*. Importante ricordare che tutte le viste possono recuperare informazioni sullo stato del `Game` attraverso `GameReader` che **consente di leggere e non scrivere informazioni**.
 
-<img src="../img/viewClassDiagram.svg" width="600"/>
+<div align="center">
+  <img src="../img/viewClassDiagram.svg" width="600"/>
+</div>
 
 Seguendo il pattern MVC, questo modulo implementa le viste per facilitare l'interazione tra il giocatore e il sistema. Il controller gestisce questa interazione e agisce di conseguenza sul model. Il modulo è composto da 3 viste, ognuna delle quali eredita dall'interfacci `javafx.fxml.Initializable`:
 - `GameBoardView`: rappresenta la vista del tabellone di gioco in cui sono presenti i comandi:
@@ -172,7 +181,9 @@ Seguendo il pattern MVC, questo modulo implementa le viste per facilitare l'inte
 
 Nella figura sottostante è rappresentato il diagramma delle classi del modulo di strumenti di *utility* utilizzati. Al suo interno è possibile trovare i sotto-moduli *resources* e *config*.
 
-<img src="../img/utilsClassDiagram.svg" width="900" />
+<div align="center">
+  <img src="../img/utilsClassDiagram.svg" width="900" />
+</div>
 
 Questo modulo contiene le varie classi implementate contenenti metodi utilizzati da più classi all'interno del programma
 
@@ -231,7 +242,6 @@ Le risorse utilizzate dall'applicativo sono state raggruppate in *enum* in base 
 - `TxtReources` -> lista delle risorse testuali (*.txt*)
 - `PrologResources` -> risorse di tipo *.pl* (file Prolog) utilizzate nell'applicativo
 
-  
 ## Config
 Al suo interno si trovano 2 file necessari per il parsing dei file `.txt` utili al corretto funzionamento dell'applicativo.
 
@@ -249,6 +259,3 @@ e tenta di analizzarla in un oggetto di tipo `T`. Per concludere, restituisce `S
 - L'object `SpecialCellsParser`, estende il trait `Parser[SpecialCell]`. Il suo compito è quello di fornire un'implementazione concreta del metodo `parse`
 per analizzare le righe da un file di configurazione o da un'altra fonte che definiscono informazioni sulle celle speciali. Si tratta di un parser progettato
 specificamente per gestire le linee che descrivono le celle speciali nel model di Duck Game.
-
-
-
