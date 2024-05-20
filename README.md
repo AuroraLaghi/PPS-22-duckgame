@@ -11,6 +11,7 @@
 - [Requisiti](report/02-requisiti.md)
 - [Design architetturale](report/03-design_architetturale.md)
 - [Design di dettaglio](report/04-design_dettaglio.md)
-- [Implementazione](report/05-implementation.md)
-- [Retrospettiva]
-- [Guida utente]
+- [Implementazione](report/05-implementazione.md)
+- [Retrospettiva](report/06-retrospettiva.md)
+- [Conclusioni]](report/07-conclusioni.md)
+- [Guida utente](report/08-guida_utente.md)
