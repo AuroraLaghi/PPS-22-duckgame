@@ -2,7 +2,10 @@ package it.unibo.pps.duckgame.utils
 
 import alice.tuprolog.exceptions.NoSolutionException
 import it.unibo.pps.duckgame.controller.GameReader
-import it.unibo.pps.duckgame.controller.logic.{LogicController, MovementsController}
+import it.unibo.pps.duckgame.controller.logic.{
+  LogicController,
+  MovementsController
+}
 import it.unibo.pps.duckgame.model.cell.specialCell.SpecialCell
 import it.unibo.pps.duckgame.model.{CellStatus, Dice, Player}
 import org.scalatest.flatspec.AnyFlatSpec
@@ -16,11 +19,15 @@ class GameUtilsTest extends AnyFlatSpec with should.Matchers:
   val RANDOM_STEPS: Int = Random.between(1, MAX_DICE_VALUE * 2 + 1)
 
   "Method addSumToPosition" should "make arithmetic sum of given values" in {
-    GameUtils.addSumToPosition(RANDOM_STEPS, RANDOM_POSITION) shouldBe RANDOM_STEPS + RANDOM_POSITION
+    GameUtils.addSumToPosition(RANDOM_STEPS)(
+      RANDOM_POSITION
+    ) shouldBe RANDOM_STEPS + RANDOM_POSITION
   }
 
   "If you get a position value bigger than the gameboard size you" should "go backward in the gameboard" in {
-    GameUtils.addSumToPosition(RANDOM_POSITION, GameReader.gameBoard.size) should be < GameReader.gameBoard.size
+    GameUtils.addSumToPosition(RANDOM_POSITION)(
+      GameReader.gameBoard.size
+    ) should be < GameReader.gameBoard.size
   }
 
   val COORD_FIRST_SIDE: ((Int, Int), Int) = ((4, 0), 4)
@@ -28,9 +35,15 @@ class GameUtilsTest extends AnyFlatSpec with should.Matchers:
   val COORD_LAST_CELL: ((Int, Int), Int) = ((3, 4), 63)
 
   "Method GetCoordinateFromPosition" should "return col, row position of a given cell in a 8x8 grid" in {
-    GameUtils.getCoordinateFromPosition(COORD_FIRST_SIDE._2) shouldBe COORD_FIRST_SIDE._1
-    GameUtils.getCoordinateFromPosition(COORD_INSIDE._2) shouldBe COORD_INSIDE._1
-    GameUtils.getCoordinateFromPosition(COORD_LAST_CELL._2) shouldBe COORD_LAST_CELL._1
+    GameUtils.getCoordinateFromPosition(
+      COORD_FIRST_SIDE._2
+    ) shouldBe COORD_FIRST_SIDE._1
+    GameUtils.getCoordinateFromPosition(
+      COORD_INSIDE._2
+    ) shouldBe COORD_INSIDE._1
+    GameUtils.getCoordinateFromPosition(
+      COORD_LAST_CELL._2
+    ) shouldBe COORD_LAST_CELL._1
   }
 
   val DEFAULT_GRID_SIZE: (Int, Int) = (3, 2)
@@ -44,26 +57,20 @@ class GameUtilsTest extends AnyFlatSpec with should.Matchers:
 
   "Method getNthCellInGridWithStartingPos" should "throws exception when are given wrong arguments" in {
     an[NoSolutionException] should be thrownBy {
-      GameUtils.getNthSlotFromCell(
-        DEFAULT_STARTING_VALUE,
-        ILLEGAL_GRID_SIZE
-      )
+      GameUtils.getNthSlotFromCell(DEFAULT_STARTING_VALUE)(ILLEGAL_GRID_SIZE)
     }
   }
 
   "Method getNthCellInGridWithStartingPos" should "return correct values with given arguments" in {
-    GameUtils.getNthSlotFromCell(
-      DEFAULT_STARTING_VALUE,
+    GameUtils.getNthSlotFromCell(DEFAULT_STARTING_VALUE)(
       DEFAULT_GRID_SIZE
     ) shouldBe STARTING_CELL
 
-    GameUtils.getNthSlotFromCell(
-      VALUE_FIRST_CELL_OF_SECOND_ROW,
+    GameUtils.getNthSlotFromCell(VALUE_FIRST_CELL_OF_SECOND_ROW)(
       DEFAULT_GRID_SIZE
     ) shouldBe FIRST_CELL_SECOND_ROW
 
-    GameUtils.getNthSlotFromCell(
-      LAST_CELL_VALUE,
+    GameUtils.getNthSlotFromCell(LAST_CELL_VALUE)(
       DEFAULT_GRID_SIZE
     ) shouldBe LAST_CELL
   }
@@ -85,5 +92,7 @@ class GameUtilsTest extends AnyFlatSpec with should.Matchers:
 
   "Method getSpecialCellFromPlayerPosition" should "throws NoSuchElementException if it is invoked get method on an empty return" in {
     LogicController.endTurn()
-    a[NoSuchElementException] shouldBe thrownBy(GameUtils.getSpecialCellFromPlayerPosition.get)
+    a[NoSuchElementException] shouldBe thrownBy(
+      GameUtils.getSpecialCellFromPlayerPosition.get
+    )
   }
