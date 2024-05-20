@@ -18,8 +18,8 @@ object GameReader:
   /** Gets the index of the current player in the turn order.
     *
     * @return
-    *   The index of the current player (integer). The meaning of the index value depends on the game's player
-    *   management system.
+    *   The index of the current player (integer). The meaning of the index
+    *   value depends on the game's player management system.
     */
   def currentPlayerIndex: Int = Game.currentPlayer
 
@@ -30,14 +30,16 @@ object GameReader:
     */
   def players: List[Player] = Game.players
 
-  /** Updates the player information at a specific index in the game's player list.
+  /** Updates the player information at a specific index in the game's player
+    * list.
     *
     * @param index
     *   The index of the player to be updated in the `Game.players` list.
     * @param updatedPlayer
     *   The `Player` object containing the new information for the player.
     */
-  def updatePlayers(index: Int, updatedPlayer: Player): Unit = Game.players = Game.players.updated(index, updatedPlayer)
+  def updatePlayers(index: Int, updatedPlayer: Player): Unit = Game.players =
+    Game.players.updated(index, updatedPlayer)
 
   /** Optional element that returns the eventual game winner
     *
@@ -85,7 +87,7 @@ object GameReader:
   def canStartGame: Boolean =
     Game.players.length match
       case n if n < MIN_PLAYERS => false
-      case _ => true
+      case _                    => true
 
   /** Tell if it's possible to add another player to the game
     *
@@ -95,7 +97,7 @@ object GameReader:
   def canAddPlayer: Boolean =
     Game.players.length match
       case n if n < MAX_PLAYERS => true
-      case _ => false
+      case _                    => false
 
   /** Return if there's a game winner, so the game is done
     *
@@ -105,7 +107,7 @@ object GameReader:
   def checkVictory(): Boolean =
     currentPlayer.actualPosition match
       case 63 =>
-        Game.winner = Game.players.headOption
+        Game.winner = Option(currentPlayer)
         true
       case _ => false
 
@@ -119,7 +121,8 @@ object GameReader:
   /** Gets the index of the player currently in the well (if any).
     *
     * @return
-    *   The index of the player in the well (integer), or -1 if no player is in the well.
+    *   The index of the player in the well (integer), or -1 if no player is in
+    *   the well.
     */
   def playerInWell(): Int =
     Game.playerInWell
@@ -138,7 +141,8 @@ object GameReader:
   /** Gets the index of the player currently in jail (if any).
     *
     * @return
-    *   The index of the player in jail (integer), or -1 if no player is in jail.
+    *   The index of the player in jail (integer), or -1 if no player is in
+    *   jail.
     */
   def playerInJail(): Int = Game.playerInJail
 
@@ -149,14 +153,17 @@ object GameReader:
     */
   def isFirstRound: Boolean = Game.firstRound
 
-  /** This method sets the `firstRound` flag in the `Game` object to `false`, signifying that the first round is over */
+  /** This method sets the `firstRound` flag in the `Game` object to `false`,
+    * signifying that the first round is over
+    */
   def endFirstRound(): Unit = Game.firstRound = false
 
   /** Gets a reference to the list of currently available tokens in the game.
     *
     * @return
-    *   An immutable list of `Token` objects representing the currently available tokens. Modifying the returned list
-    *   will not affect the internal game state.
+    *   An immutable list of `Token` objects representing the currently
+    *   available tokens. Modifying the returned list will not affect the
+    *   internal game state.
     */
   def availableTokens(): List[Token] = Game.availableTokens
 
