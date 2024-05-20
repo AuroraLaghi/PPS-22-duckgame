@@ -1,11 +1,7 @@
-package it.unibo.pps.duckgame.utils
+package it.unibo.pps.duckgame.utils.config
 
-import it.unibo.pps.duckgame.model.specialCell.SpecialCell
-import it.unibo.pps.duckgame.utils.config.Parser
 import it.unibo.pps.duckgame.utils.config.Parser.Parser
-import it.unibo.pps.duckgame.utils.resources.TxtResources
 
-import java.nio.charset.StandardCharsets
 import scala.collection.mutable.ListBuffer
 import scala.io.{Codec, Source}
 
