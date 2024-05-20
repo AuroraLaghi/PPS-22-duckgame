@@ -15,7 +15,7 @@ In figura viene mostrato il modulo *Controller* insieme ai rispettivi sotto-modu
 
 <img src="../img/diagramma_controller.svg" />
 
-### view
+### View
 Al suo interno sono state raggruppate le logiche di interazione tra View e Model rispettando il pattern MVC attraverso le classi seguenti.
 
 #### StartMenuController
@@ -39,7 +39,7 @@ Ha il compito di gestire la comunicazione con la schermata di gioco `GameBoardVi
 - `showGameLocked`: gestisce lo scenario in cui il gioco è bloccato
 - `playerLockedAlert`: prende in ingresso il giocatore attuale e informa che questo è bloccato su una casella speciale (Pozzo o Prigione), se era presente già un altro giocatore sulla stessa cella allora questo sarà libero di riprendere la partita
  
-### logic
+### Logic
 Qui è possibile trovare tutta la parte della logica di gioco.
 
 #### LogicController
@@ -231,3 +231,25 @@ Le risorse utilizzate dall'applicativo sono state raggruppate in *enum* in base 
 - `CssReources` -> risorse *Css* che definiscono lo stile grafico
 - `TxtReources` -> lista delle risorse testuali (*.txt*)
 - `PrologResources` -> risorse di tipo *.pl* (file Prolog) utilizzate nell'applicativo
+
+  
+## Config
+Al suo interno si trovano 2 file necessari per il parsing dei file `.txt` utili al corretto funzionamento dell'applicativo.
+
+### SetupFromFile
+È un object utilizzato per impostare i dati da un file. Dispone di 2 metodi:
+- `setup`: esegue la lettura di dati da un file (`filePath`), analizzando ogni singola riga tramite una funzione di parsing fornita dall'utente (`parser`).
+Il risultato dell'operazione è una `List[T]`, nella quale ogni oggetto è stato ottenuto dall'elaborazione di una riga del file utilizzando la funzione di parsing.
+- `readLinesFromFile`: legge le righe del file in input (`filePath`) e le restituisce come una `Seq[String]`.
+
+### Parser
+L'object `Parser` fornisce le funzionalità relative al parsing delle informazioni
+testuali nel model di Duck Game. Contiene:
+- Il trait `Parser` che rappresenta un parser per un tipo generico `T`. In particolare, definisce il metodo `parse` che prende in input una stringa (`line`)
+e tenta di analizzarla in un oggetto di tipo `T`. Per concludere, restituisce `Some(T)` se il parsing è riuscito o `None` in caso di fallimento.
+- L'object `SpecialCellsParser`, estende il trait `Parser[SpecialCell]`. Il suo compito è quello di fornire un'implementazione concreta del metodo `parse`
+per analizzare le righe da un file di configurazione o da un'altra fonte che definiscono informazioni sulle celle speciali. Si tratta di un parser progettato
+specificamente per gestire le linee che descrivono le celle speciali nel model di Duck Game.
+
+
+
