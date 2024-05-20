@@ -1,4 +1,4 @@
-package it.unibo.pps.duckgame.model
+package it.unibo.pps.duckgame.model.cell
 
 /** Represents the cell class. This class extends the `Cell` class and likely provides concrete functionality for a
   * standard cell on the game board.

@@ -1,4 +1,4 @@
-package it.unibo.pps.duckgame.model
+package it.unibo.pps.duckgame.model.cell
 
 /** Represents a cell on the Duck Game board.
   *

@@ -1,4 +1,4 @@
-package it.unibo.pps.duckgame.model.specialCell
+package it.unibo.pps.duckgame.model.cell.specialCell
 
 /** Represents the different types of special cells on the Duck Game board */
 enum SpecialCellType:

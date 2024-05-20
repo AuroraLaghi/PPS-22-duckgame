@@ -1,10 +1,8 @@
-package it.unibo.pps.duckgame.model.specialCell
+package it.unibo.pps.duckgame.model.cell.specialCell
 
+import it.unibo.pps.duckgame.controller.GameReader
 import it.unibo.pps.duckgame.controller.logic.{EndGameController, LogicController, MovementsController}
-import it.unibo.pps.duckgame.controller.view.PlayerMenuController
-import it.unibo.pps.duckgame.controller.{Game, GameReader}
-import it.unibo.pps.duckgame.model.CellStatus
-import it.unibo.pps.duckgame.model.specialCell.SpecialCellType.BLANK
+import it.unibo.pps.duckgame.model.cell.specialCell.SpecialCellType.BLANK
 
 /** Builder class for creating `SpecialCell` objects.
   *

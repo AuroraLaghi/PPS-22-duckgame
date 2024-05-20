@@ -1,6 +1,6 @@
-package it.unibo.pps.duckgame.model.specialCell
+package it.unibo.pps.duckgame.model.cell.specialCell
 
-import it.unibo.pps.duckgame.model.{Cell, CellStatus, Player}
+import it.unibo.pps.duckgame.model.cell.Cell
 
 /** Represents a special cell with unique gameplay effects on the Duck Game board.
   *
