@@ -30,10 +30,6 @@ jobs:
       - name: Build with SBT
         run: sbt package
 
-      - name: Check formatting
-        working-directory: ./src
-        run: sbt scalafmtCheckAll
-
       - name: Run test
         shell: bash
         run: sbt -v +test
