@@ -27,7 +27,7 @@ object GameUtils:
     * @return
     *   new player's position
     */
-  def addSumToPosition(sum: Int, position: Int): Int = sum + position match
+  def addSumToPosition(sum: Int)(position: Int): Int = sum + position match
     case result if result >= GameReader.gameBoard.size =>
       val updatedPosition = 63 - Math.abs(63 - result)
       updatedPosition
@@ -62,7 +62,7 @@ object GameUtils:
     * @return
     *   The coordinates of the nth slot.
     */
-  def getNthSlotFromCell(n: Int, gridSize: (Int, Int)): (Int, Int) =
+  def getNthSlotFromCell(n: Int)(gridSize: (Int, Int)): (Int, Int) =
     prolog.getCellInGrid(n, gridSize._1, gridSize._2)
 
   /** Finds a SpecialCell object from the game board that corresponds to the current player's position.

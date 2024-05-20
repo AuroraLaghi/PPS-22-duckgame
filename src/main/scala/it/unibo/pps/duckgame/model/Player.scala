@@ -23,7 +23,7 @@ final case class Player(actualPosition: Int, name: String, oneTurnStop: Boolean,
     *   A new `Player` instance with the updated position.
     */
   def move(steps: Int): Player =
-    Player(GameUtils.addSumToPosition(steps, actualPosition), name, oneTurnStop, token)
+    Player(GameUtils.addSumToPosition(steps)(actualPosition), name, oneTurnStop, token)
 
   /** Creates a new `Player` object with an updated position.
     *
