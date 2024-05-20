@@ -13,5 +13,5 @@
 - [Design di dettaglio](report/04-design_dettaglio.md)
 - [Implementazione](report/05-implementazione.md)
 - [Retrospettiva](report/06-retrospettiva.md)
-- [Conclusioni]](report/07-conclusioni.md)
+- [Conclusioni](report/07-conclusioni.md)
 - [Guida utente](report/08-guida_utente.md)
