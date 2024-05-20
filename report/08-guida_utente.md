@@ -2,7 +2,7 @@ All'avvio dell'applicazione, il giocatore potrà segliere se avviare il gioco op
 e controllata dal rispettivo controller `StartMenuController`.
 
 <div align="center">
-  <img src="img/StartGameView.png" />
+  <img src="../img/StartGameView.png" />
   <p> Fig. 1 - Schermata iniziale del gioco </p>
 </div>
 
@@ -13,7 +13,7 @@ Se si sceglie di giocare una partita, ci si troverà di fronte alla pagina di co
 della propria pedina dall'elenco modellato attraveso una *ComboBox*.
 
 <div align="center">
-  <img src="img/HomeGameView.png" />
+  <img src="../img/HomeGameView.png" />
   <p> Fig. 2 - Schermata di configurazione aggiunta dei giocatori </p>
 </div>
 
@@ -28,7 +28,7 @@ spostamento del giocatore corrente a seguito del lancio dei dadi. Dalla parte op
 pulsanti "Fine turno", "Abbandona la partita" e "Lancia dadi" attraverso cui ogni utente deve interagire per poter giocare la partita. 
 
 <div align="center">
-  <img src="img/GameBoardView.png" />
+  <img src="../img/GameBoardView.png" />
   <p> Fig. 3 - Schermata rappresentativa del tabellone di gioco </p>
 </div>
 
