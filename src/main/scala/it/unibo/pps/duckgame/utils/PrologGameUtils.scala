@@ -92,10 +92,10 @@ object PrologGameUtils:
 
   /** Contains useful method for deserializing TuProlog solutions. */
   object PrologSolution:
-    given Conversion[SolveInfo, (Int, Int)] = e => colRowFromTerm(e.getTerm("X"), e.getTerm("Y"))
+    given Conversion[SolveInfo, (Int, Int)] = e => colRowFromTerm(e.getTerm("X"))(e.getTerm("Y"))
     given Conversion[SolveInfo, Int] = e => intFromTerm(e.getTerm("X"))
 
-    private def colRowFromTerm(termX: Term, termY: Term): (Int, Int) =
+    private def colRowFromTerm(termX: Term)(termY: Term): (Int, Int) =
       (termX.toString.toDouble.toInt, termY.toString.toDouble.toInt)
 
     private def intFromTerm(term: Term): Int =
