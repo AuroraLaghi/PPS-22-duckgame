@@ -92,6 +92,58 @@ Tramite questo object è possibile leggere tutti i dati del `Game`, aggiornando 
 
 ## Model
 
+Nell'immagine seguente è rappresentato il diagramma delle classi relativo al package `model`
+
+<img src="../img/modelClassDiagram.svg" width="900" />
+
+All'interno di questo *package* sono state implementate le varie entità che rappresentano gli elementi del dominio
+
+- `CellStatus` -> *enum* contenente i tipi una cella: STANDARD_CELL e SPECIAL_CELL
+- `Dice` -> classe di gestione dei dadi, permette di ottenere due dadi con risultato randomico tra 1 e 6
+- `GameBoard` -> definisce il tabellone di gioco, composto da 64 caselle (partendo dallo *start* che ha numero 0), tra i
+  suoi attibuti ci sono la lista ordinata delle caselle, definita in *cells*, e la lista delle caselle speciali
+  (*specialCells*)
+- `Player` -> rappresenta un giocatore e le sue caratteristiche:
+    - *name*: il nickname scelto;
+    - *actualPosition*: posizione attuale del giocatore all'interno del tabellone (compresa tra 0 e 63);
+    - *token*: pedina scelta;
+    - *oneTurnStop*: attributo boolean che viene settato a *true* nel caso in cui il giocatore in questione debba saltare
+      un
+      turno di gioco, questo attributo viene utilizzato dalla classe `LogicController` per la gestione dei turni di
+      gioco.
+- `Token` -> *enum* contenente le varie pedine di gioco, ad ognuna è associata una `imgResource` per ottenere l'URL 
+della relativa immagine della pedina da visualizzare a schermo
+
+## Cell
+All'interno di questo modulo sono implementate le logiche di cella della `GameBoard` definite nel *trait* `Cell` e 
+poi specializzate nelle classi `CellImpl` e `SpecialCell`. Tutte le celle hanno un attributo base che è *number*, un 
+intero compreso tra 0 e 63 che definisce la posizione della cella all'interno del tabellone di gioco
+
+### specialCell
+
+Questo sottomodulo definisce le caselle speciali del gioco, ovvero tutte quelle caselle che innescano un'azione quando 
+un giocatore ci termina sopra.
+
+La classe `specialCell` rappresenta un cella speciale, ovvero una casella che innesca un'azione predefinita quando un
+giocatore ci termina sopra, composta da:
+- *specialCellType* di tipo `SpecialCellType`;
+- *message* una stringa contenente il messaggio da visualizzare quando il giocatore termina sulla casella;
+- *action* rappresenta il metodo che esegue l'azione sul giocatore corrente
+
+Le celle appartenenti a questa categoria sono ulteriormente divise in base al tipo `specialCellType`:
+- DUCK -> oca, fanno spostare avanti il giocatore di un numero di caselle pari al numero ottenuto dal lancio dei dadi;
+- BRIDGE -> ponte, il giocatore avanza fino alla casella numero 12;
+- HOUSE -> casa, chi ci finisce sopra salta il prossimo turno di gioco;
+- LABYRINTH -> labirinto, il giocatore torna indietro alla casella numero 39;
+- JAIL -> prigione, impone al giocatore di rimanere fermo finchè qualcun altro non termina sulla stessa casella, che viene a sua
+  volta bloccato;
+- WELL -> pozzo, identico alla prigione;
+- SKELETON -> scheletro, il giocatore torna alla casella iniziale;
+- FINAL -> casella finale, quando un giocatore termina qui vince il gioco
+
+Infine, la classe `SpecialCellBuilder` ha il compito di istanziare i tipi di cella al *cellType*, il quale ne definisce 
+anche la rispettiva azione
+
 ## View
 A seguire viene mostrato il modulo *view*. Importante ricordare che tutte le viste possono recuperare informazioni sullo stato del `Game` attraverso `GameReader` che **consente di leggere e non scrivere informazioni**.
 
@@ -118,3 +170,43 @@ Seguendo il pattern MVC, questo modulo implementa le viste per facilitare l'inte
   - `exitGame`: per terminarlo 
   
 ## Utils
+
+Nella figura sottostante è rappresentato il diagramma delle classi del modulo di strumenti di *utility* utilizzati
+
+<img src="../img/utilsClassDiagram.svg" width="900" />
+
+Questo modulo contiene le varie classi implementate contenenti metodi utilizzati da più classi all'interno del programma
+
+## UI
+
+Per quanto riguarda la parte di interfaccia grafica, è stata creata la classe `FxmlUtils` per il'integrazione delle 
+librerie grafiche **javaFX** e **scalaFX**
+
+Questo *object* contiene:
+- un'istanza dello Stage di scalaFX necessario per visualizzare lo stage dell'interfaccia;
+- due valori immutabili di altezza e larghezza della finestra grafica per la scena di gioco principale (DEFAULT_WIDTH_PERC e 
+DEFAULT_WIDTH_PERC)
+- il metodo *changeScene* per modificare la scena visualizzata;
+- il metodo *createPrimaryStage* che ha il compito di inizializzare l'istanza di stage citata in precedenza;
+- *initUIElements* che si occupa di inizializzare i vari elementi della UI: la dimensione del BorderPane che comprende 
+ tutti gli elementi grafici, compreso il file *Css* per lo stile; in caso si debba istanziare la scena principale di 
+gioco, viene passata anche la *View* contenente l'immagine del tabellone di gioco;
+- *getResolution* permette di recuperare la risoluzione dello schermo dal quale viene avviato l'applicativo;
+- *showAlert* mostra una finestra di notifica contenente messaggi di gioco importanti.
+
+Per gestire la parte grafica è stata implementata un'ulteriore classe, `AlertUtils`, che definisce i vari **Alert** che
+possono essere visualizzati runtime.
+Di seguito i vari metodi utilizzabili, i quali richiamano il metodo *showAlert* definito sopra:
+- *showVictory* appare quando un giocatore vince;
+- *notEnoughPlayersWarning* viene mostrato quando si vuole iniziare il gioco con meno di due giocatori;
+- *emptyPlayerNameWarning* avverte se si vuole aggiungere un nuovo giocatore senza averne inserito il nome;
+- *gameLockedWarning* caso particolare che si può verificare se sono presenti due giocatori ed entrambi finiscono 
+rispettivamente nelle caselle del pozzo e della prigione, bloccando di fatto il gioco. In questo caso la partita viene
+annullata e si torna alla schermata iniziale;
+- *exchangePlayerInWellOrJailInfo* avverte quando un giocatore finisce nella casella della prigione o del pozzo, che lo 
+costringono a rimanere fermo fino a quando un'altra pedina non arriva nella casella interessata, la quale viene a sua 
+volta "bloccata"
+
+
+
+
