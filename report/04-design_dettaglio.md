@@ -15,7 +15,7 @@ In figura viene mostrato il modulo *Controller* insieme ai rispettivi sotto-modu
 
 <img src="../img/diagramma_controller.svg" />
 
-### Sotto-modulo *view*
+### view
 Al suo interno sono state raggruppate le logiche di interazione tra View e Model rispettando il pattern MVC attraverso le classi seguenti.
 
 #### StartMenuController
@@ -39,8 +39,8 @@ Ha il compito di gestire la comunicazione con la schermata di gioco `GameBoardVi
 - `showGameLocked`: gestisce lo scenario in cui il gioco è bloccato
 - `playerLockedAlert`: prende in ingresso il giocatore attuale e informa che questo è bloccato su una casella speciale (Pozzo o Prigione), se era presente già un altro giocatore sulla stessa cella allora questo sarà libero di riprendere la partita
  
-### Sotto-modulo *logic*
-Qui è possibile trovare parte della logica di gioco.
+### logic
+Qui è possibile trovare tutta la parte della logica di gioco.
 
 #### LogicController
 Object che si occupa principalmente della gestione della logica di gioco. Fra i metodi principali è possibile trovare:
@@ -177,6 +177,21 @@ Nella figura sottostante è rappresentato il diagramma delle classi del modulo d
 
 Questo modulo contiene le varie classi implementate contenenti metodi utilizzati da più classi all'interno del programma
 
+La classe `GameUtils` è stata implementata per centralizzare i metodi utilizzati per il calcolo delle operazioni durante 
+il gioco:
+- CELLS_IN_SIDE è una costante che indica il numero di caselle in ogni lato del tabellone. La creazione di questa 
+costante si è resa necessaria in quanto tale valore viene utilizzato più volte in classi diverse e quindi è stato
+ identificato come un *magic number* e di conseguenza isolato.
+- *addSumToPosition* ritorna la nuova posizione di un giocatore a seguito di un lancio di dadi o dell'azione di una 
+casella speciale
+- *mixPlayers* mischia in modo randomico una lista di `Player` per modificarne l'ordine
+- *getCoordinateFromPosition* restituisce le coordinate di una casella data la posizione del giocatore all'interno del 
+tabellone
+- *getNthSlotFromCell* ritorna le coordinate dell'n-esima cella della griglia a partire dal numero della cella di 
+partenza fornita
+- *getSpecialCellFromPlayerPosition* ritorna, se presente, la casella speciale in base alla posizione attuale del 
+giocatore
+
 ## UI
 
 Per quanto riguarda la parte di interfaccia grafica, è stata creata la classe `FxmlUtils` per il'integrazione delle 
@@ -207,6 +222,12 @@ annullata e si torna alla schermata iniziale;
 costringono a rimanere fermo fino a quando un'altra pedina non arriva nella casella interessata, la quale viene a sua 
 volta "bloccata"
 
+## Resources
 
+Le risorse utilizzate dall'applicativo sono state raggruppate in *enum* in base al tipo di file:
 
-
+- `FxmlResources` -> risorse grafiche di tipo *fxml*
+- `ImgResources` -> elenca tutti i file di tipo *.png* o *.jpg*
+- `CssReources` -> risorse *Css* che definiscono lo stile grafico
+- `TxtReources` -> lista delle risorse testuali (*.txt*)
+- `PrologResources` -> risorse di tipo *.pl* (file Prolog) utilizzate nell'applicativo
