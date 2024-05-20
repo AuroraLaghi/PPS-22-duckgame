@@ -9,7 +9,8 @@ import scala.language.implicitConversions
 import it.unibo.pps.duckgame.utils.PrologGameUtils.ConversionTerm.given
 import it.unibo.pps.duckgame.utils.PrologGameUtils.PrologSolution.given
 
-/** Returns pair of (Int, Int) for two different methods in [[it.unibo.pps.duckgame.utils.GameUtils]] using TuProlog
+/** Returns pair of (Int, Int) for two different methods in
+  * [[it.unibo.pps.duckgame.utils.GameUtils]] using TuProlog
   * [[alice.tuprolog.Engine]].
   */
 object PrologGameUtils:
@@ -36,9 +37,10 @@ object PrologGameUtils:
         * @return
         *   coordinates of player's position in form of (column, row)
         */
-      def getCellInGrid(cell: Int, cols: Int, rows: Int): (Int, Int)
+      def getCellInGrid(cell: Int)(cols: Int)(rows: Int): (Int, Int)
 
-      /** Return the coordinate of the nth free slot in a grid of gridSize dimensions
+      /** Return the coordinate of the nth free slot in a grid of gridSize
+        * dimensions
         * @param position
         *   The number of the slot which coordinates are to be returned.
         * @param cis
@@ -47,7 +49,7 @@ object PrologGameUtils:
         * @return
         *   The coordinates of the nth slot.
         */
-      def getFreeSlotInCell(position: Int, cis: Int): (Int, Int)
+      def getFreeSlotInCell(position: Int)(cis: Int): (Int, Int)
 
       /** Return two random values simulating roll of dices
         * @param maxValue
@@ -66,12 +68,14 @@ object PrologGameUtils:
       private val engine: Prolog = new Prolog
       engine.setTheory(theory)
 
-      override def getCellInGrid(cell: Int, cols: Int, rows: Int): (Int, Int) =
-        val query: String = "getCellInGrid(" + cell + ", " + cols + ", " + rows + ", X, Y)"
+      override def getCellInGrid(cell: Int)(cols: Int)(rows: Int): (Int, Int) =
+        val query: String =
+          "getCellInGrid(" + cell + ", " + cols + ", " + rows + ", X, Y)"
         solve(query)
 
-      override def getFreeSlotInCell(position: Int, cis: Int): (Int, Int) =
-        val query: String = "getCoordinateFromPosition(" + position + ", " + cis + ", X, Y)"
+      override def getFreeSlotInCell(position: Int)(cis: Int): (Int, Int) =
+        val query: String =
+          "getCoordinateFromPosition(" + position + ", " + cis + ", X, Y)"
         solve(query)
 
       override def randomDice(maxValue: Int): (Int, Int) =
@@ -82,9 +86,11 @@ object PrologGameUtils:
 
   /** Contains useful operator for building [[Theory]]. */
   object PrologTheory:
-    given Conversion[String, Theory] = e => Theory.parseWithStandardOperators(getStringTheory(e))
+    given Conversion[String, Theory] = e =>
+      Theory.parseWithStandardOperators(getStringTheory(e))
 
-    private def getStringTheory(resourcePath: String): String = Source.fromResource(resourcePath)(Codec.UTF8).mkString
+    private def getStringTheory(resourcePath: String): String =
+      Source.fromResource(resourcePath)(Codec.UTF8).mkString
 
   /** Contains useful operator for building [[Term]]. */
   object ConversionTerm:
@@ -92,7 +98,8 @@ object PrologGameUtils:
 
   /** Contains useful method for deserializing TuProlog solutions. */
   object PrologSolution:
-    given Conversion[SolveInfo, (Int, Int)] = e => colRowFromTerm(e.getTerm("X"))(e.getTerm("Y"))
+    given Conversion[SolveInfo, (Int, Int)] = e =>
+      colRowFromTerm(e.getTerm("X"))(e.getTerm("Y"))
     given Conversion[SolveInfo, Int] = e => intFromTerm(e.getTerm("X"))
 
     private def colRowFromTerm(termX: Term)(termY: Term): (Int, Int) =
