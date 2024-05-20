@@ -8,7 +8,8 @@ import scala.io.{Codec, Source}
 /** Object for setting up data from a file */
 object SetupFromFile:
 
-  /** Reads data from a file, parses each line using the provided parser, and returns a list of parsed objects.
+  /** Reads data from a file, parses each line using the provided parser, and
+    * returns a list of parsed objects.
     *
     * @param filePath
     *   The path to the file containing the data.
@@ -17,7 +18,7 @@ object SetupFromFile:
     * @return
     *   A list of T objects parsed from the file.
     */
-  def setup[T](filePath: String, parser: Parser[T]): List[T] =
+  def setup[T](filePath: String)(parser: Parser[T]): List[T] =
     val cells = new ListBuffer[T]
     readLinesFromFile(filePath).flatMap(parser.parse).foreach(c => cells += c)
     cells.toList
@@ -30,4 +31,7 @@ object SetupFromFile:
     *   A sequence of strings representing the lines in the file.
     */
   private def readLinesFromFile(filePath: String): Seq[String] =
-    Source.fromInputStream(getClass.getResourceAsStream(filePath))(Codec.UTF8).getLines().toList
+    Source
+      .fromInputStream(getClass.getResourceAsStream(filePath))(Codec.UTF8)
+      .getLines()
+      .toList

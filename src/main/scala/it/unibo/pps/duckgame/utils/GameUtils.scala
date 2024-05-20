@@ -52,7 +52,7 @@ object GameUtils:
     *   coordinates in (col, row) of the cell representing player's position
     */
   def getCoordinateFromPosition(position: Int): (Int, Int) =
-    prolog.getFreeSlotInCell(position, CELLS_IN_SIDE)
+    prolog.getFreeSlotInCell(position)(CELLS_IN_SIDE)
 
   /** Returns the coordinate of the free slot inside a grid of gridSize
     * dimensions
@@ -64,7 +64,7 @@ object GameUtils:
     *   The coordinates of the nth slot.
     */
   def getNthSlotFromCell(n: Int)(gridSize: (Int, Int)): (Int, Int) =
-    prolog.getCellInGrid(n, gridSize._1, gridSize._2)
+    prolog.getCellInGrid(n)(gridSize._1)(gridSize._2)
 
   /** Finds a SpecialCell object from the game board that corresponds to the
     * current player's position.
