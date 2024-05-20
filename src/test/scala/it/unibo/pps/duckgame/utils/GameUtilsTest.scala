@@ -1,9 +1,9 @@
 package it.unibo.pps.duckgame.utils
 
 import alice.tuprolog.exceptions.NoSolutionException
-import it.unibo.pps.duckgame.controller.logic.{LogicController, MovementsController}
 import it.unibo.pps.duckgame.controller.GameReader
-import it.unibo.pps.duckgame.model.specialCell.SpecialCell
+import it.unibo.pps.duckgame.controller.logic.{LogicController, MovementsController}
+import it.unibo.pps.duckgame.model.cell.specialCell.SpecialCell
 import it.unibo.pps.duckgame.model.{CellStatus, Dice, Player}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should

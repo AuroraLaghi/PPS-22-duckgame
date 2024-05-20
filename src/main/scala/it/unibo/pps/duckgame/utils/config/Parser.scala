@@ -1,6 +1,6 @@
 package it.unibo.pps.duckgame.utils.config
 
-import it.unibo.pps.duckgame.model.specialCell.{SpecialCell, SpecialCellBuilder, SpecialCellType}
+import it.unibo.pps.duckgame.model.cell.specialCell.{SpecialCell, SpecialCellBuilder, SpecialCellType}
 
 /** The `Parser` object likely provides functionalities related to parsing textual information in the Duck Game model */
 object Parser:

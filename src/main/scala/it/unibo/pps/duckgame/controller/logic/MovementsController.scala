@@ -3,7 +3,7 @@ package it.unibo.pps.duckgame.controller.logic
 import it.unibo.pps.duckgame.controller.view.GameBoardController
 import it.unibo.pps.duckgame.controller.{Game, GameReader}
 import it.unibo.pps.duckgame.model.CellStatus
-import it.unibo.pps.duckgame.model.specialCell.{SpecialCellBuilder, SpecialCellType}
+import it.unibo.pps.duckgame.model.cell.specialCell.{SpecialCellBuilder, SpecialCellType}
 import it.unibo.pps.duckgame.utils.{AnyOps, GameUtils}
 
 /** Class that control all players' movements and manages special cells */

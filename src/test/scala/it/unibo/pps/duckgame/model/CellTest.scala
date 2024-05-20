@@ -1,7 +1,8 @@
 package it.unibo.pps.duckgame.model
 
 import it.unibo.pps.duckgame.controller.GameReader
-import it.unibo.pps.duckgame.model.specialCell.{SpecialCell, SpecialCellType}
+import it.unibo.pps.duckgame.model.cell.Cell
+import it.unibo.pps.duckgame.model.cell.specialCell.{SpecialCell, SpecialCellType}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should
 

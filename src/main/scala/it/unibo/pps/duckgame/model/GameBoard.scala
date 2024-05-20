@@ -1,11 +1,10 @@
 package it.unibo.pps.duckgame.model
 
-import it.unibo.pps.duckgame.model.specialCell.SpecialCellType.DUCK
-import it.unibo.pps.duckgame.model.specialCell.{SpecialCell, SpecialCellBuilder, SpecialCellType}
-import it.unibo.pps.duckgame.utils.SetupFromFile
+import it.unibo.pps.duckgame.model.cell.specialCell.{SpecialCell, SpecialCellType}
+import it.unibo.pps.duckgame.model.cell.{Cell, CellImpl}
 import it.unibo.pps.duckgame.utils.config.Parser.SpecialCellsParser
+import it.unibo.pps.duckgame.utils.config.SetupFromFile
 import it.unibo.pps.duckgame.utils.resources.TxtResources
-import scalafx.scene.control
 
 /** Represents the game board
   *

@@ -1,13 +1,11 @@
 package it.unibo.pps.duckgame.utils
 
-import alice.tuprolog.SolveInfo
 import it.unibo.pps.duckgame.controller.GameReader
-import it.unibo.pps.duckgame.controller.logic.LogicController
-import it.unibo.pps.duckgame.model.specialCell.SpecialCell
-import it.unibo.pps.duckgame.model.{Cell, GameBoard, Player}
+import it.unibo.pps.duckgame.model.Player
+import it.unibo.pps.duckgame.model.cell.specialCell.SpecialCell
 import it.unibo.pps.duckgame.utils.PrologGameUtils.PrologEngine.PrologEngine
+import it.unibo.pps.duckgame.utils.PrologGameUtils.PrologTheory
 import it.unibo.pps.duckgame.utils.PrologGameUtils.PrologTheory.given
-import it.unibo.pps.duckgame.utils.PrologGameUtils.{ConversionTerm, PrologSolution, PrologTheory}
 import it.unibo.pps.duckgame.utils.resources.PrologResources
 
 import scala.language.implicitConversions

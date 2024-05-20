@@ -1,12 +1,12 @@
 package it.unibo.pps.duckgame.controller.view
 
 import it.unibo.pps.duckgame.controller
-import it.unibo.pps.duckgame.controller.logic.{EndGameController, LogicController, MovementsController}
 import it.unibo.pps.duckgame.controller.GameReader
-import it.unibo.pps.duckgame.model.CellStatus.SPECIAL_CELL
-import it.unibo.pps.duckgame.model.specialCell.SpecialCellType.JAIL
-import it.unibo.pps.duckgame.model.specialCell.{SpecialCell, SpecialCellType}
+import it.unibo.pps.duckgame.controller.logic.{EndGameController, LogicController, MovementsController}
 import it.unibo.pps.duckgame.model.*
+import it.unibo.pps.duckgame.model.CellStatus.SPECIAL_CELL
+import it.unibo.pps.duckgame.model.cell.specialCell.SpecialCellType.JAIL
+import it.unibo.pps.duckgame.model.cell.specialCell.{SpecialCell, SpecialCellType}
 import it.unibo.pps.duckgame.utils.resources.FxmlResources
 import it.unibo.pps.duckgame.utils.{AlertUtils, AnyOps, FxmlUtils, GameUtils}
 import it.unibo.pps.duckgame.view.GameBoardView

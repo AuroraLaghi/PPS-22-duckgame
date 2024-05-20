@@ -4,7 +4,7 @@ import it.unibo.pps.duckgame.controller.logic.{LogicController, PlayerController
 import it.unibo.pps.duckgame.controller.view.GameBoardController
 import it.unibo.pps.duckgame.controller.{Game, GameReader}
 import it.unibo.pps.duckgame.model.Player
-import it.unibo.pps.duckgame.model.specialCell.{SpecialCellBuilder, SpecialCellType}
+import it.unibo.pps.duckgame.model.cell.specialCell.{SpecialCellBuilder, SpecialCellType}
 import org.scalatest.BeforeAndAfterEach
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should

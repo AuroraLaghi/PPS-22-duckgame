@@ -2,7 +2,7 @@ package it.unibo.pps.duckgame.controller.logic
 
 import it.unibo.pps.duckgame.controller.{Game, GameReader}
 import it.unibo.pps.duckgame.model.Player
-import it.unibo.pps.duckgame.model.specialCell.SpecialCell
+import it.unibo.pps.duckgame.model.cell.specialCell.SpecialCell
 import it.unibo.pps.duckgame.utils.resources.FxmlResources
 import it.unibo.pps.duckgame.utils.{AlertUtils, FxmlUtils}
 
