@@ -75,7 +75,7 @@ object GameReader:
   /** Initializes the game state and starts a new game session */
   def startGame(): Unit =
     Game.firstRound = true
-    Game.players = GameUtils MixPlayers Game.players
+    Game.players = GameUtils mixPlayers Game.players
 
   /** Checks if everything's ok to start the game
     *

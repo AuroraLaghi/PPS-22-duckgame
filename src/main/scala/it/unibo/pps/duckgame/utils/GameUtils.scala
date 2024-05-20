@@ -17,8 +17,8 @@ object GameUtils:
   private val pathTheory = PrologResources.GAMEUTILS_PROLOG.path
   private val prolog: PrologEngine = PrologEngine(pathTheory)
 
-  /** Method that returns the new position of current player If the position is bigger than the gameboard's size, it
-    * will return back from the last cell
+  /** Method that returns the new position of current player If the position is
+    * bigger than the gameboard's size, it will return back from the last cell
     *
     * @param sum
     *   result of the dices
@@ -40,11 +40,11 @@ object GameUtils:
     * @return
     *   A new list of Players objects with order randomized
     */
-  def MixPlayers(players: List[Player]): List[Player] =
-    val mixedList = Random shuffle players
-    mixedList
+  def mixPlayers(players: List[Player]): List[Player] =
+    Random shuffle players
 
-  /** Returns the cell's coordinates given player's position First int is column index, the second is the row
+  /** Returns the cell's coordinates given player's position First int is column
+    * index, the second is the row
     *
     * @param position
     *   player's position
@@ -54,7 +54,8 @@ object GameUtils:
   def getCoordinateFromPosition(position: Int): (Int, Int) =
     prolog.getFreeSlotInCell(position, CELLS_IN_SIDE)
 
-  /** Returns the coordinate of the free slot inside a grid of gridSize dimensions
+  /** Returns the coordinate of the free slot inside a grid of gridSize
+    * dimensions
     * @param n
     *   The number of the slot in grid which coordinates are to be returned.
     * @param gridSize
@@ -65,10 +66,12 @@ object GameUtils:
   def getNthSlotFromCell(n: Int)(gridSize: (Int, Int)): (Int, Int) =
     prolog.getCellInGrid(n, gridSize._1, gridSize._2)
 
-  /** Finds a SpecialCell object from the game board that corresponds to the current player's position.
+  /** Finds a SpecialCell object from the game board that corresponds to the
+    * current player's position.
     *
     * @return
-    *   An Option[SpecialCell] containing the SpecialCell if found, or None if not found.
+    *   An Option[SpecialCell] containing the SpecialCell if found, or None if
+    *   not found.
     */
   def getSpecialCellFromPlayerPosition: Option[SpecialCell] =
     GameReader.gameBoard.specialCells.find(
