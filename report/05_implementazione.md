@@ -22,7 +22,7 @@ alcuni esempi del loro utilizzo.
 ### Currying
 
 In *Scala* è possibile definire funzioni *curried*, per cui la valutazione di
-una funzione che assuma parametri multipli può essere tradotte nella
+una funzione che assuma parametri multipli può essere tradotta nella
 valutazione di una sequenza di funzioni.
 
 Questo meccanismo consente di applicare il principio **DRY** (Don't Repeat Yourself),
@@ -30,11 +30,11 @@ favorendo così il riuso di codice: infatti, quando una funzione è *curried*, �
 possibile applicare parzialmente la funzione per poterla utilizzare in più
 punti del codice.
 
-Nel seguente listato si può osservare un esempio di utilizzo di questo meccanismo
+All'interno del package *utils* si è cercato di utilizzare questo meccanismo ove possibile, il seguente listato è un esempio di utilizzo di questo meccanismo
 
 ```scala
   private def colRowFromTerm(termX: Term)(termY: Term): (Int, Int) =
-  (termX.toString.toDouble.toInt, termY.toString.toDouble.toInt)
+    (termX.toString.toDouble.toInt, termY.toString.toDouble.toInt)
 ```
 
 Il metodo `colRowFromTerm` estrae i due valori dal termine della soluzione ottenuta
@@ -63,7 +63,7 @@ sottostante è presente una funzione *higher-order*.
 
 ```scala
   def mixPlayers(players: List[Player]): List[Player] =
-  Random shuffle players
+    Random shuffle players
 ```
 
 In particolare, si tratta di un metodo utilizzato per mescolare la lista dei giocatori prima di iniziare la partita
@@ -80,6 +80,9 @@ che ben si adattavano alle caratteristiche di *Proloog*.
 Tramite il **TuProlog engine** viene creata una coppia di interi di valore randomico, compreso tra 1 e 6
 
 ```prolog
+% Roll one dice and return the result
+% Max = seed, X = random integer between 1 and 6
+
  rollDice(Max, X):-rand_int(Max,N), X is N+1.
 ```
 
@@ -97,6 +100,10 @@ Per ottenere il risultato richiesto, cerca all'interno della griglia le coordina
 ovvero la prima libera.
 
 ```prolog
+ % Return the coordinates of the N-th cell in a grid of given rows and columns
+ % N = Nth cell, Y = size of columns in grid, X = size of rows in grid
+ % Y1 = column in given position, X1 = row in given position
+
 getCellInGrid(N, Y, X, Y1, X1):- R is (N mod Y), R = 0 -> Y1 is Y -1, X1 is N//Y - 1;
 Y1 is ((N mod Y)-1), X1 is N//Y.
 ```
@@ -108,6 +115,10 @@ Queste coordinate vengono utilizzate all'interno della parte di *view* per visua
 nella posizione corretta all'interno del tabellone.
 
 ```prolog
+% Return the coordinates of a grid of cell given player's position
+% P = position, C = CELLS IN SIDE (default 7)
+% Y = column of N cell, X = row of N cell
+
 getCoordinateFromPosition(P,C,Y,X):- P < C -> Y is P, X is 0;
 P < C*2 -> Y is C, X is P - C;
 P < C*3 -> Y is (C * 3) - P, X is C;
@@ -130,19 +141,6 @@ Y is 3, X is 4.
 Come risultato del primo goal ottengo SolY = 1 e SolX = 1 (seconda colonna nella seconda riga), mentre il risultato del
 secondo è SolY = 6 e SolX = 4 (settima colonna e quinta riga)
 
--------------------------------------------------
-
-Per integrare *TuProlog* in modo più fluente, si è fatto ricorso ad un metodo che utilizza al suo interno un *engine*
-per risolvere le query in input: in questo modo, la soluzione fornita risultava inutilizzabile. Si è reso quindi
-necessario
-definire metodi utili in fase di ricostruzione del risultato finale, ossia una coppia di interi, oppure un solo intero
-nel
-caso del lancio dei dadi. Per effettuare il *parsing* del risultato del *Prolog Engine* si è utilizzato il principio
-delle *given conversion*, come si può osservare dal listato sottostante, impiegato diverse volte all'interno della
-classe
-di utilità, per favorire idiomaticità e comprensibilità, oltre a fornire un *adapter* automatico senza dover introdurre
-codice *boilerplate*.
-
 ## JavaFX e ScalaFX
 
 Per implementare la parte di interfaccia grafica sono state utilizzate le librerie *JavaFX* e *ScalaFX*. un DSL scritto
@@ -161,3 +159,29 @@ riferimento agli elementi appartenenti all'interfaccia richiamando gli ID specif
 caricatore,
 ossia *FXMLLoader* che ha il compito di istanziare e rendere accessibili gli elementi grafici. Il ruolo del controller
 è quello di inizializzare gli elementi della UI e gestirne il loro comportamento.
+
+## Suddivisione del lavoro
+A seguire, ogni membro del gruppo ha descritto le parti di codice da lui implementate o effettuate in collaborazione.
+
+tailrec => LogicController
+foldLeft => GameBoardView
+
+### Francesca Frattini
+
+### Aurora Laghi
+
+
+L'implementazione di `Dice.scala` è stata possibile grazie al **pattern Singleton** che implica l'utilizzo di un costruttore privato vietando di creare direttamente istanze della classe stessa. Inoltre, si è reso necessario l'utilizzo del rispettivo **companion object** (`object Dice`) che fornisce il metodo factory `apply` e il metodo statico`rollDice`. In egual modo si è deciso di realizzare anche `Player.scala`.
+
+Con la creazione di `Parser.scala` si può notare l'impiegato del trait `Parser[T]` e del **pattern Strategy** rappresentato da `object SpecialCellParser`. In particolare, *parser* definisce un'interfaccia generica per il parsing, consentendo flessibilità nella gestione dei diversi tipi di dati mentre l'implementazione concreta del metodo parse, resa possibile dallo strategy, fornisce una logica specifica per i rispettivi tipi di dati. Si tratta di un approvvio che definisce riutilizzabilità e menutenibilità del codice.
+
+In `PrologGameUtils.scala` si osservano due importanti pattern di design: il **pattern Facade** e il **pattern Adapter**.
+
+1. Pattern Facade:
+l'object PrologGameUtils funge da **facciata** per semplificare l'interazione con le funzionalità del motore Prolog. Offre metodi di alto livello come `getCellInGrid`, `getFreeSlotInCell` e `randomDice`, nascondendo la complessità di costruire query Prolog e processare le soluzioni. Fra i vantaggi principali è possibile notare l'interfaccia che semplifica l'utilizzo del motore Prolog da parte di sviluppatori che non hanno familiarità con il linguaggio Prolog. Il codice risulta più leggibile e comprensibile, concentrandosi sulle funzionalità desiderate piuttosto che sui dettagli di implementazione. Infine, nascondendo i dettagli di implementazione del motore Prolog, la facciata protegge il codice applicativo da eventuali modifiche future nel motore.
+
+3. Pattern Adapter:
+per integrare TuProlog in modo più fluido, si è utilizzato un metodo che sfrutta un *engine* interno per risolvere le query in input. Tuttavia, la soluzione ottenuta non era direttamente utilizzabile nell'applicazione. Per risolvere questo problema, sono stati definiti metodi di utilità per ricostruire il risultato finale (una coppia di interi o un singolo intero nel caso del lancio dei dadi). Questi metodi utilizzano il principio delle conversioni implicite (definite con l'`object given`) per facilitare il parsing del risultato del motore Prolog. Si noti che le conversioni implicite permettono di adattare il formato del risultato Prolog alle esigenze specifiche dell'applicazione, oltre ad evitare la necessità di scrivere codice *boilerplate* per la conversione manuale dei risultati.
+
+Con `SpecialCellBuilder.scala` è possibile vedere l'applicazione del **pattern Builder**. Questo pattern conferisce maggiore flessibilità con la possibilità di aggiungere nuovi tipi di caselle speciali e la loro relativa azione senza modifcare la logica principale, trattandosi di una classe *final* cioè immutabile viene conferita maggiore immutabilità all'applicativo e per concludere aiuta a separare la creazione degli oggetti dalla logica interna migliorando la leggibilità del codice.
+
