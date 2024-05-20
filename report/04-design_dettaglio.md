@@ -92,8 +92,7 @@ Tramite questo object è possibile leggere tutti i dati del `Game`, aggiornando 
 
 ## Model
 
-Nell'immagine seguente è rappresentato il diagramma delle classi relativo al package `model`
-
+Nell'immagine seguente è rappresentato il diagramma delle classi relativo al package `model`, contenente il sotto-modulo `cell`.
 <img src="../img/modelClassDiagram.svg" width="900" />
 
 All'interno di questo *package* sono state implementate le varie entità che rappresentano gli elementi del dominio
@@ -171,7 +170,7 @@ Seguendo il pattern MVC, questo modulo implementa le viste per facilitare l'inte
   
 ## Utils
 
-Nella figura sottostante è rappresentato il diagramma delle classi del modulo di strumenti di *utility* utilizzati
+Nella figura sottostante è rappresentato il diagramma delle classi del modulo di strumenti di *utility* utilizzati. Al suo interno è possibile trovare i sotto-moduli *resources* e *config*.
 
 <img src="../img/utilsClassDiagram.svg" width="900" />
 
@@ -192,7 +191,7 @@ partenza fornita
 - *getSpecialCellFromPlayerPosition* ritorna, se presente, la casella speciale in base alla posizione attuale del 
 giocatore
 
-## UI
+### FxmlUtilis
 
 Per quanto riguarda la parte di interfaccia grafica, è stata creata la classe `FxmlUtils` per il'integrazione delle 
 librerie grafiche **javaFX** e **scalaFX**
