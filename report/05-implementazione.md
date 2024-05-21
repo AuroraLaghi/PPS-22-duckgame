@@ -138,6 +138,13 @@ Y is 3, X is 4.
 
 #### Possible goal
 
+<div align="center">
+  <img src="..\img\getCellInGrid.png" />
+  <img src="..\img\getCoordinateFromPosition.png"  />
+</div>
+
+
+
 Come risultato del primo goal ottengo SolY = 1 e SolX = 1 (seconda colonna nella seconda riga), mentre il risultato del
 secondo è SolY = 6 e SolX = 4 (settima colonna e quinta riga)
 
@@ -159,6 +166,63 @@ riferimento agli elementi appartenenti all'interfaccia richiamando gli ID specif
 caricatore,
 ossia *FXMLLoader* che ha il compito di istanziare e rendere accessibili gli elementi grafici. Il ruolo del controller
 è quello di inizializzare gli elementi della UI e gestirne il loro comportamento.
+
+## Testing
+
+Per effettuare il testing delle funzionalità principali del programma si è scelto di adottare la modalità **TDD** (Test
+Driven Development): questa strategia prevede di scrivere dapprima il codice di test, indicando il comportamento
+corretto
+della funzionalità che si vuole testare, scrivendone in un secondo tempo il codice di produzione, affinchè i test
+scritti
+in precedenza passino correttamente. Una volta che il codice di produzione è stato scritto ed i test hanno esito
+positivo,
+si può procedere con il refactoring e miglioramento della soluzione ottenuta.
+
+Il TDD, dunque, si compone di tre diverse fasi che si alternano: red, green e refactor. Nella prima fase, è stato
+scritto
+solamente il codice di testing e, di conseguenza, i test non possono passare, dato che il codice di produzione non è
+presente.
+Nella fase green, invece, si cerca di verificare tutti i test scritti in precedenza, implementando del codice che li
+verifichi. Infine, nell'ultima fase, quella di refactor, si migliora il codice di produzione scritto nella fase
+precedente.
+
+Il team, per lo sviluppo dell'applicazione, ha deciso di adottare la pratica di Continuos Integration, realizzando due
+flussi di lavoro: il primo dedicato all'esecuzione dei test su SO differenti (Windowd, Linux e MacOS); il secondo,
+invece,
+mirato a determinare la copertura ottenuta dai test implementati.
+
+### Utilizzo di ScalaTest
+
+Per testare le funzionalità legate alla logica di business dell'applicazione sono state realizzare diverse suite di test
+con l'utilizzo della libreria *ScalaTest*.
+
+Tutte le classi realizzare estendono *AnyFlatSpec* ed i test seguono lo stile mostrato:
+
+```scala
+"Current player starting position" should "be 0" in {
+  val DEFAULT_STARTING_POSITION = 0
+  GameReader.currentPlayer.actualPosition shouldBe DEFAULT_STARTING_POSITION
+}
+```
+
+Per verificare determinate condizioni come, per esempio, l'uguaglianza, minoranza o maggioranza, sono stati utilizzati
+i *matchers* di *ScalaTest*: in particolare, se la classe di test estende il trait `Matchers`, si ha la possibilità di
+utilizzare all'interno dei test keywords come *shouldBe*, *equal*, *shouldEqual*... che consentono di verificare le
+condizioni espresse
+
+Per verificare che alcuni metodi non accettino parametri sbagliati, si è utilizzato il costrutto *an [Exception] should
+be
+thrownBy* come nell'esempio riportato:
+
+```scala
+ "Method getNthCellInGridWithStartingPos" should "throws exception when are given wrong arguments" in {
+  val DEFAULT_STARTING_VALUE = 1
+  val ILLEGAL_GRID_SIZE: (Int, Int) = (0, 1)
+  an[NoSolutionException] should be thrownBy {
+    GameUtils.getNthSlotFromCell(DEFAULT_STARTING_VALUE)(ILLEGAL_GRID_SIZE)
+  }
+}
+```
 
 ## Suddivisione del lavoro
 A seguire, ogni membro del gruppo ha descritto le parti di codice da lui implementate o effettuate in collaborazione.
