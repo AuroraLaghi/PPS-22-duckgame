@@ -87,7 +87,9 @@ feature.
 
 Nell'immagine seguente è possibile avere un riassunto di questa metodologia di lavoro:
 
-<img src="../img/gitflow.jpg" alt="workflow" width="500" />
+<div align="center">
+  <img src="../img/gitflow.jpg" alt="workflow" width="500" />
+</div>
 
 ## 1.4 Strumenti utilizzati
 
