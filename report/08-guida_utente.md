@@ -10,7 +10,7 @@ e controllata dal rispettivo controller `StartMenuController`.
   <p> Fig. 1 - Schermata iniziale del gioco </p>
 </div>
 
-[Fig. 1]: img/StartGameView.png
+[Fig. 1]: ../img/StartGameView.png
 
 ## PlayersMenuView
 Se si sceglie di giocare una partita, ci si troverà di fronte alla pagina di configurazione e aggiunta dei giocatori modellata da `PlayersMenuView` e controllata da `playersMenuController`. Come si può notare dall'immagine ([Fig. 2]) ogni giocatore deve inserire il nome con cui identificarsi durante la partita e scegliere il coloredella propria pedina dall'elenco modellato attraveso una *ComboBox*.
@@ -20,7 +20,7 @@ Se si sceglie di giocare una partita, ci si troverà di fronte alla pagina di co
   <p> Fig. 2 - Schermata di configurazione aggiunta dei giocatori </p>
 </div>
 
-[Fig. 2]: img/HomeGameView.png
+[Fig. 2]: ../img/HomeGameView.png
 
 Inoltre, è possibile cancellare un giocatore selezionandolo all'interno della lista e cliccando sul pulsante "Rimuovi giocatore". Quando si è pronti ad iniziare la partita si selezioni il pulsante "Gioca", previo inserimento di almeno 2 giocatori.
 
@@ -35,7 +35,7 @@ pulsanti "Fine turno", "Abbandona la partita" e "Lancia dadi" attraverso cui ogn
   <p> Fig. 3 - Schermata rappresentativa del tabellone di gioco </p>
 </div>
 
-[Fig. 3]: /img/GameBoardView.png
+[Fig. 3]: ../img/GameBoardView.png
 
 ## Victory view
 
@@ -46,5 +46,5 @@ All'interno del sistema è stato implementato un meccanismo di alert, per segnal
   <p> Fig. 4 - Alert per la vittoria della partita </p>
 </div>
 
-[Fig. 4]: img/VictoryView.png
+[Fig. 4]: ../img/VictoryView.png
 
