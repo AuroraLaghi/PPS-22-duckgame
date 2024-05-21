@@ -1,4 +1,4 @@
-# Design Architetturale
+# 3. Design Architetturale
 Dopo aver stabilito i requisiti e considerata la natura del progetto, il team durante il primo sprint ha optato per l'adozione
 del _pattern architetturale MVC_ per la progettazione e l'implementazione dell'applicativo. 
 
