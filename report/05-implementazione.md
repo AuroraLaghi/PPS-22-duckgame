@@ -68,6 +68,16 @@ sottostante è presente una funzione *higher-order*.
 
 In particolare, si tratta di un metodo utilizzato per mescolare la lista dei giocatori prima di iniziare la partita
 
+### Pattern di Design
+
+In `PrologGameUtils.scala` si osservano due importanti pattern di design: il **pattern Facade** e il **pattern Adapter**.
+
+1. **Pattern Facade**
+l'object PrologGameUtils funge da **facciata** per semplificare l'interazione con le funzionalità del motore Prolog. Offre metodi di alto livello come `getCellInGrid`, `getFreeSlotInCell` e `randomDice`, nascondendo la complessità di costruire query Prolog e processare le soluzioni. Fra i vantaggi principali è possibile notare l'interfaccia che semplifica l'utilizzo del motore Prolog da parte di sviluppatori che non hanno familiarità con il linguaggio Prolog. Il codice risulta più leggibile e comprensibile, concentrandosi sulle funzionalità desiderate piuttosto che sui dettagli di implementazione. Infine, nascondendo i dettagli di implementazione del motore Prolog, la facciata protegge il codice applicativo da eventuali modifiche future nel motore.
+
+3. **Pattern Adapter**
+per integrare TuProlog in modo più fluido, si è utilizzato un metodo che sfrutta un *engine* interno per risolvere le query in input. Tuttavia, la soluzione ottenuta non era direttamente utilizzabile nell'applicazione. Per risolvere questo problema, sono stati definiti metodi di utilità per ricostruire il risultato finale (una coppia di interi o un singolo intero nel caso del lancio dei dadi). Questi metodi utilizzano il principio delle conversioni implicite (definite con l'`object given`) per facilitare il parsing del risultato del motore Prolog. Si noti che le conversioni implicite permettono di adattare il formato del risultato Prolog alle esigenze specifiche dell'applicazione, oltre ad evitare la necessità di scrivere codice *boilerplate* per la conversione manuale dei risultati.
+
 ## Utilizzo del paradigma logico
 
 Il team di sviluppo si è posto come obiettivo realizzativo l'uso del paradigma
@@ -284,12 +294,57 @@ Come si denota dalla figura sopra, la *coverage* finale ottenuta è del 55% su u
 
 Gli element per i cui si ha una *coverage* maggiore sono quelli che fanno riferimento al *model* e alla parte logica dell'applicazione, mentre si ha una *coverage* vicina allo 0 per gli elementi della *view* i quali, come spiegato poco sopra, sono stati testati tramite test manuali.
 
+## Parser
+Per il popolamento delle caselle speciali all'interno del tabellone di gioco, è stato creato un file *.txt* contenente le informazioni utili alla creazione di queste celle speciali, mediante l'aiuto della classe `SpecialCellBuilder`.
+Per "tradurre" il contenuto del file testuale in valori attribuili ad una casella, si è ricorso all'uso di un *parser*, il quale, ricevendo in input una riga del file per volta, divide la stringa letta in base ad un carattere di separazione predefinito e converte quanto ottenuto in stringhe o numeri, a seconda della loro posizione.
+
+Con la creazione di `Parser` si può notare l'impiego del trait `Parser[T]` e del **pattern Strategy**, rappresentato da `object SpecialCellParser`. In particolare, `Parser` definisce un'interfaccia generica per il parsing, consentendo flessibilità nella gestione dei diversi tipi di dati; mentre l'implementazione concreta del metodo *parse*, resa possibile dallo strategy, fornisce una logica specifica per i rispettivi tipi di dati. Si tratta di un approccio che permette riusabilità e manutenibilità del codice.
+
+```scala
+  object Parser:
+    trait Parser[T]:
+      def parse(line: String): Option[T]
+
+    object SpecialCellsParser extends Parser[SpecialCell]:
+      override def parse(line: String): Option[SpecialCell] =
+        line.split(";").toList match
+          case number :: cellType :: message :: Nil =>
+            cellType match
+              case "duck" => Some(SpecialCellBuilder(number.toInt, SpecialCellType.DUCK, message).build())
+              case "jail" => Some(SpecialCellBuilder(number.toInt, SpecialCellType.JAIL, message).build())
+              case "bridge" => Some(SpecialCellBuilder(number.toInt, SpecialCellType.BRIDGE, message).build())
+              case "house" => Some(SpecialCellBuilder(number.toInt, SpecialCellType.HOUSE, message).build())
+              case "well" => Some(SpecialCellBuilder(number.toInt, SpecialCellType.WELL, message).build())
+              case "labyrinth" => Some(SpecialCellBuilder(number.toInt, SpecialCellType.LABYRINTH, message).build())
+              case "skeleton" => Some(SpecialCellBuilder(number.toInt, SpecialCellType.SKELETON, message).build())
+              case "final" => Some(SpecialCellBuilder(number.toInt, SpecialCellType.FINAL, message).build())
+              case _ => Some(SpecialCellBuilder(number.toInt, SpecialCellType.BLANK, message).build())
+          case _ => None
+```
+
 ## Suddivisione del lavoro
-A seguire, ogni membro del gruppo ha descritto le parti di codice implementate o effettuate in collaborazione.
+Essendo il team di sviluppo composto da soli due membri, risulta complicato distinguere nettamente aree dell'applicazione attribuili ad un solo membro piuttosto che all'altro: questo perchè l'intero processo di sviluppo si è svolto in stretta collaborazione, perciò la quasi totalità degli elementi implementati è opera dell'intero team.
 
-foldLeft => GameBoardView
+Durante lo svolgimento del progetto si è cercato di suddividere il carico di lavoro nella maniera più equa possibile, cercando di sfruttare le competenze di entrambi i membri del gruppo ed evitando che uno dei due svolgesse più lavoro dell'altro.
 
-### Francesca Frattini
+La mole di lavoro maggiore relativa alla parte di logica e view è stata svolta da Aurora Laghi, mentre Francesca Frattini ha contribuito in modo più significato alla parte di model ed al testing.
+
+### Frattini Francesca
+
+L'implementazione di `Dice` è stata possibile grazie al **pattern Singleton** che implica l'utilizzo di un costruttore privato vietando di creare direttamente istanze della classe stessa. Inoltre, si è reso necessario l'utilizzo del rispettivo **companion object** (`object Dice`) che fornisce il metodo factory `apply` e il metodo statico`rollDice`. In egual modo si è deciso di realizzare anche `Player.scala`.
+
+```scala
+  final case class Dice(dice: (Int, Int)):
+    def roll(): (Int, Int) = Dice.rollDice()
+
+  object Dice:    
+    def apply(): Dice = new Dice(rollDice())
+```
+
+All'interno della classe  `SpecialCellBuilder.scala` è possibile vedere l'applicazione del **pattern Builder**. Questo pattern conferisce maggiore flessibilità con la possibilità di aggiungere nuovi tipi di caselle speciali e la loro relativa azione senza modifcare la logica principale, trattandosi di una classe *final* cioè immutabile viene conferita maggiore immutabilità all'applicativo e per concludere aiuta a separare la creazione degli oggetti dalla logica interna migliorando la leggibilità del codice.
+
+
+### Laghi Aurora
 
 #### LogicController
 
@@ -325,22 +380,4 @@ Per gestire il movimento delle pedine, il tabellone è stato suddiviso in una gr
 <div align="center">
   <img src="..\img\screenshot.png" />
 </div>
-
-
-### Aurora Laghi
-
-
-L'implementazione di `Dice` è stata possibile grazie al **pattern Singleton** che implica l'utilizzo di un costruttore privato vietando di creare direttamente istanze della classe stessa. Inoltre, si è reso necessario l'utilizzo del rispettivo **companion object** (`object Dice`) che fornisce il metodo factory `apply` e il metodo statico`rollDice`. In egual modo si è deciso di realizzare anche `Player.scala`.
-
-Con la creazione di `Parser.scala` si può notare l'impiegato del trait `Parser[T]` e del **pattern Strategy** rappresentato da `object SpecialCellParser`. In particolare, *parser* definisce un'interfaccia generica per il parsing, consentendo flessibilità nella gestione dei diversi tipi di dati mentre l'implementazione concreta del metodo parse, resa possibile dallo strategy, fornisce una logica specifica per i rispettivi tipi di dati. Si tratta di un approvvio che definisce riutilizzabilità e menutenibilità del codice.
-
-In `PrologGameUtils.scala` si osservano due importanti pattern di design: il **pattern Facade** e il **pattern Adapter**.
-
-1. Pattern Facade:
-l'object PrologGameUtils funge da **facciata** per semplificare l'interazione con le funzionalità del motore Prolog. Offre metodi di alto livello come `getCellInGrid`, `getFreeSlotInCell` e `randomDice`, nascondendo la complessità di costruire query Prolog e processare le soluzioni. Fra i vantaggi principali è possibile notare l'interfaccia che semplifica l'utilizzo del motore Prolog da parte di sviluppatori che non hanno familiarità con il linguaggio Prolog. Il codice risulta più leggibile e comprensibile, concentrandosi sulle funzionalità desiderate piuttosto che sui dettagli di implementazione. Infine, nascondendo i dettagli di implementazione del motore Prolog, la facciata protegge il codice applicativo da eventuali modifiche future nel motore.
-
-3. Pattern Adapter:
-per integrare TuProlog in modo più fluido, si è utilizzato un metodo che sfrutta un *engine* interno per risolvere le query in input. Tuttavia, la soluzione ottenuta non era direttamente utilizzabile nell'applicazione. Per risolvere questo problema, sono stati definiti metodi di utilità per ricostruire il risultato finale (una coppia di interi o un singolo intero nel caso del lancio dei dadi). Questi metodi utilizzano il principio delle conversioni implicite (definite con l'`object given`) per facilitare il parsing del risultato del motore Prolog. Si noti che le conversioni implicite permettono di adattare il formato del risultato Prolog alle esigenze specifiche dell'applicazione, oltre ad evitare la necessità di scrivere codice *boilerplate* per la conversione manuale dei risultati.
-
-Con `SpecialCellBuilder.scala` è possibile vedere l'applicazione del **pattern Builder**. Questo pattern conferisce maggiore flessibilità con la possibilità di aggiungere nuovi tipi di caselle speciali e la loro relativa azione senza modifcare la logica principale, trattandosi di una classe *final* cioè immutabile viene conferita maggiore immutabilità all'applicativo e per concludere aiuta a separare la creazione degli oggetti dalla logica interna migliorando la leggibilità del codice.
 
