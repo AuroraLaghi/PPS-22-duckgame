@@ -20,4 +20,5 @@ Sicuramente, l'evoluzione del progetto comporterebbe aggiornamenti per l'adattam
 
 - Implementazione di un'interfaccia grafica più intuitiva e curata
 - Implementazione sistema di salvataggio e caricamento delle partite
-- Implementazione di un sistema per giocare contro un Bot
+- Implementazione di un sistema di gioco per una partita _playersVSBot_
+- Possibilità di scelta del tabellone di gioco tra quelli proposti
