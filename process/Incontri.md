@@ -111,3 +111,12 @@ Ordine del giorno:
     - Miglioramento qualità del codice
     - Avanzamento stesura relazione
 - Pianificare prossima riunione
+
+## Riunione 21/05/2024: 5° sprint review
+Ordine del giorno:
+- Verifica del lavoro svolto:
+    - Check codice sviluppato e di testing
+    - Allineamento documentazione
+    - Controllo coverage tests
+- Aggiornamento product backlog
+- Aggiungere obiettivi raggiunti durante lo sprint
