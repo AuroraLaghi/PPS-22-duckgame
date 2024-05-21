@@ -9,9 +9,9 @@ dei dati e maggiori informazioni visualizzate nella schermata principale. Avvio 
 | Product Backlog Item | Sprint Task                                                  | Volunteer             | Initial Estimate of Effort |
 |----------------------|--------------------------------------------------------------|-----------------------|----------------------------|
 | Avanzamento GUI      | Completamento visualizzazione pedine segnaposto              | All members           | 6                          | 
-|                      | Visualizzazione informazioni aggiuntive schermata principale | All members           | 12                         |
+|                      | Visualizzazione informazioni aggiuntive schermata principale | All members           | 8                          |
 |                      | Visualizzazione lancio dei dadi                              | All members           | 4                          |
-| Scrittura Prolog     | Prima approcci con il codice in Prolog                       | All members           | 10                         |
+| Scrittura Prolog     | Primi approcci con il codice in Prolog                       | All members           | 10                         |
 
 
 ## Sprint result
