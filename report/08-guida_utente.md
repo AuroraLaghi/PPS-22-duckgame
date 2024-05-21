@@ -1,4 +1,4 @@
-# 8. Guida utente
+# 7. Guida utente
 
 ## StartMenuView
 
