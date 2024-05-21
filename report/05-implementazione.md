@@ -75,6 +75,48 @@ logico. In fase di progettazione ci si è interrogati sul possibile utilizzo
 della programmazione logica all'interno del progetto, scegliendo alcuni metodi
 che ben si adattavano alle caratteristiche di *Proloog*.
 
+Per integrare *TuProlog* in modo più fluente, si è fatto ricorso ad un metodo che utilizza al suo interno un *engine*
+per risolvere le query in input.
+
+```prolog
+    case class PrologEngine(theory: Theory) extends Engine:
+      private val engine: Prolog = new Prolog
+      engine.setTheory(theory)
+
+      override def getCellInGrid(cell: Int)(cols: Int)(rows: Int): (Int, Int) =
+        val query: String = "getCellInGrid(" + cell + ", " + cols + ", " + rows + ", X, Y)"
+        solve(query)
+
+      override def getFreeSlotInCell(position: Int)(cis: Int): (Int, Int) =
+        val query: String = "getCoordinateFromPosition(" + position + ", " + cis + ", X, Y)"
+        solve(query)
+
+      override def randomDice(maxValue: Int): (Int, Int) =
+        val query: String = "rollDice(" + maxValue + ", X)"
+        (solve(query), solve(query))
+
+      override def solve: Term => SolveInfo = term => engine solve term
+```
+
+In questo modo, la soluzione fornita risultava inutilizzabile. Si è reso quindi necessario definire metodi utili in fase
+di ricostruzione del risultato finale, ossia una coppia di interi, oppure un solo intero
+nel caso del lancio dei dadi. Per effettuare il *parsing* del risultato del *Prolog Engine* si è utilizzato il principio
+delle *given conversion*, come si può osservare dal listato sottostante, impiegato diverse volte all'interno della
+classe di utilità, per favorire idiomaticità e comprensibilità, oltre a fornire un *adapter* automatico senza dover
+introdurre codice *boilerplate*.
+
+```prolog
+    object PrologSolution:
+        given Conversion[SolveInfo, (Int, Int)] = e => colRowFromTerm(e.getTerm("X"))(e.getTerm("Y"))
+        given Conversion[SolveInfo, Int] = e => intFromTerm(e.getTerm("X"))
+    
+        private def colRowFromTerm(termX: Term)(termY: Term): (Int, Int) =
+          (termX.toString.toDouble.toInt, termY.toString.toDouble.toInt)
+    
+        private def intFromTerm(term: Term): Int =
+          term.toString.toInt
+```
+
 ### Utilizzo di *Prolog* per il lancio dei dadi
 
 Tramite il **TuProlog engine** viene creata una coppia di interi di valore randomico, compreso tra 1 e 6
@@ -188,8 +230,9 @@ precedente.
 
 Il team, per lo sviluppo dell'applicazione, ha deciso di adottare la pratica di Continuos Integration, realizzando due
 flussi di lavoro: il primo dedicato all'esecuzione dei test su SO differenti (Windowd, Linux e MacOS); il secondo,
-invece,
-mirato a determinare la copertura ottenuta dai test implementati.
+invece, mirato a determinare la copertura ottenuta dai test implementati.
+
+Per il testing degli aspetti della *view* sono stati svolti test manuali: difatti, risultava complicato verificare condizioni limite tramite test automatici, i quali non possono essere considerati esaustivi nella verifica degli aspetti di interazione con l'utente.
 
 ### Utilizzo di ScalaTest
 
@@ -224,18 +267,70 @@ thrownBy* come nell'esempio riportato:
 }
 ```
 
-## Suddivisione del lavoro
-A seguire, ogni membro del gruppo ha descritto le parti di codice da lui implementate o effettuate in collaborazione.
+### Coverage
 
-tailrec => LogicController
+Come detto nei capitoli precedenti, il team di sviluppo ha realizzato anche un flusso di lavoro dedicato alla *coverage* dei test, in modo tale da poter verificare la copertura ottenuta ogni qual volta vengano aggiunti o modificati dei test.
+
+La *code coverage* si riferisce alla quantità di istruzioni di codice eseguite durante l'esecuzione dei test. 
+Bisogna però tenere presente che una copertura del 100% non garantisce che il testing implementato copra tutti gli scenari possibili: infatti, l'obiettivo che il team si è posto non è quello di raggiungere un *coverage* totale, bensì quello di testare funzioni mirate.
+
+In particolare, per ottenere i dettagli relativi alla copertura dei test, si è scelto di utilizzare il *tool* [_JaCoCo_](https://www.eclemma.org/jacoco/)
+
+<div align="center">
+  <img src="..\img\coverage.png" />
+</div>
+
+Come si denota dalla figura sopra, la *coverage* finale ottenuta è del 55% su un totale di 84 test effettuati.
+
+Gli element per i cui si ha una *coverage* maggiore sono quelli che fanno riferimento al *model* e alla parte logica dell'applicazione, mentre si ha una *coverage* vicina allo 0 per gli elementi della *view* i quali, come spiegato poco sopra, sono stati testati tramite test manuali.
+
+## Suddivisione del lavoro
+A seguire, ogni membro del gruppo ha descritto le parti di codice implementate o effettuate in collaborazione.
+
 foldLeft => GameBoardView
 
 ### Francesca Frattini
 
+#### LogicController
+
+La classe `LogicController` può essere considerata lo *scheletro logico* dell'intera applicazione.
+Tramite questa classe, definita come un *object*, è possibile gestire tutti gli aggiornamenti relativi alla partita in corso: movimenti dei giocatori, designazione dei turni...
+Naturalmente ci sono altre classi che affiancano `LogicController` per la gestione della partita: `EndGameController` per il controllo della presenza di un vincitore, `MovementsController` per la gestione dei movimenti all'interno del tabellone e il controllo delle caselle speciali e `PlayerController` per l'aggiornamento della posizione dei giocatori.
+
+All'interno della classe sono state utilizzati meccanismi della programmazione funzionale, come ad esempio l'uso della notazione *tailrec* per la ricorsione di coda, visibile nel listato sottostante.
+
+```scala
+  @tailrec
+  private def nextPlayerFree(): Unit =
+    GameReader.nextPlayer()
+    GameReader.currentPlayer.isLocked match
+      case true =>
+        LogicController.lockUnlockTurnPlayer(false)
+        nextPlayerFree()
+      case false
+          if GameReader.currentPlayerIndex != GameReader.playerInWell()
+            && GameReader.currentPlayerIndex != GameReader.playerInJail() =>
+      case _ => nextPlayerFree()
+```
+
+#### GameBoardView
+
+La classe `GameBoardView` rappresenta un classe di *view*, infatti estende l'interfaccia `Initializable` di *FXML*.
+All'interno di questa classe sono gestiti gli elementi che compongono l'interfaccia grafica della schermata relativa alla pagina principale dell'applicazione, ovvero quella contenente la *GameBoard*, il tabellone di gioco.
+Gli ID assegnati agli elementi presenti nel relativo file *FXML* sono richiamati utilizzando delle variabili con lo stesso nome.
+Per gestire il movimento delle pedine, il tabellone è stato suddiviso in una griglia 8x8, le cui celle sono a loro volta divise in griglie 3x2, in modo tale che su ogni casella possono esserci contemporaneamente fino a 6 pedine, il numero massimo di giocatori.
+
+È inoltre presente una finestra nel menù di sinistra che visualizza tutti i movimenti effettuati dal giocatore corrente, oltre alla tabella contenente tutti i giocatori attivi con le relative pedine.
+
+<div align="center">
+  <img src="..\img\screenshot.png" />
+</div>
+
+
 ### Aurora Laghi
 
 
-L'implementazione di `Dice.scala` è stata possibile grazie al **pattern Singleton** che implica l'utilizzo di un costruttore privato vietando di creare direttamente istanze della classe stessa. Inoltre, si è reso necessario l'utilizzo del rispettivo **companion object** (`object Dice`) che fornisce il metodo factory `apply` e il metodo statico`rollDice`. In egual modo si è deciso di realizzare anche `Player.scala`.
+L'implementazione di `Dice` è stata possibile grazie al **pattern Singleton** che implica l'utilizzo di un costruttore privato vietando di creare direttamente istanze della classe stessa. Inoltre, si è reso necessario l'utilizzo del rispettivo **companion object** (`object Dice`) che fornisce il metodo factory `apply` e il metodo statico`rollDice`. In egual modo si è deciso di realizzare anche `Player.scala`.
 
 Con la creazione di `Parser.scala` si può notare l'impiegato del trait `Parser[T]` e del **pattern Strategy** rappresentato da `object SpecialCellParser`. In particolare, *parser* definisce un'interfaccia generica per il parsing, consentendo flessibilità nella gestione dei diversi tipi di dati mentre l'implementazione concreta del metodo parse, resa possibile dallo strategy, fornisce una logica specifica per i rispettivi tipi di dati. Si tratta di un approvvio che definisce riutilizzabilità e menutenibilità del codice.
 
