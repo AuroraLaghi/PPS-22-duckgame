@@ -12,6 +12,6 @@
 - [Design architetturale](report/03-design_architetturale.md)
 - [Design di dettaglio](report/04-design_dettaglio.md)
 - [Implementazione](report/05-implementazione.md)
-- [Retrospettiva](report/06-retrospettiva.md)
-- [Conclusioni](report/07-conclusioni.md)
-- [Guida utente](report/08-guida_utente.md)
+- [Guida utente](report/06-guida_utente.md)
+- [Retrospettiva](report/07-retrospettiva.md)
+
