@@ -2,9 +2,9 @@
 
 ## Sviluppo con metodologia SCRUM-inspired
 
-Come descritto nel capitolo [Ch. 1](01-sviluppo.md), il progetto è stato sviluppato utilizzando un approccio ispirato alla metodologia SCRUM. In questo contesto, il team ha adottato un ciclo di sprint bisettimanali con l'obiettivo di completare diversi _product backlog_ in grado di fornire risultati tangibili per l'utente finale.
+Come descritto nel capitolo [1](01-sviluppo.md), il progetto è stato sviluppato utilizzando un approccio ispirato alla metodologia SCRUM. In questo contesto, il team ha adottato un ciclo di sprint bisettimanali con l'obiettivo di completare diversi _product backlog_ in grado di fornire risultati tangibili per l'utente finale.
 
-## Definition of "Done"
+## *Definition of Done*
 
 Prima di definire i _product backlog_ di prodotto e di avviare gli sprint, il team di lavoro ha concordato una _"definition of Done"_ per ogni task. In sostanza, è stato stabilito il criterio per determinare quando un prodotto può essere considerato effettivamente completato.
 
