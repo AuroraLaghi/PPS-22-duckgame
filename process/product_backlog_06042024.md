@@ -8,11 +8,11 @@ funzionamento di _ScalaFx/JavaFX_ e dei file _FXML_.
 
 | Product Backlog Item   | Sprint Task                                          | Volunteer             | Initial Estimate of Effort |
 |------------------------|------------------------------------------------------|-----------------------|----------------------------|
-| Implementazione GUI    | Creazione griglia di gioco in ScalaFX                | All members           | 12                         | 
-|                        | Renderizzazione della griglia                        | All members           | 10                         |
-|                        | Renderizzazione delle pedine segnaposto              | All members           | 10                         |
-|                        | Movimento delle pedine all'interno del tabellone     | All members           | 8                          |
-| Scrittura test         | Creazione test di verifica delle classi implementate | All members           | 6                          |
+| Implementazione GUI    | Creazione griglia di gioco JavaFX e FXML             | All members           | 6                          | 
+|                        | Renderizzazione della griglia                        | All members           | 8                          |
+|                        | Renderizzazione delle pedine segnaposto              | All members           | 6                          |
+|                        | Movimento delle pedine all'interno del tabellone     | All members           | 6                          |
+| Scrittura test         | Creazione test di verifica delle classi implementate | All members           | 4                          |
 
 
 
