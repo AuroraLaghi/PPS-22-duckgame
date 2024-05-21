@@ -8,7 +8,7 @@ dei dati e maggiori informazioni visualizzate nella schermata principale. Avvio 
 
 | Product Backlog Item | Sprint Task                                                  | Volunteer             | Initial Estimate of Effort |
 |----------------------|--------------------------------------------------------------|-----------------------|----------------------------|
-| Avanzamento GUI      | Renderizzazione delle pedine segnaposto                      | All members           | 8                          | 
+| Avanzamento GUI      | Completamento visualizzazione pedine segnaposto              | All members           | 6                          | 
 |                      | Visualizzazione informazioni aggiuntive schermata principale | All members           | 12                         |
 |                      | Visualizzazione lancio dei dadi                              | All members           | 4                          |
 | Scrittura Prolog     | Prima approcci con il codice in Prolog                       | All members           | 10                         |
