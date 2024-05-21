@@ -120,3 +120,5 @@ Ordine del giorno:
     - Controllo coverage tests
 - Aggiornamento product backlog
 - Aggiungere obiettivi raggiunti durante lo sprint
+- Controllare outline relazione
+- Rivedere numerazione sezioni relazione
