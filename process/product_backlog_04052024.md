@@ -8,8 +8,9 @@ L'obiettivo di questo sprint, consiste nell'integrare il codice Prolog realizzat
 | Product Backlog Item  | Sprint Task                         | Volunteer   | Initial Estimate of Effort |
 |-----------------------|-------------------------------------|-------------|----------------------------|
 | Prolog                | Integrazione codice Scala e Prolog  | All members | 8                          |  
-| Qualità del codice    | Refactoring codice Scala            | All members | 14                         |
-| Avanzamento relazione |                                     | All members | 10                         |
+| Qualità del codice    | Refactoring codice Scala            | All members | 6                          |
+| Testing               | Revisione e covering dei test       | All members | 8                          |
+| Avanzamento relazione | Raffinamento report finale          | All members | 12                         |
 
 
 ## Sprint result
