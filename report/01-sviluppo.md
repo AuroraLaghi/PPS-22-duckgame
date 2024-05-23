@@ -35,19 +35,22 @@ tra gli artefatti del progetto.
 
 Ogni sprint è caratterizzato dalle seguenti attività:
 
-- **Sprint Planning** 
+- **Sprint Planning**
+  
 Seguendo la natura di SCRUM, lo sprint planning è stato suddiviso in due parti: la prima è dedicata alla 
 preparazione dello sprint, cioè al delineamento dei vari task, estratti dal Product Backlog, da svolgere all'interno 
-dello sprint stesso. Al termine di questa prima fase, si ottiene come risultato lo **Sprint Goal**, un file riassuntivo 
+dello sprint stesso. Al termine di questa prima fase, si ottiene come risultato lo **Sprint Goal**, un riassunto 
 degli obiettivi dello sprint. 
 Lo Sprint Goal ha reso flessibile il lavoro in preparazione della seconda fase dello Sprint Planning.
-Nella seconda fase il team si è occupato di scegiere, in base alle tempistiche, quali task dovranno essere completati 
+Nella seconda fase il team si è occupato di scegliere, in base alle tempistiche, quali tasks dovranno essere completati 
 nello sprint attuale. Al termine di questa fase si ha come risultato lo **Sprint Backlog**, un approfondimento del 
 Product Backlog trattato.
 - **Daily Scrum**
+
 Durante gli sprint, con cadenza quasi giornaliera, sono effettuati dei Daily Scrum, della durata di circa 15 minuti, 
 con lo scopo di sincronizzare il lavoro e riportare eventuali difficoltà.
 - **Sprint Review**
+  
 Si tratta di un incontro svolto al termine dello sprint che ha lo scopo di analizzare il risultato ottenuto per revisionare 
 e valutare il lavoro svolto dal team di sviluppo.
 
@@ -93,8 +96,7 @@ Nell'immagine seguente è possibile avere un riassunto di questa metodologia di 
 
 ## 1.4 Strumenti utilizzati
 
-Per la realizzazione del progetto sono stati utilizzati diversi tool, con lo scopo di agevolare gli sviluppatori durante 
-la creazione del progetto, cercando di automatizzarne diversi aspetti.
+Per la realizzazione del progetto sono stati utilizzati diversi tool, con lo scopo di agevolare gli sviluppatori durante la creazione del progetto, cercando di automatizzarne diversi aspetti.
 I vari strumenti di supporto impiegati sono:
 
 - **SBT** per la build automation,
