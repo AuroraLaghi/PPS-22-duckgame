@@ -18,10 +18,9 @@ in caselle numerate.
 
 Gli utenti, per procedere nel gioco, dovranno lanciare due dadi per avanzare lungo il percorso: può capitare che un 
 giocatore finisca su una casella _speciale_ che potrà farlo avanzare, indietreggiare, fermarsi per un turno oppure 
-perdere la partita.
+rimanere bloccato fin quando un altro giocatore non capita sulla stessa casella.
 
-La partita termina quando un giocatore si ferma sull'ultima casella del tabellone, oppure quando vengono eliminati dal 
-gioco tutti i giocatori tranne uno.
+La partita termina quando un giocatore si ferma sull'ultima casella del tabellone, oppure quando tutti i giocatori tranne uno abbandonando la partita.
 
 <div style="page-break-after: always;"></div>
 
