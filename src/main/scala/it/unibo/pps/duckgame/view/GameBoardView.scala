@@ -1,8 +1,8 @@
 package it.unibo.pps.duckgame.view
 
-import it.unibo.pps.duckgame.controller.view.GameBoardController
 import it.unibo.pps.duckgame.controller.GameReader
 import it.unibo.pps.duckgame.controller.logic.EndGameController
+import it.unibo.pps.duckgame.controller.view.GameBoardController
 import it.unibo.pps.duckgame.model.{Player, Token}
 import it.unibo.pps.duckgame.utils.resources.CssResources.GAME_STYLE
 import it.unibo.pps.duckgame.utils.resources.ImgResources
@@ -11,11 +11,9 @@ import javafx.beans.property.SimpleObjectProperty
 import javafx.fxml.{FXML, Initializable}
 import javafx.geometry.{Insets, Pos}
 import javafx.scene.control.*
-import javafx.scene.control.cell.PropertyValueFactory
 import javafx.scene.image.{Image, ImageView}
 import javafx.scene.layout.*
 import javafx.scene.{image, layout}
-import javafx.stage.Screen
 import javafx.{fxml, geometry}
 import scalafx.beans.property.StringProperty
 
@@ -24,6 +22,7 @@ import java.util.ResourceBundle
 import scala.collection.immutable.Map as MMap
 
 /** This class represents the Game Board view of the game */
+@SuppressWarnings(Array("org.wartremover.warts.Null"))
 class GameBoardView extends Initializable:
 
   private def NMENU = 2
@@ -101,7 +100,9 @@ class GameBoardView extends Initializable:
     currentPlayer.setAlignment(geometry.Pos.CENTER)
     setCurrentPlayer()
     GameReader.players.foreach { p =>
-      val tokenImage = new ImageView(new Image(getClass.getResource(p.token.img.path).toString))
+      val tokenImage = new ImageView(
+        new Image(getClass.getResource(p.token.img.path).toString)
+      )
       tokensMap += (p.token -> tokenImage)
       setImageViewDimensions(tokenImage)
       updatePlayerPosition(p)
@@ -112,29 +113,36 @@ class GameBoardView extends Initializable:
 
     playerNameColumn.setCellValueFactory(p => StringProperty(p.getValue.name))
 
-    val tokensMapForTable: Map[Token, ImageView] = tokensMap.foldLeft(Map.empty[Token, ImageView]) { (acc, entry) =>
-      val (token, imageView) = entry
-      val imageTokenTable = new ImageView(imageView.getImage)
-      setImageViewDimensions(imageTokenTable)
-      acc + (token -> imageTokenTable)
-    }
-    playerTokenColumn.setCellValueFactory(p => SimpleObjectProperty(tokensMapForTable(p.getValue.token)))
+    val tokensMapForTable: Map[Token, ImageView] =
+      tokensMap.foldLeft(Map.empty[Token, ImageView]) { (acc, entry) =>
+        val (token, imageView) = entry
+        val imageTokenTable = new ImageView(imageView.getImage)
+        setImageViewDimensions(imageTokenTable)
+        acc + (token -> imageTokenTable)
+      }
+    playerTokenColumn.setCellValueFactory(p =>
+      SimpleObjectProperty(tokensMapForTable(p.getValue.token))
+    )
     updatePlayersTable()
     GameBoardController.view = this
 
-  /** Handles the click of the "Quit" button (likely). Disables the current player's token on the board, displays a
-    * message, and updates the game state.
+  /** Handles the click of the "Quit" button (likely). Disables the current
+    * player's token on the board, displays a message, and updates the game
+    * state.
     */
   def quitButtonClick(): Unit =
     tokensMap(GameReader.currentPlayer.token).setDisable(true)
-    movementMessage.setText("Il giocatore " + GameReader.currentPlayer.name + " ha abbandonato la partita.")
+    movementMessage.setText(
+      "Il giocatore " + GameReader.currentPlayer.name + " ha abbandonato la partita."
+    )
     GameBoardController.currentPlayerQuit()
     if GameReader.players.nonEmpty then
       setCurrentPlayer()
       setButtonsForTurnEnding(false)
       updatePlayersTable()
 
-  /** Enables or disables buttons related to ending a turn based on the provided flag.
+  /** Enables or disables buttons related to ending a turn based on the provided
+    * flag.
     *
     * @param can
     *   A boolean indicating whether the buttons should be enabled.
@@ -143,16 +151,18 @@ class GameBoardView extends Initializable:
     endTurnButton.setDisable(!can)
     throwDiceButton.setDisable(can)
 
-  /** Handles the click of the "Throw Dice" button (likely). Clears any previous message, throws the dice using the game
-    * board controller, and updates the game state.
+  /** Handles the click of the "Throw Dice" button (likely). Clears any previous
+    * message, throws the dice using the game board controller, and updates the
+    * game state.
     */
   def throwDiceButtonClick(): Unit =
     movementMessage.setText("")
     val (dice1, dice2) = GameBoardController.throwDice()
     afterThrow(dice1, dice2)
 
-  /** Handles the click of the "End Turn" button (likely). Ends the current player's turn using the game board
-    * controller, sets the new current player, and updates button states.
+  /** Handles the click of the "End Turn" button (likely). Ends the current
+    * player's turn using the game board controller, sets the new current
+    * player, and updates button states.
     */
   def endTurnButtonClick(): Unit =
     GameBoardController.endTurn()
@@ -176,7 +186,8 @@ class GameBoardView extends Initializable:
 
       /** Creates and adds columns to a GridPane with a specified width.
         *
-        * This method is likely used to create a grid-like structure within a cell on the game board.
+        * This method is likely used to create a grid-like structure within a
+        * cell on the game board.
         *
         * @param grid
         *   The GridPane to which the columns will be added.
@@ -190,7 +201,8 @@ class GameBoardView extends Initializable:
 
       /** Creates and adds rows to a GridPane with a specified width.
         *
-        * This method is likely used to create a grid-like structure within a cell on the game board.
+        * This method is likely used to create a grid-like structure within a
+        * cell on the game board.
         *
         * @param grid
         *   The GridPane to which the rows will be added.
@@ -208,9 +220,14 @@ class GameBoardView extends Initializable:
     *   The player whose position needs to be updated.
     */
   private def updatePlayerPosition(player: Player): Unit =
-    val cellGrid = cellsGrid(GameUtils.getCoordinateFromPosition(player.actualPosition))
-    val (col, row) = GameUtils.getNthSlotFromCell(cellGrid.getChildren.size() + 1)(N_COLS_IN_CELL, N_ROWS_IN_CELL)
-    if !cellGrid.getChildren.contains(tokensMap(player.token)) then cellGrid.add(tokensMap(player.token), col, row)
+    val cellGrid = cellsGrid(
+      GameUtils.getCoordinateFromPosition(player.actualPosition)
+    )
+    val (col, row) = GameUtils.getNthSlotFromCell(
+      cellGrid.getChildren.size() + 1
+    )(N_COLS_IN_CELL, N_ROWS_IN_CELL)
+    if !cellGrid.getChildren.contains(tokensMap(player.token)) then
+      cellGrid.add(tokensMap(player.token), col, row)
 
   /** Handles updates after the dice are thrown.
     *
@@ -225,13 +242,19 @@ class GameBoardView extends Initializable:
     val position: Int = GameReader.currentPlayer.actualPosition
     playerMovement("Posizione aggiornata del giocatore: " + position.toString)
     if GameBoardController.checkVictory() then GameBoardController.showVictory()
-    else if EndGameController.isGameLocked then GameBoardController.showGameLocked()
-    else if dice1 != dice2 || position == 19 || position == 31 || position == 52 then setButtonsForTurnEnding(true)
-    else playerMovement("Dal lancio dei dadi si è ottenuto un doppio, quindi il giocatore può effettuare un altro tiro")
+    else if EndGameController.isGameLocked then
+      GameBoardController.showGameLocked()
+    else if dice1 != dice2 || position == 19 || position == 31 || position == 52
+    then setButtonsForTurnEnding(true)
+    else
+      playerMovement(
+        "Dal lancio dei dadi si è ottenuto un doppio, quindi il giocatore può effettuare un altro tiro"
+      )
 
   /** Updates the movement message text area with the provided message.
     *
-    * This method is likely used to display messages related to player movement on the game board.
+    * This method is likely used to display messages related to player movement
+    * on the game board.
     *
     * @param message
     *   The message to be appended to the movement text area.
@@ -241,28 +264,37 @@ class GameBoardView extends Initializable:
 
   /** Sets the current player indicator text.
     *
-    * This method likely updates a UI element that displays the name of the player whose turn it is.
+    * This method likely updates a UI element that displays the name of the
+    * player whose turn it is.
     */
   private def setCurrentPlayer(): Unit =
     currentPlayer.setText("É il turno di: " + GameReader.currentPlayer.name)
 
-  /** Sets the dimensions of an ImageView based on the game board size and cell properties.
+  /** Sets the dimensions of an ImageView based on the game board size and cell
+    * properties.
     *
     * @param imgView
     *   The ImageView whose dimensions will be set.
     */
   private def setImageViewDimensions(imgView: ImageView): Unit =
     imgView.setPreserveRatio(false)
-    imgView.setFitWidth(gameBoard.getFitWidth / (GameUtils.CELLS_IN_SIDE + 1) / N_COLS_IN_CELL)
-    imgView.setFitHeight(gameBoard.getFitHeight / (GameUtils.CELLS_IN_SIDE + 1) / N_COLS_IN_CELL)
+    imgView.setFitWidth(
+      gameBoard.getFitWidth / (GameUtils.CELLS_IN_SIDE + 1) / N_COLS_IN_CELL
+    )
+    imgView.setFitHeight(
+      gameBoard.getFitHeight / (GameUtils.CELLS_IN_SIDE + 1) / N_COLS_IN_CELL
+    )
 
-  /** Sets the dimensions of a dice image view based on the game board size and number of cells.
+  /** Sets the dimensions of a dice image view based on the game board size and
+    * number of cells.
     *
     * @param diceImage
     *   The ImageView representing the dice that will be resized.
     */
   private def setDiceImage(diceImage: ImageView): Unit =
-    diceImage.setFitWidth(pane.getPrefHeight / (GameReader.gameBoard.size / GameUtils.CELLS_IN_SIDE + 1))
+    diceImage.setFitWidth(
+      pane.getPrefHeight / (GameReader.gameBoard.size / GameUtils.CELLS_IN_SIDE + 1)
+    )
 
   /** Updates the images for both dice based on their rolled values.
     *
@@ -288,7 +320,8 @@ class GameBoardView extends Initializable:
 
   /** Updates the players table on the UI.
     *
-    * This method likely refreshes a UI element (playersTable) that displays information about the players in the game.
+    * This method likely refreshes a UI element (playersTable) that displays
+    * information about the players in the game.
     */
   private def updatePlayersTable(): Unit =
     val rowHeight = 35

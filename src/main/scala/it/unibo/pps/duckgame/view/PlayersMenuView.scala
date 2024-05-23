@@ -1,25 +1,24 @@
 package it.unibo.pps.duckgame.view
 
-import it.unibo.pps.duckgame.controller.view.{GameBoardController, PlayerMenuController}
+import it.unibo.pps.duckgame.controller.view.PlayerMenuController
 import it.unibo.pps.duckgame.model.{Player, Token}
+import it.unibo.pps.duckgame.utils.resources.CssResources
 import it.unibo.pps.duckgame.utils.resources.CssResources.GAME_STYLE
-import it.unibo.pps.duckgame.utils.resources.{CssResources, FxmlResources}
 import it.unibo.pps.duckgame.utils.{AlertUtils, FxmlUtils}
 import javafx.beans.binding.Bindings
 import javafx.collections.FXCollections
-import javafx.fxml.{FXML, FXMLLoader, Initializable}
+import javafx.fxml.{FXML, Initializable}
 import javafx.scene.control.*
-import javafx.scene.layout.{AnchorPane, BorderPane, VBox}
-import javafx.scene.{Scene, control as jfxsc, layout as jfxsl}
-import javafx.stage.Screen
-import javafx.{event as jfxe, fxml as jfxf, scene as jfxs}
-import scalafx.Includes.*
+import javafx.scene.layout.BorderPane
+import javafx.scene.{control as jfxsc, layout as jfxsl}
+import javafx.{fxml as jfxf, scene as jfxs}
 import scalafx.beans.property.{ObjectProperty, StringProperty}
 
 import java.net.URL
 import java.util.ResourceBundle
 
 /** This class represents the Players Menu view of the game */
+@SuppressWarnings(Array("org.wartremover.warts.Null"))
 class PlayersMenuView extends Initializable:
 
   private def WIDTH = 0.6
@@ -62,7 +61,9 @@ class PlayersMenuView extends Initializable:
 
     initializeTableView()
     updateTokenComboBox()
-    removePlayerButton.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel.getSelectedItems))
+    removePlayerButton
+      .disableProperty()
+      .bind(Bindings.isEmpty(tableView.getSelectionModel.getSelectedItems))
 
   /** Initializes the TableView used to display player information */
   private def initializeTableView(): Unit =
@@ -71,22 +72,28 @@ class PlayersMenuView extends Initializable:
     tableView.setItems(FXCollections.observableArrayList[Player]())
 
   /** Adds a new player to the TableView and updates the game logic */
-  private def addPlayerToTableView(): Unit = addPlayerNameTextField.getText match
-    case name if name.isEmpty => AlertUtils.emptyPlayerNameWarning()
-    case _ =>
-      val newPlayer = Player(addPlayerNameTextField.getText, addTokenComboBox.getValue)
-      tableView.getItems.add(newPlayer)
-      PlayerMenuController.addPlayer(newPlayer)
-      updateTokenComboBox()
-      updateAddAndRemoveButton()
-      addPlayerNameTextField.clear()
+  private def addPlayerToTableView(): Unit =
+    addPlayerNameTextField.getText match
+      case name if name.isEmpty => AlertUtils.emptyPlayerNameWarning()
+      case _ =>
+        val newPlayer =
+          Player(addPlayerNameTextField.getText, addTokenComboBox.getValue)
+        tableView.getItems.add(newPlayer)
+        PlayerMenuController.addPlayer(newPlayer)
+        updateTokenComboBox()
+        updateAddAndRemoveButton()
+        addPlayerNameTextField.clear()
 
   /** Updates the available token options in the token combo box */
   private def updateTokenComboBox(): Unit =
-    addTokenComboBox.getItems.setAll(FXCollections.observableArrayList(PlayerMenuController.availableToken(): _*))
+    addTokenComboBox.getItems.setAll(
+      FXCollections.observableArrayList(PlayerMenuController.availableToken()*)
+    )
     addTokenComboBox.getSelectionModel.selectFirst()
 
-  /** Updates the enabled/disabled state of the "Add Player" button based on whether adding players is allowed */
+  /** Updates the enabled/disabled state of the "Add Player" button based on
+    * whether adding players is allowed
+    */
   private def updateAddAndRemoveButton(): Unit =
     if PlayerMenuController.canAddPlayer then addPlayerButton.setDisable(false)
     else addPlayerButton.setDisable(true)
@@ -99,7 +106,9 @@ class PlayersMenuView extends Initializable:
     updateTokenComboBox()
     updateAddAndRemoveButton()
 
-  /** Attempts to add a new player to the table view if adding players is allowed */
+  /** Attempts to add a new player to the table view if adding players is
+    * allowed
+    */
   def checkAndAddPlayerToTableView(): Unit =
     if PlayerMenuController.canAddPlayer then addPlayerToTableView()
 
