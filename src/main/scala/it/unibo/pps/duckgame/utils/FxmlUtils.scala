@@ -1,22 +1,16 @@
 package it.unibo.pps.duckgame.utils
 
-import it.unibo.pps.duckgame.utils.resources.{
-  CssResources,
-  FxmlResources,
-  ImgResources
-}
+import it.unibo.pps.duckgame.utils.resources.{CssResources, FxmlResources, ImgResources}
 import javafx.fxml.FXMLLoader
 import javafx.scene.Parent
-import javafx.scene.control.Alert
-import javafx.scene.layout.{AnchorPane, Pane}
+import javafx.scene.control.{Alert, ButtonType}
+import javafx.scene.image.{Image, ImageView}
+import javafx.scene.layout.{BorderPane, Pane}
 import scalafx.Includes.*
 import scalafx.application.JFXApp3
 import scalafx.application.JFXApp3.PrimaryStage
 import scalafx.scene.Scene
-import javafx.scene.image.{Image, ImageView}
-import javafx.scene.layout.BorderPane
 import scalafx.scene.control.Alert.AlertType
-import javafx.scene.control.ButtonType
 import scalafx.stage.{Screen, Stage}
 
 import java.io.IOException
@@ -25,6 +19,7 @@ import java.util.Optional
 /** Utility object that provides methods to load FXML resources and change the
   * current scene.
   */
+@SuppressWarnings(Array("org.wartremover.warts.Null"))
 object FxmlUtils:
   private var _stage: Stage = _
   private var width: Double = _
@@ -58,10 +53,15 @@ object FxmlUtils:
     *   If the FXML resource file cannot be loaded.
     */
   private def loadFXMLResource(fxmlPath: String): Scene =
-    val fxmlFile = getClass.getResource(fxmlPath)
-    if fxmlFile === null then
+    val fxmlFile = Option(getClass.getResource(fxmlPath))
+    if fxmlFile.isEmpty then
       throw new IOException("Cannot load resource: " + fxmlPath)
-    val root: Parent = FXMLLoader.load(fxmlFile)
+
+    val root: Parent = fxmlFile
+      .map(url => FXMLLoader.load[Parent](url))
+      .getOrElse(
+        throw new IOException("Cannot load FXML from resource: " + fxmlPath)
+      )
     new Scene(root)
 
   /** Changes the current scene.
@@ -115,9 +115,8 @@ object FxmlUtils:
   ): Unit =
     setPaneResolution(pane)(width_perc)(height_perc)
     setPaneStyle(pane)(cssResources)
-    if gameBoard.isDefined then
-      setGameBoardImage(gameBoard.get)
-      setGameBoardSize(pane)(gameBoard.get)
+    setGameBoardImage(gameBoard)
+    setGameBoardSize(pane)(gameBoard)
 
   /** Sets pane resolution
     *
@@ -156,23 +155,27 @@ object FxmlUtils:
     * @param gameBoard
     *   gameboard image
     */
-  private def setGameBoardSize(pane: BorderPane)(gameBoard: ImageView): Unit =
+  private def setGameBoardSize(pane: BorderPane)(
+    gameBoard: Option[ImageView]
+  ): Unit =
     val gameBoardSize = pane.getPrefHeight
-    gameBoard.setFitWidth(gameBoardSize)
-    gameBoard.setFitHeight(gameBoardSize)
+    gameBoard.fold(None)(g => g.setFitWidth(gameBoardSize))
+    gameBoard.fold(None)(g => g.setFitHeight(gameBoardSize))
 
   /** Sets the gameboard image
     *
     * @param gameBoard
     *   imageView of the gameboard
     */
-  private def setGameBoardImage(gameBoard: ImageView): Unit =
-    gameBoard.setImage(
-      new Image(
-        getClass.getResource(ImgResources.GAMEBOARD.path).toString
+  private def setGameBoardImage(gameBoard: Option[ImageView]): Unit =
+    gameBoard.fold(None)(g =>
+      g.setImage(
+        new Image(
+          getClass.getResource(ImgResources.GAMEBOARD.path).toString
+        )
       )
+      g.setPreserveRatio(false)
     )
-    gameBoard.setPreserveRatio(false)
 
   /** Displays a modal alert dialog with a specified type, title, header text,
     * and content text.
