@@ -93,7 +93,7 @@ object GameBoardController:
     *   The message string to be displayed related to player movement.
     */
   def viewPlayerMovement(message: String): Unit =
-    if _view.isDefined then _view.get.playerMovement(message)
+    _view.fold(None)(v => v.playerMovement(message))
 
   /** Emits an alert telling that current player got locked If the special cell was already occupied, tells that old
     * player locked now is unlocked
