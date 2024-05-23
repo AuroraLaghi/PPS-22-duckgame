@@ -116,7 +116,7 @@ object GameReader:
     * @param player
     *   An `Option[Player]` containing the winning player object (if any).
     */
-  def setWinner(player: Option[Player]): Unit = Game.winner = player
+  def setWinner(player: Player): Unit = Game.winner = Option(player)
 
   /** Gets the index of the player currently in the well (if any).
     *

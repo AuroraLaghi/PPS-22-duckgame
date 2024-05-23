@@ -29,7 +29,7 @@ object EndGameController:
     * modifies the internal game state.
     */
   def setWinner(): Unit =
-    GameReader.setWinner(Option(GameReader.currentPlayer))
+    GameReader.setWinner(GameReader.currentPlayer)
 
   /** Checks if the game is in a locked state, where only two players remain and both are either in jail or the well.
     *
