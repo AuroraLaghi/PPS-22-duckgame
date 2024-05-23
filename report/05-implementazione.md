@@ -83,7 +83,7 @@ per integrare TuProlog in modo più fluido, si è utilizzato un metodo che sfrut
 Il team di sviluppo si è posto come obiettivo realizzativo l'uso del paradigma
 logico. In fase di progettazione ci si è interrogati sul possibile utilizzo
 della programmazione logica all'interno del progetto, scegliendo alcuni metodi
-che ben si adattavano alle caratteristiche di *Proloog*.
+che ben si adattavano alle caratteristiche di *Prolog*.
 
 Per integrare *TuProlog* in modo più fluente, si è fatto ricorso ad un metodo che utilizza al suo interno un *engine*
 per risolvere le query in input.
@@ -202,7 +202,7 @@ secondo è SolY = 6 e SolX = 4 (settima colonna e quinta riga)
 
 ## JavaFX e ScalaFX
 
-Per implementare la parte di interfaccia grafica sono state utilizzate le librerie *JavaFX* e *ScalaFX*. un DSL scritto
+Per implementare la parte di interfaccia grafica sono state utilizzate le librerie *JavaFX* e *ScalaFX*. Un DSL scritto
 in Scala che fa da *wrapper* agli elementi di *JavaFX*.
 
 In particolare, si è deciso di generare i vari stage dell'applicazione mediante la creazione di layout in formato
@@ -239,7 +239,7 @@ verifichi. Infine, nell'ultima fase, quella di refactor, si migliora il codice d
 precedente.
 
 Il team, per lo sviluppo dell'applicazione, ha deciso di adottare la pratica di Continuos Integration, realizzando due
-flussi di lavoro: il primo dedicato all'esecuzione dei test su SO differenti (Windowd, Linux e MacOS); il secondo,
+flussi di lavoro: il primo dedicato all'esecuzione dei test su SO differenti (Windows, Linux e MacOS); il secondo,
 invece, mirato a determinare la copertura ottenuta dai test implementati.
 
 Per il testing degli aspetti della *view* sono stati svolti test manuali: difatti, risultava complicato verificare condizioni limite tramite test automatici, i quali non possono essere considerati esaustivi nella verifica degli aspetti di interazione con l'utente.
@@ -249,7 +249,7 @@ Per il testing degli aspetti della *view* sono stati svolti test manuali: difatt
 Per testare le funzionalità legate alla logica di business dell'applicazione sono state realizzare diverse suite di test
 con l'utilizzo della libreria *ScalaTest*.
 
-Tutte le classi realizzare estendono *AnyFlatSpec* ed i test seguono lo stile mostrato:
+Tutte le classi realizzate estendono *AnyFlatSpec* ed i test seguono lo stile mostrato:
 
 ```scala
 "Current player starting position" should "be 0" in {
@@ -261,7 +261,7 @@ Tutte le classi realizzare estendono *AnyFlatSpec* ed i test seguono lo stile mo
 Per verificare determinate condizioni come, per esempio, l'uguaglianza, minoranza o maggioranza, sono stati utilizzati
 i *matchers* di *ScalaTest*: in particolare, se la classe di test estende il trait `Matchers`, si ha la possibilità di
 utilizzare all'interno dei test keywords come *shouldBe*, *equal*, *shouldEqual*... che consentono di verificare le
-condizioni espresse
+condizioni espresse.
 
 Per verificare che alcuni metodi non accettino parametri sbagliati, si è utilizzato il costrutto *an [Exception] should
 be
@@ -282,7 +282,7 @@ thrownBy* come nell'esempio riportato:
 Come detto nei capitoli precedenti, il team di sviluppo ha realizzato anche un flusso di lavoro dedicato alla *coverage* dei test, in modo tale da poter verificare la copertura ottenuta ogni qual volta vengano aggiunti o modificati dei test.
 
 La *code coverage* si riferisce alla quantità di istruzioni di codice eseguite durante l'esecuzione dei test. 
-Bisogna però tenere presente che una copertura del 100% non garantisce che il testing implementato copra tutti gli scenari possibili: infatti, l'obiettivo che il team si è posto non è quello di raggiungere un *coverage* totale, bensì quello di testare funzioni mirate.
+Bisogna però tenere presente che una copertura del 100% non garantisce che il testing implementato copra tutti gli scenari possibili: infatti, l'obiettivo che il team si è posto non è quello di raggiungere uns *coverage* totale, bensì quello di testare funzioni mirate.
 
 In particolare, per ottenere i dettagli relativi alla copertura dei test, si è scelto di utilizzare il *tool* [_JaCoCo_](https://www.eclemma.org/jacoco/)
 
@@ -292,10 +292,10 @@ In particolare, per ottenere i dettagli relativi alla copertura dei test, si è 
 
 Come si denota dalla figura sopra, la *coverage* finale ottenuta è del 55% su un totale di 84 test effettuati.
 
-Gli element per i cui si ha una *coverage* maggiore sono quelli che fanno riferimento al *model* e alla parte logica dell'applicazione, mentre si ha una *coverage* vicina allo 0 per gli elementi della *view* i quali, come spiegato poco sopra, sono stati testati tramite test manuali.
+Gli elementi per i quali si ha una *coverage* maggiore sono quelli che fanno riferimento al *model* e alla parte logica dell'applicazione, mentre si ha una *coverage* vicina allo 0 per gli elementi della *view* i quali, come spiegato poco sopra, sono stati testati tramite test manuali.
 
 ## Parser
-Per il popolamento delle caselle speciali all'interno del tabellone di gioco, è stato creato un file *.txt* contenente le informazioni utili alla creazione di queste celle speciali, mediante l'aiuto della classe `SpecialCellBuilder`.
+Per il popolamento delle caselle speciali all'interno del tabellone di gioco, è stato creato un file *.txt* contenente le informazioni utili alla creazione di queste caselle speciali, mediante l'aiuto della classe `SpecialCellBuilder`.
 Per "tradurre" il contenuto del file testuale in valori attribuili ad una casella, si è ricorso all'uso di un *parser*, il quale, ricevendo in input una riga del file per volta, divide la stringa letta in base ad un carattere di separazione predefinito e converte quanto ottenuto in stringhe o numeri, a seconda della loro posizione.
 
 Con la creazione di `Parser` si può notare l'impiego del trait `Parser[T]` e del **pattern Strategy**, rappresentato da `object SpecialCellParser`. In particolare, `Parser` definisce un'interfaccia generica per il parsing, consentendo flessibilità nella gestione dei diversi tipi di dati; mentre l'implementazione concreta del metodo *parse*, resa possibile dallo strategy, fornisce una logica specifica per i rispettivi tipi di dati. Si tratta di un approccio che permette riusabilità e manutenibilità del codice.
@@ -327,11 +327,11 @@ Essendo il team di sviluppo composto da soli due membri, risulta complicato dist
 
 Durante lo svolgimento del progetto si è cercato di suddividere il carico di lavoro nella maniera più equa possibile, cercando di sfruttare le competenze di entrambi i membri del gruppo ed evitando che uno dei due svolgesse più lavoro dell'altro.
 
-La mole di lavoro maggiore relativa alla parte di logica e view è stata svolta da Aurora Laghi, mentre Francesca Frattini ha contribuito in modo più significato alla parte di model ed al testing.
+La mole di lavoro maggiore relativa alla parte di logica e view è stata svolta da Aurora Laghi, mentre Francesca Frattini ha contribuito in modo più significativo alla parte di model ed al testing.
 
 ### Frattini Francesca
 
-L'implementazione di `Dice` è stata possibile grazie al **pattern Singleton** che implica l'utilizzo di un costruttore privato vietando di creare direttamente istanze della classe stessa. Inoltre, si è reso necessario l'utilizzo del rispettivo **companion object** (`object Dice`) che fornisce il metodo factory `apply` e il metodo statico`rollDice`. In egual modo si è deciso di realizzare anche `Player.scala`.
+L'implementazione di `Dice` è stata possibile grazie al **pattern Singleton** che implica l'utilizzo di un costruttore privato vietando di creare direttamente istanze della classe stessa. Inoltre, si è reso necessario l'utilizzo del rispettivo **companion object** (`object Dice`) che fornisce il metodo factory *apply* e il metodo statico *rollDice*. In egual modo si è deciso di realizzare anche la classe `Player`.
 
 ```scala
   final case class Dice(dice: (Int, Int)):
@@ -341,8 +341,7 @@ L'implementazione di `Dice` è stata possibile grazie al **pattern Singleton** c
     def apply(): Dice = new Dice(rollDice())
 ```
 
-All'interno della classe  `SpecialCellBuilder.scala` è possibile vedere l'applicazione del **pattern Builder**. Questo pattern conferisce maggiore flessibilità con la possibilità di aggiungere nuovi tipi di caselle speciali e la loro relativa azione senza modifcare la logica principale, trattandosi di una classe *final* cioè immutabile viene conferita maggiore immutabilità all'applicativo e per concludere aiuta a separare la creazione degli oggetti dalla logica interna migliorando la leggibilità del codice.
-
+All'interno della classe `SpecialCellBuilder` è possibile vedere l'applicazione del **pattern Builder**. Questo pattern conferisce maggiore flessibilità con la possibilità di aggiungere nuovi tipi di caselle speciali e la loro relativa azione senza modificare la logica principale, trattandosi di una classe *final* cioè immutabile viene conferita maggiore immutabilità all'applicativo e per concludere aiuta a separare la creazione degli oggetti dalla logica interna migliorando la leggibilità del codice.
 
 ### Laghi Aurora
 
