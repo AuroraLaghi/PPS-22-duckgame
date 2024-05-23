@@ -3,16 +3,12 @@ package it.unibo.pps.duckgame.view
 import it.unibo.pps.duckgame.controller.view.StartMenuController
 import it.unibo.pps.duckgame.utils.FxmlUtils
 import it.unibo.pps.duckgame.utils.resources.CssResources.GAME_STYLE
-import it.unibo.pps.duckgame.utils.resources.{CssResources, FxmlResources, ImgResources}
-import javafx.fxml.{FXML, FXMLLoader, Initializable}
+import it.unibo.pps.duckgame.utils.resources.{CssResources, ImgResources}
+import javafx.fxml.{FXML, Initializable}
 import javafx.scene.image.{Image, ImageView}
-import javafx.scene.layout.{AnchorPane, BorderPane}
-import javafx.scene.{control as jfxsc, layout as jfxsl}
-import javafx.{event as jfxe, fxml as jfxf, scene as jfxs}
-import scalafx.Includes.*
-import scalafx.scene.Scene
-import scalafx.scene.control.Button
-import scalafx.stage.Screen
+import javafx.scene.layout as jfxsl
+import javafx.scene.layout.BorderPane
+import javafx.{fxml as jfxf, scene as jfxs}
 
 import java.net.URL
 import java.util.ResourceBundle
