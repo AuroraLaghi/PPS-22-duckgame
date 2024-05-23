@@ -22,23 +22,16 @@ lazy val root = (project in file("."))
 
 
 Compile/compile/wartremoverWarnings ++= Warts.allBut(
-  Wart.Any,
-  Wart.AsInstanceOf,
-  Wart.Null,
-  Wart.ThreadSleep,
   Wart.Nothing,
   Wart.Throw,
-  Wart.ToString,
-  Wart.DefaultArguments,
-  Wart.AutoUnboxing,
-  Wart.IsInstanceOf,
-  Wart.Overloading,
   Wart.Var,
   Wart.SeqApply,
   Wart.SeqUpdated,
   Wart.IterableOps,
   Wart.MutableDataStructures,
   Wart.ImplicitConversion,
+  Wart.Overloading,
+  Wart.ToString,
   Wart.SizeIs
 )
 
