@@ -1,6 +1,6 @@
 # Report finale PPS - The Duckgame
 
-<img src="../img/logo-color.svg" width="400"/>
+<img src="../img/logo-color.svg" width="300" alt="logoImage"/>
 
 | Nome               |                Email                | Matricola   |
 |--------------------|:-----------------------------------:|-------------|

@@ -25,15 +25,15 @@ L'utente che farà utilizzo dell'applicazione potrà:
 
 ## 2.3 Requisiti funzionali
 
-Fra i requisiti funzionali, sono stati indivuati:
+Fra i requisiti funzionali, sono stati individuati:
 
-- Il gioco di svolge interativamente mantenendo corretto ordine dei giocatori durante i turni
+- Il gioco di svolge interattivamente mantenendo corretto ordine dei giocatori durante i turni
 - Il campo di gioco consiste in un tabellone a spirale, composto da 63 caselle
 - Ciascun giocatore è rappresentato da una pedina all'interno del tabellone
 - Le pedine si spostano lungo le caselle del tabellone
 - Un giocatore si muove lanciando entrambi i dadi. Il numero ottenuto, compreso tra 2 e 12, indica di quante caselle avanzare. In caso di due numeri uguali, il giocatore ripete il turno
 - Esistono diversi tipi di caselle:
-  - Caselle d'oca, il giocatore che si muove su una casella dell’oca si muove di un numero di caselle pari a quelle di cui si è appena spostato
+  - Caselle dell'oca, il giocatore che si muove su una casella dell’oca si muove di un numero di caselle pari a quelle di cui si è appena spostato
   - Ponte, si ripete il movimento
   - Casa, si rimane fermi per un turno
   - Prigione, si rimane fermi finchè un giocatore non finisce sulla stessa casella
@@ -65,7 +65,7 @@ Utilizzo di:
 - _tuProlog 4.x_
 - _ScalaTest_ 
 
-## 2.5 Requisiti opzionali
+## 2.6 Requisiti opzionali
 
 Sono stati individuati dei requisiti non obbligatori del progetto ma che contribuirebbero ad accrescerne il valore:
 
