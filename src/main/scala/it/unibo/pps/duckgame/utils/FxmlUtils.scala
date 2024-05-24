@@ -15,15 +15,15 @@ import scalafx.stage.{Screen, Stage}
 
 import java.io.IOException
 import java.util.Optional
+import scala.compiletime.uninitialized
 
 /** Utility object that provides methods to load FXML resources and change the
   * current scene.
   */
-@SuppressWarnings(Array("org.wartremover.warts.Null"))
 object FxmlUtils:
-  private var _stage: Stage = _
-  private var width: Double = _
-  private var height: Double = _
+  private var _stage: Stage = uninitialized
+  private var width: Double = 0
+  private var height: Double = 0
 
   val DEFAULT_WIDTH_PERC: Double = 0.8
   val DEFAULT_HEIGHT_PERC: Double = 0.8
