@@ -20,9 +20,9 @@ import scalafx.beans.property.StringProperty
 import java.net.URL
 import java.util.ResourceBundle
 import scala.collection.immutable.Map as MMap
+import scala.compiletime.uninitialized
 
 /** This class represents the Game Board view of the game */
-@SuppressWarnings(Array("org.wartremover.warts.Null"))
 class GameBoardView extends Initializable:
 
   private def NMENU = 2
@@ -30,46 +30,46 @@ class GameBoardView extends Initializable:
   private def N_ROWS_IN_CELL = 2
 
   @FXML
-  private var actionsMenu: VBox = _
+  private var actionsMenu: VBox = uninitialized
 
   @FXML
-  private var throwDiceButton: Button = _
+  private var throwDiceButton: Button = uninitialized
 
   @FXML
-  private var endTurnButton: Button = _
+  private var endTurnButton: Button = uninitialized
 
   @FXML
-  private var gameBoard: ImageView = _
+  private var gameBoard: ImageView = uninitialized
 
   @FXML
-  private var pane: BorderPane = _
+  private var pane: BorderPane = uninitialized
 
   @FXML
-  private var playerListBox: VBox = _
+  private var playerListBox: VBox = uninitialized
 
   @FXML
-  private var mainGrid: GridPane = _
+  private var mainGrid: GridPane = uninitialized
 
   @FXML
-  private var currentPlayer: Label = _
+  private var currentPlayer: Label = uninitialized
 
   @FXML
-  private var diceImage1: ImageView = _
+  private var diceImage1: ImageView = uninitialized
 
   @FXML
-  private var diceImage2: ImageView = _
+  private var diceImage2: ImageView = uninitialized
 
   @FXML
-  private var playersTable: TableView[Player] = _
+  private var playersTable: TableView[Player] = uninitialized
 
   @FXML
-  private var playerNameColumn: TableColumn[Player, String] = _
+  private var playerNameColumn: TableColumn[Player, String] = uninitialized
 
   @FXML
-  private var playerTokenColumn: TableColumn[Player, ImageView] = _
+  private var playerTokenColumn: TableColumn[Player, ImageView] = uninitialized
 
   @FXML
-  private var movementMessage: TextArea = _
+  private var movementMessage: TextArea = uninitialized
 
   private var cellsGrid: MMap[(Int, Int), GridPane] = MMap.empty
 

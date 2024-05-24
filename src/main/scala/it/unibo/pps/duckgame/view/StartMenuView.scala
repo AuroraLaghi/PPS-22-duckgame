@@ -12,16 +12,16 @@ import javafx.{fxml as jfxf, scene as jfxs}
 
 import java.net.URL
 import java.util.ResourceBundle
+import scala.compiletime.uninitialized
 
 /** This class represents the Start Menu view of the game */
-@SuppressWarnings(Array("org.wartremover.warts.Null"))
 class StartMenuView extends Initializable:
   private def WIDTH = 0.4
   private def HEIGHT = 0.4
   @FXML
-  private var pane: BorderPane = _
+  private var pane: BorderPane = uninitialized
   @FXML
-  private var logo: ImageView = _
+  private var logo: ImageView = uninitialized
 
   /** This method is called after the FXML view is loaded.
     *

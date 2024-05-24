@@ -16,9 +16,9 @@ import scalafx.beans.property.{ObjectProperty, StringProperty}
 
 import java.net.URL
 import java.util.ResourceBundle
+import scala.compiletime.uninitialized
 
 /** This class represents the Players Menu view of the game */
-@SuppressWarnings(Array("org.wartremover.warts.Null"))
 class PlayersMenuView extends Initializable:
 
   private def WIDTH = 0.6
@@ -26,28 +26,28 @@ class PlayersMenuView extends Initializable:
   private def HEIGHT = 0.6
 
   @FXML
-  private var pane: BorderPane = _
+  private var pane: BorderPane = uninitialized
 
   @FXML
-  private var tableView: TableView[Player] = _
+  private var tableView: TableView[Player] = uninitialized
 
   @FXML
-  private var playerNameColumn: TableColumn[Player, String] = _
+  private var playerNameColumn: TableColumn[Player, String] = uninitialized
 
   @FXML
-  private var playerTokenColumn: TableColumn[Player, Token] = _
+  private var playerTokenColumn: TableColumn[Player, Token] = uninitialized
 
   @FXML
-  private var addPlayerNameTextField: TextField = _
+  private var addPlayerNameTextField: TextField = uninitialized
 
   @FXML
-  private var addPlayerButton: Button = _
+  private var addPlayerButton: Button = uninitialized
 
   @FXML
-  private var removePlayerButton: Button = _
+  private var removePlayerButton: Button = uninitialized
 
   @FXML
-  private var addTokenComboBox: ComboBox[Token] = _
+  private var addTokenComboBox: ComboBox[Token] = uninitialized
 
   /** This method is called after the FXML view is loaded.
     *
