@@ -5,7 +5,7 @@ lazy val osNames = Seq("linux", "mac", "win")
 lazy val root = (project in file("."))
   .settings(
     name := "PPS-22-duckgame",
-    scalaVersion := "3.3.0",
+    scalaVersion := "3.3.3",
     assembly / assemblyJarName := "duckgame.jar",
     libraryDependencies ++= Seq(
       "org.scalatest" %% "scalatest" % "3.2.18" % Test,
