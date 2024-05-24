@@ -7,7 +7,7 @@ class FxmlResourcesTest extends AnyFlatSpec with should.Matchers:
 
   private val START_MENU_POSITION = 0
   private val GAMEVIEW_POSITION = 1
-  private val NUM_FXML_RESOURCES = 2
+  private val NUM_FXML_RESOURCES = 3
 
   "Resource path for starting menu" should "be correct" in {
     FxmlResources.START_MENU.path shouldBe "/fxml/StartMenuFXML.fxml"

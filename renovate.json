@@ -3,17 +3,17 @@
   "extends": [
     "config:base", ":disableDependencyDashboard", ":semanticCommits"
   ],
-  "baseBranches": ["main"],
+  "baseBranches": ["develop"],
   "packageRules": [
     {
       "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
       "automerge": true,
-      "automergeType": "branch"
+      "automergeType": "pr"
     },
     {
       "matchDepTypes": ["devDependencies"],
       "automerge": true,
-      "automergeType": "branch"
+      "automergeType": "pr"
     }
   ],
   "platformAutomerge": true

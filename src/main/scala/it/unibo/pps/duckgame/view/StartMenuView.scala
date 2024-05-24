@@ -1,40 +1,51 @@
 package it.unibo.pps.duckgame.view
 
-import it.unibo.pps.duckgame.controller.GameController
+import it.unibo.pps.duckgame.controller.view.StartMenuController
 import it.unibo.pps.duckgame.utils.FxmlUtils
-import it.unibo.pps.duckgame.utils.resources.{CssResources, FxmlResources}
-import javafx.fxml.{FXML, FXMLLoader, Initializable}
-import javafx.scene.layout.AnchorPane
-import javafx.{event as jfxe, fxml as jfxf, scene as jfxs}
-import javafx.scene.{control as jfxsc, layout as jfxsl}
-import scalafx.scene.Scene
+import it.unibo.pps.duckgame.utils.resources.CssResources.GAME_STYLE
+import it.unibo.pps.duckgame.utils.resources.{CssResources, ImgResources}
+import javafx.fxml.{FXML, Initializable}
+import javafx.scene.image.{Image, ImageView}
+import javafx.scene.layout as jfxsl
+import javafx.scene.layout.BorderPane
+import javafx.{fxml as jfxf, scene as jfxs}
 
 import java.net.URL
 import java.util.ResourceBundle
-import scalafx.Includes.*
-import scalafx.scene.control.Button
-import scalafx.stage.Screen
 
+/** This class represents the Start Menu view of the game */
+@SuppressWarnings(Array("org.wartremover.warts.Null"))
 class StartMenuView extends Initializable:
-
+  private def WIDTH = 0.4
+  private def HEIGHT = 0.4
   @FXML
-  @SuppressWarnings(Array("org.wartremover.warts.Null", "org.wartremover.warts.Var"))
-  private var startButton: Button = _
-
+  private var pane: BorderPane = _
   @FXML
-  @SuppressWarnings(Array("org.wartremover.warts.Null", "org.wartremover.warts.Var"))
-  private var exitButton: Button = _
+  private var logo: ImageView = _
 
-  @FXML
-  @SuppressWarnings(Array("org.wartremover.warts.Null", "org.wartremover.warts.Var"))
-  private var startMenuPane: AnchorPane = _
-
+  /** This method is called after the FXML view is loaded.
+    *
+    * @param url
+    *   The URL of the FXML file.
+    * @param resourceBundle
+    *   The resource bundle used for localization (optional).
+    */
   override def initialize(url: URL, resourceBundle: ResourceBundle): Unit =
-    startMenuPane.getStylesheets.add(getClass.getResource(CssResources.GAME_STYLE.path).toExternalForm)
-    FxmlUtils.setPaneResolution(startMenuPane, 0.6, 0.6)
+    FxmlUtils.initUIElements(pane, None, GAME_STYLE, WIDTH, HEIGHT)
+    logo.setImage(
+      new Image(getClass.getResource(ImgResources.LOGO.path).toString)
+    )
+    logo.setFitWidth(FxmlUtils.getResolution._1 * WIDTH)
+    logo.setFitHeight(FxmlUtils.getResolution._2 * HEIGHT)
 
+  /** Handles the click of the "Play Game" button. Delegates the game start
+    * logic to the StartMenuController
+    */
   def playGame(): Unit =
-    FxmlUtils.changeScene(FxmlResources.GAME_VIEW.path)
+    StartMenuController.playGame()
 
+  /** Handles the click of the "Exit Game" button. Delegates the game exit logic
+    * to the StartMenuController
+    */
   def exitGame(): Unit =
-    GameController.exitGame()
+    StartMenuController.closeGame()

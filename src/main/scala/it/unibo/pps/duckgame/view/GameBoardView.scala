@@ -1,159 +1,175 @@
 package it.unibo.pps.duckgame.view
-import it.unibo.pps.duckgame.controller.{GameController, GameStats}
-import it.unibo.pps.duckgame.model.Player
-import it.unibo.pps.duckgame.utils.{FxmlUtils, GameUtils}
+
+import it.unibo.pps.duckgame.controller.GameReader
+import it.unibo.pps.duckgame.controller.logic.EndGameController
+import it.unibo.pps.duckgame.controller.view.GameBoardController
+import it.unibo.pps.duckgame.model.{Player, Token}
 import it.unibo.pps.duckgame.utils.resources.CssResources.GAME_STYLE
 import it.unibo.pps.duckgame.utils.resources.ImgResources
-import javafx.{fxml, geometry}
+import it.unibo.pps.duckgame.utils.{FxmlUtils, GameUtils}
+import javafx.beans.property.SimpleObjectProperty
 import javafx.fxml.{FXML, Initializable}
 import javafx.geometry.{Insets, Pos}
-import javafx.scene.layout.{BorderPane, ColumnConstraints, GridPane, HBox, RowConstraints, VBox}
-import javafx.stage.Screen
-import javafx.fxml.{FXML, Initializable}
-import javafx.scene.control.{Button, Label, ListView, TableColumn, TableView}
+import javafx.scene.control.*
 import javafx.scene.image.{Image, ImageView}
-import javafx.scene.layout
+import javafx.scene.layout.*
+import javafx.scene.{image, layout}
+import javafx.{fxml, geometry}
+import scalafx.beans.property.StringProperty
 
-import scala.collection.immutable.Map as MMap
 import java.net.URL
 import java.util.ResourceBundle
-import scala.::
+import scala.collection.immutable.Map as MMap
 
+/** This class represents the Game Board view of the game */
+@SuppressWarnings(Array("org.wartremover.warts.Null"))
 class GameBoardView extends Initializable:
 
-  private def DEFAULT_SPACING = 10
+  private def NMENU = 2
   private def N_COLS_IN_CELL = 3
   private def N_ROWS_IN_CELL = 2
 
   @FXML
-  @SuppressWarnings(
-    Array("org.wartremover.warts.Null", "org.wartremover.warts.Var")
-  )
   private var actionsMenu: VBox = _
 
   @FXML
-  @SuppressWarnings(
-    Array("org.wartremover.warts.Null", "org.wartremover.warts.Var")
-  )
-  private var turnLabel: Label = _
-
-  @FXML
-  @SuppressWarnings(
-    Array("org.wartremover.warts.Null", "org.wartremover.warts.Var")
-  )
   private var throwDiceButton: Button = _
 
   @FXML
-  @SuppressWarnings(
-    Array("org.wartremover.warts.Null", "org.wartremover.warts.Var")
-  )
   private var endTurnButton: Button = _
 
   @FXML
-  @SuppressWarnings(
-    Array("org.wartremover.warts.Null", "org.wartremover.warts.Var")
-  )
-  private var exitButton: Button = _
-
-  @FXML
-  @SuppressWarnings(
-    Array("org.wartremover.warts.Null", "org.wartremover.warts.Var")
-  )
   private var gameBoard: ImageView = _
 
   @FXML
-  @SuppressWarnings(
-    Array("org.wartremover.warts.Null", "org.wartremover.warts.Var")
-  )
   private var pane: BorderPane = _
 
   @FXML
-  @SuppressWarnings(
-    Array("org.wartremover.warts.Null", "org.wartremover.warts.Var")
-  )
   private var playerListBox: VBox = _
 
   @FXML
-  @SuppressWarnings(
-    Array("org.wartremover.warts.Null", "org.wartremover.warts.Var")
-  )
   private var mainGrid: GridPane = _
 
   @FXML
-  @SuppressWarnings(
-    Array("org.wartremover.warts.Null", "org.wartremover.warts.Var")
-  )
-  private var currentPlayer: VBox = _
+  private var currentPlayer: Label = _
 
-  @SuppressWarnings(
-    Array("org.wartremover.warts.Null", "org.wartremover.warts.Var")
-  )
-  private var playersHBox: MMap[String,HBox] = MMap.empty
+  @FXML
+  private var diceImage1: ImageView = _
 
-  @SuppressWarnings(
-    Array("org.wartremover.warts.Null", "org.wartremover.warts.Var")
-  )
+  @FXML
+  private var diceImage2: ImageView = _
+
+  @FXML
+  private var playersTable: TableView[Player] = _
+
+  @FXML
+  private var playerNameColumn: TableColumn[Player, String] = _
+
+  @FXML
+  private var playerTokenColumn: TableColumn[Player, ImageView] = _
+
+  @FXML
+  private var movementMessage: TextArea = _
+
   private var cellsGrid: MMap[(Int, Int), GridPane] = MMap.empty
 
-  @SuppressWarnings(
-    Array("org.wartremover.warts.Null", "org.wartremover.warts.Var")
-  )
-  private var nameLabel: MMap[String, Label] = MMap.empty
+  private var tokensMap: MMap[Token, ImageView] = MMap.empty
 
-  private val currentPlayerLabel: Label = new Label()
-
-
+  /** This method is called after the FXML view is loaded.
+    *
+    * @param url
+    *   The URL of the FXML file.
+    * @param resourceBundle
+    *   The resource bundle used for localization (optional).
+    */
   override def initialize(url: URL, resourceBundle: ResourceBundle): Unit =
-    GameController.startGame()
-    FxmlUtils.initUIElements(pane, gameBoard, GAME_STYLE, FxmlUtils.DEFAULT_WIDTH_PERC,
-      FxmlUtils.DEFAULT_HEIGHT_PERC)
+    FxmlUtils.initUIElements(
+      pane,
+      Some(gameBoard),
+      GAME_STYLE,
+      FxmlUtils.DEFAULT_WIDTH_PERC,
+      FxmlUtils.DEFAULT_HEIGHT_PERC
+    )
     initializeCellGrid()
     val menuWidth = FxmlUtils.getResolution._1 - pane.getPrefHeight
-    actionsMenu.setPrefWidth(menuWidth / 2)
-    playerListBox.setPrefWidth(menuWidth / 2)
-    currentPlayer.setPrefWidth(menuWidth / 2)
-    playerListBox.getChildren.add(new Label("Elenco giocatori:"))
-    currentPlayer.getChildren.add(new Label("È il turno di"))
-    currentPlayer.getChildren.add(currentPlayerLabel)
-    currentPlayer.setSpacing(DEFAULT_SPACING)
+    actionsMenu.setPrefWidth(menuWidth / NMENU)
+    playerListBox.setPrefWidth(menuWidth / NMENU)
+    currentPlayer.setPrefWidth(menuWidth / NMENU)
+    playersTable.setPrefWidth(menuWidth)
+    movementMessage.setPrefWidth(menuWidth)
     currentPlayer.setAlignment(geometry.Pos.CENTER)
     setCurrentPlayer()
-    GameStats.players.foreach(p => {
-      createPlayerBox(p)
-      nameLabel += (p.name -> new Label(p.name))
+    GameReader.players.foreach { p =>
+      val tokenImage = new ImageView(
+        new Image(getClass.getResource(p.token.img.path).toString)
+      )
+      tokensMap += (p.token -> tokenImage)
+      setImageViewDimensions(tokenImage)
       updatePlayerPosition(p)
-    })
+    }
 
+    setDiceImage(diceImage1)
+    setDiceImage(diceImage2)
+
+    playerNameColumn.setCellValueFactory(p => StringProperty(p.getValue.name))
+
+    val tokensMapForTable: Map[Token, ImageView] =
+      tokensMap.foldLeft(Map.empty[Token, ImageView]) { (acc, entry) =>
+        val (token, imageView) = entry
+        val imageTokenTable = new ImageView(imageView.getImage)
+        setImageViewDimensions(imageTokenTable)
+        acc + (token -> imageTokenTable)
+      }
+    playerTokenColumn.setCellValueFactory(p =>
+      SimpleObjectProperty(tokensMapForTable(p.getValue.token))
+    )
+    updatePlayersTable()
+    GameBoardController.view = this
+
+  /** Handles the click of the "Quit" button (likely). Disables the current
+    * player's token on the board, displays a message, and updates the game
+    * state.
+    */
   def quitButtonClick(): Unit =
-    nameLabel(GameStats.currentPlayer.name).setDisable(true)
-    playersHBox(GameStats.currentPlayer.name).setDisable(true)
-    GameController.currentPlayerQuit()
-    if GameStats.players.nonEmpty then
+    tokensMap(GameReader.currentPlayer.token).setDisable(true)
+    movementMessage.setText(
+      "Il giocatore " + GameReader.currentPlayer.name + " ha abbandonato la partita."
+    )
+    GameBoardController.currentPlayerQuit()
+    if GameReader.players.nonEmpty then
+      setCurrentPlayer()
       setButtonsForTurnEnding(false)
+      updatePlayersTable()
 
+  /** Enables or disables buttons related to ending a turn based on the provided
+    * flag.
+    *
+    * @param can
+    *   A boolean indicating whether the buttons should be enabled.
+    */
   private def setButtonsForTurnEnding(can: Boolean): Unit =
     endTurnButton.setDisable(!can)
     throwDiceButton.setDisable(can)
 
+  /** Handles the click of the "Throw Dice" button (likely). Clears any previous
+    * message, throws the dice using the game board controller, and updates the
+    * game state.
+    */
   def throwDiceButtonClick(): Unit =
-    val (dice1, dice2) = GameController.throwDice()
+    movementMessage.setText("")
+    val (dice1, dice2) = GameBoardController.throwDice()
     afterThrow(dice1, dice2)
 
+  /** Handles the click of the "End Turn" button (likely). Ends the current
+    * player's turn using the game board controller, sets the new current
+    * player, and updates button states.
+    */
   def endTurnButtonClick(): Unit =
-    GameController.endTurn()
+    GameBoardController.endTurn()
     setCurrentPlayer()
     setButtonsForTurnEnding(false)
 
-
-  private def createPlayerBox(player: Player): Unit =
-    val playerHBox: HBox = new HBox()
-    playerListBox.getChildren.add(playerHBox)
-    val playerLabel: Label = new Label(player.name)
-    playerHBox.getChildren.add(playerLabel)
-    playerHBox.setSpacing(DEFAULT_SPACING)
-    playerHBox.setAlignment(geometry.Pos.CENTER)
-    playersHBox += (player.name -> playerHBox)
-
+  /** Initializes the grid of cells on the game board */
   private def initializeCellGrid(): Unit =
     val CONSTRAINT_PERC = 50
     for
@@ -166,42 +182,151 @@ class GameBoardView extends Initializable:
       spawnRows(tempGrid, N_ROWS_IN_CELL)
 
       mainGrid.add(tempGrid, i, j)
-      cellsGrid += ((i,j) -> tempGrid)
+      cellsGrid += ((i, j) -> tempGrid)
 
+      /** Creates and adds columns to a GridPane with a specified width.
+        *
+        * This method is likely used to create a grid-like structure within a
+        * cell on the game board.
+        *
+        * @param grid
+        *   The GridPane to which the columns will be added.
+        * @param numCol
+        *   The number of columns to create.
+        */
       def spawnColumns(grid: GridPane, numCol: Int): Unit =
         val col = new ColumnConstraints()
         col.setPercentWidth(CONSTRAINT_PERC)
-        for _ <- 0 until numCol
-        do
-          grid.getColumnConstraints.add(col)
+        for _ <- 0 until numCol do grid.getColumnConstraints.add(col)
 
+      /** Creates and adds rows to a GridPane with a specified width.
+        *
+        * This method is likely used to create a grid-like structure within a
+        * cell on the game board.
+        *
+        * @param grid
+        *   The GridPane to which the rows will be added.
+        * @param numRows
+        *   The number of rows to create.
+        */
       def spawnRows(grid: GridPane, numRows: Int): Unit =
         val row = new RowConstraints()
         row.setPercentHeight(CONSTRAINT_PERC)
-        for _ <- 0 until numRows
-        do
-          grid.getRowConstraints.add(row)
+        for _ <- 0 until numRows do grid.getRowConstraints.add(row)
 
+  /** Updates the player's position on the game board UI.
+    *
+    * @param player
+    *   The player whose position needs to be updated.
+    */
   private def updatePlayerPosition(player: Player): Unit =
-    val cellGrid = cellsGrid(GameUtils.getCoordinateFromPosition(player.actualPosition))
-    val (col, row) = getFirstFreeCellStartingFrom(cellGrid, cellGrid.getChildren.size(), (0, 1))
-    if !cellGrid.getChildren.contains(nameLabel(player.name)) then
-      cellGrid.add(nameLabel(player.name), col, row)
-
-  private def getFirstFreeCellStartingFrom(gridPane: GridPane, nthCell: Int, startingCell: (Int, Int)): (Int, Int) =
-    GameUtils.getNthCellInGridWithStartingPos(nthCell + 1, (N_COLS_IN_CELL, N_ROWS_IN_CELL), startingCell)
-
-  @SuppressWarnings(Array("org.wartremover.warts.Equals"))
-  private def afterThrow(dice1: Int, dice2: Int): Unit =
-    updatePlayerPosition(GameStats.currentPlayer)
-    nameLabel.foreach(t =>
-      GameStats.players.find(p => p.name == t._1) match
-        case None => t._2.setDisable(true)
-        case _ =>
+    val cellGrid = cellsGrid(
+      GameUtils.getCoordinateFromPosition(player.actualPosition)
     )
-    if dice1 != dice2 then
-      setButtonsForTurnEnding(true)
+    val (col, row) = GameUtils.getNthSlotFromCell(
+      cellGrid.getChildren.size() + 1
+    )(N_COLS_IN_CELL, N_ROWS_IN_CELL)
+    if !cellGrid.getChildren.contains(tokensMap(player.token)) then
+      cellGrid.add(tokensMap(player.token), col, row)
 
+  /** Handles updates after the dice are thrown.
+    *
+    * @param dice1
+    *   The value of the first die.
+    * @param dice2
+    *   The value of the second die.
+    */
+  private def afterThrow(dice1: Int, dice2: Int): Unit =
+    updatePlayerPosition(GameReader.currentPlayer)
+    updateDiceImg(dice1, dice2)
+    val position: Int = GameReader.currentPlayer.actualPosition
+    playerMovement("Posizione aggiornata del giocatore: " + position.toString)
+    if GameBoardController.checkVictory() then GameBoardController.showVictory()
+    else if EndGameController.isGameLocked then
+      GameBoardController.showGameLocked()
+    else if dice1 != dice2 || position == 19 || position == 31 || position == 52
+    then setButtonsForTurnEnding(true)
+    else
+      playerMovement(
+        "Dal lancio dei dadi si è ottenuto un doppio, quindi il giocatore può effettuare un altro tiro"
+      )
+
+  /** Updates the movement message text area with the provided message.
+    *
+    * This method is likely used to display messages related to player movement
+    * on the game board.
+    *
+    * @param message
+    *   The message to be appended to the movement text area.
+    */
+  def playerMovement(message: String): Unit =
+    movementMessage.appendText(message + "\n")
+
+  /** Sets the current player indicator text.
+    *
+    * This method likely updates a UI element that displays the name of the
+    * player whose turn it is.
+    */
   private def setCurrentPlayer(): Unit =
-    currentPlayerLabel.setText(GameStats.currentPlayer.name)
+    currentPlayer.setText("É il turno di: " + GameReader.currentPlayer.name)
 
+  /** Sets the dimensions of an ImageView based on the game board size and cell
+    * properties.
+    *
+    * @param imgView
+    *   The ImageView whose dimensions will be set.
+    */
+  private def setImageViewDimensions(imgView: ImageView): Unit =
+    imgView.setPreserveRatio(false)
+    imgView.setFitWidth(
+      gameBoard.getFitWidth / (GameUtils.CELLS_IN_SIDE + 1) / N_COLS_IN_CELL
+    )
+    imgView.setFitHeight(
+      gameBoard.getFitHeight / (GameUtils.CELLS_IN_SIDE + 1) / N_COLS_IN_CELL
+    )
+
+  /** Sets the dimensions of a dice image view based on the game board size and
+    * number of cells.
+    *
+    * @param diceImage
+    *   The ImageView representing the dice that will be resized.
+    */
+  private def setDiceImage(diceImage: ImageView): Unit =
+    diceImage.setFitWidth(
+      pane.getPrefHeight / (GameReader.gameBoard.size / GameUtils.CELLS_IN_SIDE + 1)
+    )
+
+  /** Updates the images for both dice based on their rolled values.
+    *
+    * @param dice1
+    *   The value of the first die.
+    * @param dice2
+    *   The value of the second die.
+    */
+  private def updateDiceImg(dice1: Int, dice2: Int): Unit =
+    updateSingleDiceImg(dice1, diceImage1)
+    updateSingleDiceImg(dice2, diceImage2)
+
+  /** Updates the image for a single die based on its rolled value.
+    *
+    * @param dice
+    *   The value of the rolled die.
+    * @param diceImage
+    *   The ImageView representing the die to be updated.
+    */
+  private def updateSingleDiceImg(dice: Int, diceImage: ImageView): Unit =
+    val dicePath: String = ImgResources.valueOf("DICE_" + dice.toString).path
+    diceImage.setImage(new Image(getClass.getResource(dicePath).toString))
+
+  /** Updates the players table on the UI.
+    *
+    * This method likely refreshes a UI element (playersTable) that displays
+    * information about the players in the game.
+    */
+  private def updatePlayersTable(): Unit =
+    val rowHeight = 35
+    playersTable.getItems.clear()
+    GameReader.players.foreach(p => playersTable.getItems.add(p))
+    val numRows = playersTable.getItems.size() + 1
+    val newHeight = numRows * rowHeight
+    playersTable.setPrefHeight(newHeight)
