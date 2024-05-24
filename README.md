@@ -2,6 +2,8 @@
 Project for `Paradigmi di Programmazione e Sviluppo` course of `University of Bologna` (A.Y. 2022/2023).
 `PP-22-duckgame` is a remake of the popular **Gioco dell'oca** in *Scala* language.
 
+<img src="src/main/resources/img/logo.png" width="300" alt="logo image"/>
+
 Once the application is started, it'll possible to add up to 6 players before starting the game. 
 Each player needs to choose a nickname and the color of its token.
 After that, the game can be started and the winner is who gets exactly over cell #63 for first.
