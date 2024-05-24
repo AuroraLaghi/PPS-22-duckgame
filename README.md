@@ -15,7 +15,7 @@ The following dependencies are required to run the application:
 - JDK version 17
 
 ## Documentation
-You can find project's report inside `report` folder into the `doc` branch, or by clicking [this link](https://github.com/AuroraLaghi/PPS-22-duckgame/tree/doc/report)
+You can find project's report inside `report` folder into the `doc` branch, or by clicking [this link](https://github.com/AuroraLaghi/PPS-22-duckgame/blob/doc/README.md)
 
 Futhermore, you can find the detailed description of the development process in the `process` folder, into the `doc` branch.  
 
