@@ -19,7 +19,7 @@ L'utente che farà utilizzo dell'applicazione potrà:
   - Inserire il proprio nome e scegliere una pedina segnaposto 
   - Definire il numero di giocatori 
   - Avviare una partita
-- Durante lo svolgimento di una partita:
+- Durante lo svolgimento di una partita è possibile:
   - lanciare i dadi
   - abbandonare la partita
 
@@ -27,7 +27,7 @@ L'utente che farà utilizzo dell'applicazione potrà:
 
 Fra i requisiti funzionali, sono stati individuati:
 
-- Il gioco di svolge interattivamente mantenendo corretto ordine dei giocatori durante i turni
+- Il gioco di svolge interattivamente mantenendo il corretto ordine dei giocatori durante i turni
 - Il campo di gioco consiste in un tabellone a spirale, composto da 63 caselle
 - Ciascun giocatore è rappresentato da una pedina all'interno del tabellone
 - Le pedine si spostano lungo le caselle del tabellone
@@ -51,7 +51,7 @@ Sono stati identificati i seguenti requisiti non funzionali:
 - L'applicazione deve essere _cross-platform_, cioè eseguibile su SO Windows, Linux e MacOS, o comunque qualsiasi sistema operativo in grado di supportare _Java Runtime Environment_ versione 17 o successive.
 - Il sistema deve essere responsivo alle azioni del giocatore ed in grado di gestire il carico di lavoro necessario per gestire una partita
 - L'applicazione deve essere stabile e affidabile, evitando crash o errori critici
-- Il sistema deve essere intuitivo e semplice da utilizzare con un'interfaccia utente chiara ed oragnizzata. I giocatori devono essere in grado di 
+- Il sistema deve essere intuitivo e semplice da utilizzare con un'interfaccia utente chiara ed organizzata. I giocatori devono essere in grado di 
 interagire con il gioco senza difficoltà e comprenderne gli avvenimenti
 - L'applicazione deve essere scalabile in seguito all'aggiunta di nuovi componenti
 - La documentazione che accompagna il sistema deve essere chiara e completa, esponendo le regole del gioco e le funzionalità del software
@@ -70,5 +70,5 @@ Utilizzo di:
 Sono stati individuati dei requisiti non obbligatori del progetto ma che contribuirebbero ad accrescerne il valore:
 
 - Possibilità di effettuare una partita in modalità _playerVSbot_
-- Scelta tabellone di gioco tra quelli proposti
+- Scelta del tabellone di gioco tra quelli proposti
 - Aggiunta della possibilità di mettere in pausa la partita e salvarne i progressi
