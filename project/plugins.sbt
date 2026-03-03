@@ -1,5 +1,5 @@
 
-addSbtPlugin("org.jetbrains.scala" % "sbt-ide-settings" % "1.1.2")
+addSbtPlugin("org.jetbrains.scala" % "sbt-ide-settings" % "1.1.4")
 
 addSbtPlugin("com.github.sbt" % "sbt-jacoco" % "3.5.0")
 addDependencyTreePlugin
