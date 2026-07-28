@@ -12,7 +12,7 @@ lazy val root = (project in file("."))
       "org.scalafx" %% "scalafx" % "21.0.0-R32",
       "it.unibo.alice.tuprolog" % "2p-core" % "4.1.1",
       "it.unibo.alice.tuprolog" % "2p-ui" % "4.1.1",
-      "org.controlsfx" % "controlsfx" % "11.2.1"
+      "org.controlsfx" % "controlsfx" % "11.2.4"
     ) ++ osNames.flatMap(os =>
       Seq("base", "controls", "fxml", "graphics", "media", "swing", "web")
         .map(m => "org.openjfx" % s"javafx-$m" % "20" classifier os) ),
